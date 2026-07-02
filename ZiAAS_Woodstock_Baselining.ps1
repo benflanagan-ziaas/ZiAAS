@@ -57,8 +57,9 @@ function Invoke-OfficeUninstallAndCleanup {
             -WorkingDirectory $Script:OfficeDir
     }
     catch {
+        $officeRemovalError = $_.Exception.Message
         Write-Log "Office Click-to-Run removal returned a non-success result. Continuing to Microsoft Office scrub cleanup because ODT Remove All can fail when Office is already absent or partially removed." "WARN"
-        Write-Log "Office Click-to-Run removal detail: $($_.Exception.Message)" "WARN"
+        Write-Log "Office Click-to-Run removal detail: $officeRemovalError" "WARN"
     }
 
     Invoke-OfficeScrubCleanup
@@ -69,7 +70,12 @@ $officePattern = '(?s)function Invoke-OfficeUninstallAndCleanup \{.*?\r?\n\}\r?\
 if ($scriptText -notmatch $officePattern) {
     throw "Could not find Invoke-OfficeUninstallAndCleanup function block to patch. Source script may have changed."
 }
-$scriptText = [regex]::Replace($scriptText, $officePattern, ($officeUninstallReplacement + "`r`nfunction Invoke-OfficeInstall"), 1)
+$scriptText = [regex]::Replace(
+    $scriptText,
+    $officePattern,
+    { param($match) $officeUninstallReplacement + "`r`nfunction Invoke-OfficeInstall" },
+    1
+)
 
 $acroCleanerReplacement = @'
 function Invoke-AdobeCleanerCleanup {
@@ -115,7 +121,12 @@ $acroPattern = '(?s)function Invoke-AdobeCleanerCleanup \{.*?\r?\n\}\r?\n\r?\nfu
 if ($scriptText -notmatch $acroPattern) {
     throw "Could not find Invoke-AdobeCleanerCleanup function block to patch. Source script may have changed."
 }
-$scriptText = [regex]::Replace($scriptText, $acroPattern, ($acroCleanerReplacement + "`r`nfunction Get-AdobeReaderInstallerPath"), 1)
+$scriptText = [regex]::Replace(
+    $scriptText,
+    $acroPattern,
+    { param($match) $acroCleanerReplacement + "`r`nfunction Get-AdobeReaderInstallerPath" },
+    1
+)
 
 Set-Content -LiteralPath $patchedScript -Value $scriptText -Encoding UTF8
 Write-Host "Running patched ZiAAS Woodstock Baselining script..."
