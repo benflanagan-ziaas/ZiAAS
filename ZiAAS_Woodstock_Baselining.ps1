@@ -20,22 +20,24 @@ Defaults:
   - Removes existing LEAP installs via MSI product code or registered quiet uninstall command
   - Moves known LEAP residual folders to timestamped backup storage
   - Preserves AppData\Roaming\LEAP Accounting because it may contain incomplete timesheet data
+  - Resolves the latest LEAP Desktop installer from the official LEAP downloads page
+  - Can optionally fall back to a local trusted LEAP installer from common installer folders
 
 Run from an elevated PowerShell session:
-  powershell.exe -ExecutionPolicy Bypass -File .\Install-M365Apps-And-AdobeReader.ps1
+  powershell.exe -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1
 
 For unattended use:
-  powershell.exe -ExecutionPolicy Bypass -File .\Install-M365Apps-And-AdobeReader.ps1 -InstallMode All -AdobeProduct Reader -LeapInstallerPath C:\Installers\LEAPSetup.exe
+  powershell.exe -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -InstallMode All -AdobeProduct Reader
 
 For sandbox testing without touching installed software:
-  powershell.exe -ExecutionPolicy Bypass -File .\Install-M365Apps-And-AdobeReader.ps1 -Simulation -InstallMode All -WorkingRoot .\sandbox-test
+  powershell.exe -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -Simulation -InstallMode All -WorkingRoot .\sandbox-test
 
 Use -ForceCloseApps only if the user has saved their work.
 #>
 
 [CmdletBinding()]
 param(
-    [string]$WorkingRoot = "$env:ProgramData\M365ReaderDeploy",
+    [string]$WorkingRoot = "$env:ProgramData\ZiAAS_Woodstock_Baselining",
 
     [ValidateSet("Prompt", "Office", "OfficeAndAdobe", "OfficeAndAdobeReader", "Adobe", "AdobeReader", "Leap", "OfficeAndLeap", "AdobeAndLeap", "AdobeReaderAndLeap", "OfficeAndAdobeAndLeap", "OfficeAndAdobeReaderAndLeap", "All")]
     [string]$InstallMode = "Prompt",
@@ -79,6 +81,18 @@ param(
 
     [string]$LeapInstallerUrl,
 
+    [string]$LeapDownloadsPageUrl = "https://community.leap.co.uk/s/downloads",
+
+    [string[]]$LeapInstallerSearchRoots = @(
+        "$env:USERPROFILE\Downloads",
+        "$env:PUBLIC\Downloads",
+        "$env:SystemDrive\Installers",
+        "$env:SystemDrive\Temp",
+        "$env:ProgramData\ZiAAS_Woodstock_Baselining\Downloads"
+    ),
+
+    [switch]$AllowLocalLeapInstallerFallback,
+
     [string[]]$LeapInstallArguments = @(),
 
     [string[]]$LeapTrustedPublisherFragments = @("LEAP"),
@@ -102,11 +116,15 @@ $Script:OfficeDir = Join-Path $Script:Root "OfficeODT"
 $Script:LogDir = Join-Path $Script:Root "Logs"
 $Script:BackupDir = Join-Path $Script:Root "Backups"
 $Script:RunStamp = Get-Date -Format "yyyyMMdd-HHmmss"
-$Script:LogFile = Join-Path $Script:LogDir "Deploy-M365-Adobe-$Script:RunStamp.log"
+$Script:LogFile = Join-Path $Script:LogDir "ZiAAS_Woodstock_Baselining-$Script:RunStamp.log"
 $Script:RebootRequired = $false
 $Script:SimulationAdobeProductsRemoved = $false
 $Script:SimulationLeapProductsRemoved = $false
 $Script:SimulationLeapInstalled = $false
+$Script:AutoDiscoveredLeapInstallerPath = $null
+$Script:ResolvedLeapInstallerUrl = $null
+$Script:ResolvedLeapInstallerVersion = $null
+$Script:ResolvedLeapInstallerFileName = $null
 $Script:LeapResidualMoved = 0
 $Script:LeapResidualRenamed = 0
 $Script:LeapResidualSkipped = 0
@@ -435,12 +453,17 @@ function Save-Download {
     param(
         [Parameter(Mandatory = $true)][string]$Url,
         [Parameter(Mandatory = $true)][string]$Destination,
-        [int64]$MinimumBytes = 1024
+        [int64]$MinimumBytes = 1024,
+        [switch]$AlwaysDownload
     )
 
-    if ((Test-Path -LiteralPath $Destination) -and ((Get-Item -LiteralPath $Destination).Length -ge $MinimumBytes)) {
+    if ((-not $AlwaysDownload) -and (Test-Path -LiteralPath $Destination) -and ((Get-Item -LiteralPath $Destination).Length -ge $MinimumBytes)) {
         Write-Log "Using existing download: $Destination"
         return
+    }
+
+    if ($AlwaysDownload -and (Test-Path -LiteralPath $Destination)) {
+        Write-Log "Refreshing existing download: $Destination"
     }
 
     if ($Simulation) {
@@ -504,6 +527,364 @@ function Assert-TrustedSignature {
     }
 
     Write-Log "Signature OK: $Path signed by $subject"
+}
+
+function Test-TrustedSignature {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string[]]$ExpectedPublisherFragments
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        return $false
+    }
+
+    try {
+        $signature = Get-AuthenticodeSignature -LiteralPath $Path
+        if ($signature.Status -ne "Valid") {
+            return $false
+        }
+
+        $subject = $signature.SignerCertificate.Subject
+        foreach ($fragment in $ExpectedPublisherFragments) {
+            if ($subject -like "*$fragment*") {
+                return $true
+            }
+        }
+    }
+    catch {
+        return $false
+    }
+
+    return $false
+}
+
+function Resolve-AbsoluteUrl {
+    param(
+        [Parameter(Mandatory = $true)][string]$BaseUrl,
+        [Parameter(Mandatory = $true)][string]$Url
+    )
+
+    if ([System.Uri]::IsWellFormedUriString($Url, [System.UriKind]::Absolute)) {
+        return $Url
+    }
+
+    $baseUri = New-Object System.Uri -ArgumentList $BaseUrl
+    $resolvedUri = New-Object System.Uri -ArgumentList $baseUri, $Url
+    return $resolvedUri.AbsoluteUri
+}
+
+function New-QueryString {
+    param([Parameter(Mandatory = $true)][hashtable]$Parameters)
+
+    $parts = @()
+    foreach ($key in $Parameters.Keys) {
+        $parts += ([System.Uri]::EscapeDataString([string]$key) + "=" + [System.Uri]::EscapeDataString([string]$Parameters[$key]))
+    }
+
+    return ($parts -join "&")
+}
+
+function ConvertTo-SafeFileName {
+    param([Parameter(Mandatory = $true)][string]$FileName)
+
+    $invalidCharacters = [System.IO.Path]::GetInvalidFileNameChars()
+    $safe = $FileName
+    foreach ($character in $invalidCharacters) {
+        $safe = $safe.Replace([string]$character, "_")
+    }
+
+    return $safe
+}
+
+function Get-RemoteFileNameFromContentDisposition {
+    param([object]$ContentDisposition)
+
+    $value = @($ContentDisposition | Select-Object -First 1)
+    if ([string]::IsNullOrWhiteSpace($value)) {
+        return $null
+    }
+
+    if ($value -match "filename\*=utf-8''(?<name>[^;]+)") {
+        return (ConvertTo-SafeFileName -FileName ([System.Uri]::UnescapeDataString($matches["name"])))
+    }
+
+    if ($value -match 'filename="(?<name>[^"]+)"') {
+        return (ConvertTo-SafeFileName -FileName $matches["name"])
+    }
+
+    if ($value -match 'filename=(?<name>[^;]+)') {
+        return (ConvertTo-SafeFileName -FileName $matches["name"].Trim())
+    }
+
+    return $null
+}
+
+function Get-RemoteFileNameFromUrl {
+    param(
+        [Parameter(Mandatory = $true)][string]$Url,
+        [Parameter(Mandatory = $true)][string]$FallbackFileName
+    )
+
+    try {
+        $response = Invoke-WebRequest -Uri $Url -Method Head -MaximumRedirection 10 -UseBasicParsing -TimeoutSec 60
+        $contentDisposition = $null
+        try {
+            if ($response.Headers) {
+                if ($response.Headers -is [System.Collections.IDictionary]) {
+                    if ($response.Headers.Contains("Content-Disposition")) {
+                        $contentDisposition = $response.Headers["Content-Disposition"]
+                    }
+                    elseif ($response.Headers.Contains("content-disposition")) {
+                        $contentDisposition = $response.Headers["content-disposition"]
+                    }
+                }
+                elseif ($response.Headers.PSObject.Methods["Get"]) {
+                    $contentDisposition = $response.Headers.Get("Content-Disposition")
+                }
+            }
+        }
+        catch {
+            $contentDisposition = $null
+        }
+
+        try {
+            if ((-not $contentDisposition) -and $response.BaseResponse -and $response.BaseResponse.Headers -and $response.BaseResponse.Headers.PSObject.Methods["Get"]) {
+                $contentDisposition = $response.BaseResponse.Headers.Get("Content-Disposition")
+            }
+        }
+        catch {
+            $contentDisposition = $null
+        }
+
+        $fileName = Get-RemoteFileNameFromContentDisposition -ContentDisposition $contentDisposition
+        if (-not [string]::IsNullOrWhiteSpace($fileName)) {
+            return $fileName
+        }
+    }
+    catch {
+        Write-Log "Could not read remote filename from download headers. $($_.Exception.Message)" "WARN"
+    }
+
+    return $FallbackFileName
+}
+
+function Get-LeapInstallerLinkFromContent {
+    param([Parameter(Mandatory = $true)][string]$Content)
+
+    $normalized = $Content -replace '\\/', '/'
+    $normalized = $normalized -replace '\\u0026', '&'
+    $normalized = [System.Net.WebUtility]::HtmlDecode($normalized)
+
+    $version = $null
+    $versionMatch = [regex]::Match($normalized, 'Latest Version:\s*(?<version>[0-9][^<"\\\r\n]*)', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    if ($versionMatch.Success) {
+        $version = $versionMatch.Groups["version"].Value.Trim()
+    }
+
+    $labelledMatch = [regex]::Match(
+        $normalized,
+        '(?is)"label"\s*:\s*\{[^}]*"value"\s*:\s*"Download\s+LEAP\s+Desktop".*?"url"\s*:\s*\{[^}]*"value"\s*:\s*"(?<url>https://leaphome\.sharepoint\.com[^"]+)"'
+    )
+    if ($labelledMatch.Success) {
+        return [pscustomobject]@{
+            Url = $labelledMatch.Groups["url"].Value
+            Version = $version
+        }
+    }
+
+    $anchorMatch = [regex]::Match(
+        $normalized,
+        '(?is)<a[^>]+href="(?<url>https://leaphome\.sharepoint\.com[^"]+)"[^>]*>\s*Download\s+LEAP\s+Desktop\s*</a>'
+    )
+    if ($anchorMatch.Success) {
+        return [pscustomobject]@{
+            Url = $anchorMatch.Groups["url"].Value
+            Version = $version
+        }
+    }
+
+    $urlMatches = [regex]::Matches($normalized, 'https://leaphome\.sharepoint\.com[^"''<>\s\\]+')
+    foreach ($match in $urlMatches) {
+        $start = [Math]::Max(0, $match.Index - 800)
+        $length = [Math]::Min(1600, $normalized.Length - $start)
+        $nearbyText = $normalized.Substring($start, $length)
+        if (($nearbyText -match '(?i)Download\s+LEAP\s+Desktop|LEAPDesktopX64setup|LEAP\s+Desktop') -and ($nearbyText -notmatch '(?i)System\s+Audit')) {
+            return [pscustomobject]@{
+                Url = $match.Value
+                Version = $version
+            }
+        }
+    }
+
+    return $null
+}
+
+function Resolve-LeapInstallerFromWebsite {
+    if ($Script:ResolvedLeapInstallerUrl) {
+        return [pscustomobject]@{
+            Url = $Script:ResolvedLeapInstallerUrl
+            Version = $Script:ResolvedLeapInstallerVersion
+            FileName = $Script:ResolvedLeapInstallerFileName
+        }
+    }
+
+    Write-Log "Resolving latest LEAP Desktop installer from $LeapDownloadsPageUrl"
+    $pageResponse = Invoke-WebRequest -Uri $LeapDownloadsPageUrl -UseBasicParsing -TimeoutSec 60
+    $pageContent = $pageResponse.Content
+
+    $directInfo = Get-LeapInstallerLinkFromContent -Content $pageContent
+    if ($directInfo) {
+        $fallbackFileName = "LEAPDesktopX64setup.exe"
+        if ($directInfo.Version -match '^(?<version>[0-9.]+)') {
+            $fallbackFileName = "$($matches["version"])_LEAPDesktopX64setup.exe"
+        }
+
+        $fileName = Get-RemoteFileNameFromUrl -Url $directInfo.Url -FallbackFileName $fallbackFileName
+        $Script:ResolvedLeapInstallerUrl = $directInfo.Url
+        $Script:ResolvedLeapInstallerVersion = $directInfo.Version
+        $Script:ResolvedLeapInstallerFileName = $fileName
+        Write-Log "Resolved LEAP Desktop installer from downloads page: $fileName"
+        if ($directInfo.Version) {
+            Write-Log "LEAP downloads page reports latest version: $($directInfo.Version)"
+        }
+        return [pscustomobject]@{
+            Url = $directInfo.Url
+            Version = $directInfo.Version
+            FileName = $fileName
+        }
+    }
+
+    $bootstrapMatch = [regex]::Match($pageContent, '<script[^>]+src="(?<src>[^"]*bootstrap\.js[^"]*)"', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    if (-not $bootstrapMatch.Success) {
+        throw "Could not find LEAP downloads page bootstrap data."
+    }
+
+    $bootstrapUrl = Resolve-AbsoluteUrl -BaseUrl $LeapDownloadsPageUrl -Url $bootstrapMatch.Groups["src"].Value
+    $bootstrapResponse = Invoke-WebRequest -Uri $bootstrapUrl -UseBasicParsing -TimeoutSec 60
+    $bootstrapContent = $bootstrapResponse.Content
+
+    $marker = 'Object.assign(window.Aura.appBootstrap, '
+    $jsonStart = $bootstrapContent.IndexOf($marker)
+    if ($jsonStart -lt 0) {
+        throw "Could not find LEAP downloads page bootstrap payload."
+    }
+
+    $jsonStart = $jsonStart + $marker.Length
+    $jsonEnd = $bootstrapContent.IndexOf(";(function()", $jsonStart)
+    if ($jsonEnd -lt $jsonStart) {
+        $jsonEnd = $bootstrapContent.IndexOf(";(function", $jsonStart)
+    }
+
+    if ($jsonEnd -lt $jsonStart) {
+        throw "Could not parse LEAP downloads page bootstrap payload."
+    }
+
+    $bootstrapJson = $bootstrapContent.Substring($jsonStart, $jsonEnd - $jsonStart).Trim()
+    if ($bootstrapJson.EndsWith(");")) {
+        $bootstrapJson = $bootstrapJson.Substring(0, $bootstrapJson.Length - 2).Trim()
+    }
+    elseif ($bootstrapJson.EndsWith(")")) {
+        $bootstrapJson = $bootstrapJson.Substring(0, $bootstrapJson.Length - 1).Trim()
+    }
+
+    $bootstrap = $bootstrapJson | ConvertFrom-Json
+
+    $router = @($bootstrap.data.components | Where-Object { $_.componentDef.descriptor -eq "markup://siteforce:routerInitializer" } | Select-Object -First 1)
+    if ($router.Count -eq 0) {
+        throw "Could not find LEAP downloads page router data."
+    }
+
+    $downloadsPath = ([Uri]$LeapDownloadsPageUrl).AbsolutePath
+    $routeKey = if ($downloadsPath.StartsWith("/s/")) { $downloadsPath.Substring(2) } else { $downloadsPath }
+    if ([string]::IsNullOrWhiteSpace($routeKey)) {
+        $routeKey = "/downloads"
+    }
+
+    $routeProperty = $router[0].model.routes.PSObject.Properties[$routeKey]
+    if (-not $routeProperty) {
+        throw "Could not find LEAP downloads route metadata for $routeKey."
+    }
+
+    $route = $routeProperty.Value
+    $viewUuid = $route.view_uuid
+    $viewId = $route.id
+    $routeType = $route.event
+    $themeLayoutType = $route.themeLayoutType
+    $publishedChangelistNum = [int]$bootstrap.data.app.attributes.values.publishedChangelistNum
+    $brandingSetId = $bootstrap.data.app.attributes.values.brandingSetId
+    $descriptor = "sitelayout://siteforce-generatedpage-$viewUuid.c$publishedChangelistNum"
+
+    $dca = @{
+        _pl = @{
+            _cn = $descriptor
+            _vc = @{
+                viewId = $viewId
+                routeType = $routeType
+                themeLayoutType = $themeLayoutType
+                params = @{
+                    viewid = $viewUuid
+                    view_uddid = ""
+                    entity_name = ""
+                    audience_name = ""
+                    picasso_id = ""
+                    routeId = ""
+                }
+                hasAttrVaringCmps = $false
+                pageLoadType = "STANDARD_PAGE_CONTENT"
+                includeLayout = $true
+            }
+            _bsi = $brandingSetId
+            _pcn = $publishedChangelistNum
+            _ff = "DESKTOP"
+        }
+    } | ConvertTo-Json -Depth 20 -Compress
+
+    $componentQuery = New-QueryString -Parameters @{
+        "_def" = $descriptor
+        "_dca" = $dca
+        "aura.app" = "markup://siteforce:communityApp"
+        "aura.mode" = "PROD"
+        "_l" = "true"
+        "_ff" = "DESKTOP"
+        "_l10n" = "en_US"
+    }
+
+    $componentUrl = (Resolve-AbsoluteUrl -BaseUrl $LeapDownloadsPageUrl -Url "/s/sfsites/auraCmpDef") + "?" + $componentQuery
+    $componentResponse = Invoke-WebRequest -Uri $componentUrl -UseBasicParsing -TimeoutSec 60
+    $componentInfo = Get-LeapInstallerLinkFromContent -Content $componentResponse.Content
+    if (-not $componentInfo) {
+        throw "Could not find the Download LEAP Desktop installer link on the official LEAP downloads page."
+    }
+
+    $fallbackResolvedFileName = "LEAPDesktopX64setup.exe"
+    if ($componentInfo.Version -match '^(?<version>[0-9.]+)') {
+        $fallbackResolvedFileName = "$($matches["version"])_LEAPDesktopX64setup.exe"
+    }
+
+    $resolvedFileName = Get-RemoteFileNameFromUrl -Url $componentInfo.Url -FallbackFileName $fallbackResolvedFileName
+    if ($resolvedFileName -notmatch '(?i)\.(exe|msi)$') {
+        throw "LEAP download did not resolve to an installer filename. Resolved filename: $resolvedFileName"
+    }
+
+    if ($resolvedFileName -notmatch '(?i)x64|64') {
+        Write-Log "Resolved LEAP installer filename does not explicitly include x64: $resolvedFileName" "WARN"
+    }
+
+    $Script:ResolvedLeapInstallerUrl = $componentInfo.Url
+    $Script:ResolvedLeapInstallerVersion = $componentInfo.Version
+    $Script:ResolvedLeapInstallerFileName = $resolvedFileName
+
+    Write-Log "Resolved LEAP Desktop installer from official downloads page: $resolvedFileName"
+    if ($componentInfo.Version) {
+        Write-Log "LEAP downloads page reports latest version: $($componentInfo.Version)"
+    }
+
+    return [pscustomobject]@{
+        Url = $componentInfo.Url
+        Version = $componentInfo.Version
+        FileName = $resolvedFileName
+    }
 }
 
 function Stop-DeploymentBlockingApps {
@@ -1359,6 +1740,71 @@ function Get-LeapEntries {
     } | Sort-Object DisplayName, DisplayVersion -Unique
 }
 
+function Find-TrustedLeapInstallerPath {
+    if ($Script:AutoDiscoveredLeapInstallerPath -and (Test-Path -LiteralPath $Script:AutoDiscoveredLeapInstallerPath)) {
+        return $Script:AutoDiscoveredLeapInstallerPath
+    }
+
+    $roots = @($LeapInstallerSearchRoots | Where-Object {
+        -not [string]::IsNullOrWhiteSpace($_)
+    } | Select-Object -Unique)
+
+    if ($roots.Count -eq 0) {
+        return $null
+    }
+
+    Write-Log "Searching for a local LEAP installer in: $($roots -join '; ')"
+
+    $candidates = @()
+    foreach ($root in $roots) {
+        if (-not (Test-Path -LiteralPath $root)) {
+            continue
+        }
+
+        try {
+            $candidates += @(Get-ChildItem -LiteralPath $root -File -ErrorAction SilentlyContinue |
+                Where-Object {
+                    $_.Extension -match "(?i)^\.(exe|msi)$" -and
+                    $_.Name -match "(?i)leap"
+                })
+        }
+        catch {
+            Write-Log "Could not search LEAP installer folder $root. $($_.Exception.Message)" "WARN"
+        }
+    }
+
+    $candidates = @($candidates | Sort-Object FullName -Unique)
+    if ($candidates.Count -eq 0) {
+        Write-Log "No local LEAP installer candidates were found in configured search folders." "WARN"
+        return $null
+    }
+
+    $trustedCandidates = @()
+    foreach ($candidate in $candidates) {
+        if (Test-TrustedSignature -Path $candidate.FullName -ExpectedPublisherFragments $LeapTrustedPublisherFragments) {
+            $trustedCandidates += $candidate
+        }
+        else {
+            Write-Log "Ignoring LEAP-named installer candidate without a trusted LEAP signature: $($candidate.FullName)" "WARN"
+        }
+    }
+
+    if ($trustedCandidates.Count -eq 0) {
+        Write-Log "LEAP-named installer files were found, but none had a trusted LEAP signature." "WARN"
+        return $null
+    }
+
+    if ($trustedCandidates.Count -gt 1) {
+        $candidateList = ($trustedCandidates | ForEach-Object { $_.FullName }) -join "; "
+        throw "Multiple trusted LEAP installer candidates were found. Supply -LeapInstallerPath explicitly. Candidates: $candidateList"
+    }
+
+    $resolved = $trustedCandidates[0].FullName
+    $Script:AutoDiscoveredLeapInstallerPath = $resolved
+    Write-Log "Auto-discovered trusted LEAP installer: $resolved"
+    return $resolved
+}
+
 function Get-LeapInstallerPath {
     if ($LeapInstallerPath) {
         if (-not (Test-Path -LiteralPath $LeapInstallerPath)) {
@@ -1376,13 +1822,10 @@ function Get-LeapInstallerPath {
     }
 
     if ($LeapInstallerUrl) {
-        $leaf = Split-Path -Leaf ([Uri]$LeapInstallerUrl).AbsolutePath
-        if ([string]::IsNullOrWhiteSpace($leaf)) {
-            $leaf = "LEAP-Installer.exe"
-        }
+        $leaf = Get-RemoteFileNameFromUrl -Url $LeapInstallerUrl -FallbackFileName "LEAP-Installer.exe"
 
         $installer = Join-Path $Script:DownloadDir $leaf
-        Save-Download -Url $LeapInstallerUrl -Destination $installer -MinimumBytes 100000
+        Save-Download -Url $LeapInstallerUrl -Destination $installer -MinimumBytes 10000000
         Assert-TrustedSignature -Path $installer -ExpectedPublisherFragments $LeapTrustedPublisherFragments
         return $installer
     }
@@ -1396,7 +1839,35 @@ function Get-LeapInstallerPath {
         return $installer
     }
 
-    throw "LEAP was selected, but no LEAP installer was supplied. Download it from https://community.leap.co.uk/s/downloads, then rerun with -LeapInstallerPath, or provide a direct -LeapInstallerUrl."
+    try {
+        $websiteInstaller = Resolve-LeapInstallerFromWebsite
+        $installerFileName = $websiteInstaller.FileName
+        if ([string]::IsNullOrWhiteSpace($installerFileName)) {
+            $installerFileName = "LEAPDesktopX64setup.exe"
+        }
+
+        $installer = Join-Path $Script:DownloadDir $installerFileName
+        Save-Download -Url $websiteInstaller.Url -Destination $installer -MinimumBytes 10000000 -AlwaysDownload
+        Assert-TrustedSignature -Path $installer -ExpectedPublisherFragments $LeapTrustedPublisherFragments
+        return $installer
+    }
+    catch {
+        if (-not $AllowLocalLeapInstallerFallback) {
+            throw
+        }
+
+        Write-Log "LEAP website installer resolution failed; checking local fallback because -AllowLocalLeapInstallerFallback was supplied. $($_.Exception.Message)" "WARN"
+    }
+
+    if ($AllowLocalLeapInstallerFallback) {
+        $autoDiscoveredInstaller = Find-TrustedLeapInstallerPath
+        if ($autoDiscoveredInstaller) {
+            Assert-TrustedSignature -Path $autoDiscoveredInstaller -ExpectedPublisherFragments $LeapTrustedPublisherFragments
+            return $autoDiscoveredInstaller
+        }
+    }
+
+    throw "LEAP was selected, but the latest LEAP Desktop installer could not be resolved from $LeapDownloadsPageUrl."
 }
 
 function Assert-LeapInstallerSourceAvailable {
@@ -1418,7 +1889,30 @@ function Assert-LeapInstallerSourceAvailable {
         return
     }
 
-    throw "LEAP was selected, but no LEAP installer source was supplied. Provide -LeapInstallerPath or -LeapInstallerUrl before running a real cleanup."
+    try {
+        $websiteInstaller = Resolve-LeapInstallerFromWebsite
+        if ($websiteInstaller -and $websiteInstaller.Url) {
+            Write-Log "LEAP installer source preflight passed: latest installer resolved from official LEAP downloads page."
+            return
+        }
+    }
+    catch {
+        if (-not $AllowLocalLeapInstallerFallback) {
+            throw
+        }
+
+        Write-Log "LEAP website installer preflight failed; checking local fallback because -AllowLocalLeapInstallerFallback was supplied. $($_.Exception.Message)" "WARN"
+    }
+
+    if ($AllowLocalLeapInstallerFallback) {
+        $autoDiscoveredInstaller = Find-TrustedLeapInstallerPath
+        if ($autoDiscoveredInstaller) {
+            Write-Log "LEAP installer source preflight passed: auto-discovered trusted local installer fallback."
+            return
+        }
+    }
+
+    throw "LEAP was selected, but the latest LEAP Desktop installer could not be resolved from $LeapDownloadsPageUrl. Stopping before cleanup."
 }
 
 function Uninstall-Leap {
