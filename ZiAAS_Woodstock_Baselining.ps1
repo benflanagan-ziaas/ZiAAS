@@ -586,7 +586,15 @@ function New-QueryString {
 }
 
 function ConvertTo-SafeFileName {
-    param([Parameter(Mandatory = $true)][string]$FileName)
+    param(
+        [Parameter(Mandatory = $true)]
+        [Alias("Name")]
+        [string]$FileName
+    )
+
+    if ([string]::IsNullOrWhiteSpace($FileName)) {
+        return "Unnamed"
+    }
 
     $invalidCharacters = [System.IO.Path]::GetInvalidFileNameChars()
     $safe = $FileName
@@ -1992,7 +2000,7 @@ function Move-LeapResidualToBackup {
     }
 
     $backupDir = Get-LeapResidualBackupDir
-    $safeLabel = ConvertTo-SafeFileName -Name $Label
+    $safeLabel = ConvertTo-SafeFileName -FileName $Label
     $destination = Get-UniquePath -Path (Join-Path $backupDir $safeLabel)
 
     try {
