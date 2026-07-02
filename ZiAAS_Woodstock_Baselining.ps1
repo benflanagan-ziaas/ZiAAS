@@ -9,6 +9,8 @@
 
     Current hotfixes:
       - ConvertTo-SafeFileName tolerates blank filename/header values.
+      - Office ODT Remove All is best-effort. If ODT removal returns a non-success code,
+        Microsoft OfficeScrubScenario still runs instead of stopping immediately.
       - Adobe AcroCleaner is best-effort only when a post-check proves Reader/Acrobat
         uninstall entries are already gone. If Adobe remains, the deployment still fails.
 #>
@@ -40,6 +42,34 @@ $scriptText = $scriptText.Replace(
     '[Parameter(Mandatory = $true)][string]$Name',
     '[Parameter(Mandatory = $true)][AllowEmptyString()][string]$Name'
 )
+
+$officeUninstallReplacement = @'
+function Invoke-OfficeUninstallAndCleanup {
+    param([Parameter(Mandatory = $true)]$Assets)
+
+    Stop-OfficeBlockingApps
+
+    try {
+        Invoke-ProcessChecked `
+            -FilePath $Assets.Setup `
+            -ArgumentList @("/configure", $Assets.RemoveConfig) `
+            -Description "Office Click-to-Run removal" `
+            -WorkingDirectory $Script:OfficeDir
+    }
+    catch {
+        Write-Log "Office Click-to-Run removal returned a non-success result. Continuing to Microsoft Office scrub cleanup because ODT Remove All can fail when Office is already absent or partially removed." "WARN"
+        Write-Log "Office Click-to-Run removal detail: $($_.Exception.Message)" "WARN"
+    }
+
+    Invoke-OfficeScrubCleanup
+}
+'@
+
+$officePattern = '(?s)function Invoke-OfficeUninstallAndCleanup \{.*?\r?\n\}\r?\n\r?\nfunction Invoke-OfficeInstall'
+if ($scriptText -notmatch $officePattern) {
+    throw "Could not find Invoke-OfficeUninstallAndCleanup function block to patch. Source script may have changed."
+}
+$scriptText = [regex]::Replace($scriptText, $officePattern, ($officeUninstallReplacement + "`r`nfunction Invoke-OfficeInstall"), 1)
 
 $acroCleanerReplacement = @'
 function Invoke-AdobeCleanerCleanup {
@@ -81,12 +111,11 @@ function Invoke-AdobeCleanerCleanup {
 }
 '@
 
-$pattern = '(?s)function Invoke-AdobeCleanerCleanup \{.*?\r?\n\}\r?\n\r?\nfunction Get-AdobeReaderInstallerPath'
-if ($scriptText -notmatch $pattern) {
+$acroPattern = '(?s)function Invoke-AdobeCleanerCleanup \{.*?\r?\n\}\r?\n\r?\nfunction Get-AdobeReaderInstallerPath'
+if ($scriptText -notmatch $acroPattern) {
     throw "Could not find Invoke-AdobeCleanerCleanup function block to patch. Source script may have changed."
 }
-
-$scriptText = [regex]::Replace($scriptText, $pattern, ($acroCleanerReplacement + "`r`nfunction Get-AdobeReaderInstallerPath"), 1)
+$scriptText = [regex]::Replace($scriptText, $acroPattern, ($acroCleanerReplacement + "`r`nfunction Get-AdobeReaderInstallerPath"), 1)
 
 Set-Content -LiteralPath $patchedScript -Value $scriptText -Encoding UTF8
 Write-Host "Running patched ZiAAS Woodstock Baselining script..."
