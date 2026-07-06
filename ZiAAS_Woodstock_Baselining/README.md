@@ -13,6 +13,17 @@ Invoke-WebRequest $u -OutFile $p -UseBasicParsing
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p
 ```
 
+For engineer-led use from a batch file, use:
+
+```cmd
+Run-ZiAAS_Woodstock_Baselining.cmd
+```
+
+The batch launcher is deliberately plain and auditable: it downloads the root
+entrypoint to `ProgramData`, verifies its SHA-256 hash, then runs it locally
+with `RemoteSigned`. It does not use encoded PowerShell, hidden execution,
+`Invoke-Expression`, or in-memory script execution.
+
 ## Common Unattended Examples
 
 Full Office + Adobe Reader + LEAP flow:
