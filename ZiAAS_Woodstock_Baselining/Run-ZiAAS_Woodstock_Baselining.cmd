@@ -32,7 +32,7 @@ if not exist "%WORK_ROOT%" (
     )
 )
 
-echo Downloading signed release entrypoint...
+echo Downloading verified release entrypoint...
 powershell.exe -NoLogo -NoProfile -Command "$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%SCRIPT_URL%' -OutFile '%DOWNLOAD_PATH%' -UseBasicParsing -TimeoutSec 120; $hash=(Get-FileHash -Algorithm SHA256 -LiteralPath '%DOWNLOAD_PATH%').Hash; if ($hash -ne '%EXPECTED_SHA256%') { throw ('Downloaded script hash mismatch. Expected %EXPECTED_SHA256%, got ' + $hash) }; Move-Item -LiteralPath '%DOWNLOAD_PATH%' -Destination '%SCRIPT_PATH%' -Force"
 if errorlevel 1 (
     echo Download or verification failed.
