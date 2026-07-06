@@ -988,7 +988,10 @@ function Resolve-LeapInstallerFromWebsite {
 }
 
 function Stop-DeploymentBlockingApps {
-    param([string[]]$ProcessNames)
+    param(
+        [string[]]$ProcessNames,
+        [string[]]$AutoForceProcessNames = @()
+    )
 
     if ($Simulation) {
         Write-Log "SIMULATION: Would check and close blocking apps if needed: $($ProcessNames -join ', ')"
@@ -1035,6 +1038,30 @@ function Stop-DeploymentBlockingApps {
     $stillRunning = @()
     foreach ($name in $ProcessNames) {
         $stillRunning += @(Get-Process -Name $name -ErrorAction SilentlyContinue)
+    }
+
+    if ($stillRunning.Count -gt 0 -and $AutoForceProcessNames.Count -gt 0) {
+        $autoForceSet = @{}
+        foreach ($name in $AutoForceProcessNames) {
+            if (-not [string]::IsNullOrWhiteSpace($name)) {
+                $autoForceSet[$name.ToLowerInvariant()] = $true
+            }
+        }
+
+        $autoForceRunning = @($stillRunning | Where-Object { $autoForceSet.ContainsKey($_.ProcessName.ToLowerInvariant()) })
+        if ($autoForceRunning.Count -gt 0) {
+            $autoForceNames = ($autoForceRunning | Select-Object -ExpandProperty ProcessName -Unique | Sort-Object) -join ", "
+            Write-Log "Force-closing known background/helper processes after normal close timeout: $autoForceNames" "WARN"
+            foreach ($process in $autoForceRunning) {
+                Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+            }
+
+            Start-Sleep -Seconds 5
+            $stillRunning = @()
+            foreach ($name in $ProcessNames) {
+                $stillRunning += @(Get-Process -Name $name -ErrorAction SilentlyContinue)
+            }
+        }
     }
 
     if ($stillRunning.Count -gt 0) {
@@ -2063,6 +2090,15 @@ function Get-LeapProcessNames {
     )
 }
 
+function Get-LeapBackgroundHelperProcessNames {
+    return @(
+        "LEAPLauncher",
+        "LEAPCloud",
+        "LeapOfficeXE.NetClient",
+        "leapsystray"
+    )
+}
+
 function Uninstall-Leap {
     $maxPasses = 3
     $foundAnyLeapEntry = $false
@@ -2085,7 +2121,7 @@ function Uninstall-Leap {
             Write-Log "Found LEAP product: $($entry.DisplayName) $($entry.DisplayVersion)"
         }
 
-        Stop-DeploymentBlockingApps -ProcessNames (Get-LeapProcessNames)
+        Stop-DeploymentBlockingApps -ProcessNames (Get-LeapProcessNames) -AutoForceProcessNames (Get-LeapBackgroundHelperProcessNames)
 
         foreach ($entry in $entries) {
             $productCode = Get-MsiProductCode -Entry $entry
