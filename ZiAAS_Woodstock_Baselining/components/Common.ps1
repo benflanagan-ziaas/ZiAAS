@@ -311,6 +311,34 @@ function Resolve-InstallSelection {
     throw "Unknown install mode: $InstallMode"
 }
 
+function Write-AdobeAcrobatProPrerequisiteNotice {
+    Write-Host ""
+    Write-Host "Adobe Acrobat Pro selected." -ForegroundColor Yellow
+    Write-Host "Acrobat Pro is licensed software; this tool cannot automatically download it like Reader." -ForegroundColor Yellow
+    Write-Host "Before continuing, supply a licensed enterprise Pro installer/package with -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl." -ForegroundColor Yellow
+    Write-Host "Also supply silent install arguments, including LANG_LIST=en_GB where applicable." -ForegroundColor Yellow
+    Write-Host "The Adobe cleanup step removes existing Reader/Acrobat first, so an already-installed copy is not a reinstall source." -ForegroundColor Yellow
+}
+
+function New-AdobeProductSelection {
+    param(
+        [Parameter(Mandatory = $true)][ValidateSet("Reader", "AcrobatPro")][string]$Product
+    )
+
+    $label = if ($Product -eq "Reader") { "Adobe Acrobat Reader" } else { "Adobe Acrobat Pro" }
+
+    return [pscustomobject]@{
+        Product = $Product
+        Label = $label
+    }
+}
+
+function Confirm-AdobeAcrobatProInteractiveSelection {
+    Write-AdobeAcrobatProPrerequisiteNotice
+    $confirmation = Read-Host "Type PRO to confirm the licensed Pro installer/package details are ready, or press Enter to choose again"
+    return ($confirmation -ieq "PRO")
+}
+
 function Resolve-AdobeProductSelection {
     param([Parameter(Mandatory = $true)][bool]$InstallAdobe)
 
@@ -320,39 +348,35 @@ function Resolve-AdobeProductSelection {
 
     switch ($AdobeProduct) {
         "Reader" {
-            return [pscustomobject]@{
-                Product = "Reader"
-                Label = "Adobe Acrobat Reader"
-            }
+            return New-AdobeProductSelection -Product "Reader"
         }
         "AcrobatPro" {
-            return [pscustomobject]@{
-                Product = "AcrobatPro"
-                Label = "Adobe Acrobat Pro"
-            }
+            Write-AdobeAcrobatProPrerequisiteNotice
+            return New-AdobeProductSelection -Product "AcrobatPro"
         }
         "Prompt" {
             Write-Host ""
             Write-Host "Choose Adobe product:"
             Write-Host "  1. Adobe Acrobat Reader"
-            Write-Host "  2. Adobe Acrobat Pro"
+            Write-Host "  2. Adobe Acrobat Pro (licensed installer/package required)"
             Write-Host ""
 
-            do {
-                $choice = Read-Host "Enter 1 or 2"
-            } until ($choice -in @("1", "2"))
+            while ($true) {
+                do {
+                    $choice = Read-Host "Enter 1 or 2"
+                } until ($choice -in @("1", "2"))
 
-            switch ($choice) {
-                "1" {
-                    return [pscustomobject]@{
-                        Product = "Reader"
-                        Label = "Adobe Acrobat Reader"
+                switch ($choice) {
+                    "1" {
+                        return New-AdobeProductSelection -Product "Reader"
                     }
-                }
-                "2" {
-                    return [pscustomobject]@{
-                        Product = "AcrobatPro"
-                        Label = "Adobe Acrobat Pro"
+                    "2" {
+                        if (Confirm-AdobeAcrobatProInteractiveSelection) {
+                            return New-AdobeProductSelection -Product "AcrobatPro"
+                        }
+
+                        Write-Host ""
+                        Write-Host "Acrobat Pro was not confirmed. Choose Reader or Pro again." -ForegroundColor Yellow
                     }
                 }
             }
@@ -1529,7 +1553,7 @@ function Assert-AdobeInstallerSourceAvailable {
     $hasUrl = -not [string]::IsNullOrWhiteSpace($AdobeAcrobatProInstallerUrl)
 
     if (-not $hasPath -and -not $hasUrl) {
-        throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied. Provide -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl before running a real cleanup."
+        throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied. Provide -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl before starting the run. The script cannot reinstall Pro from an already-installed copy because Adobe cleanup removes existing Reader/Acrobat first."
     }
 
     if ($hasPath) {
@@ -1551,7 +1575,7 @@ function Assert-AdobeInstallerSourceAvailable {
 
     $acrobatProArguments = @(Get-AdobeAcrobatProInstallArgumentList)
     if ($acrobatProArguments.Count -eq 0 -and (-not $AllowAcrobatProInstallerWithoutArguments)) {
-        throw "Acrobat Pro was selected, but no silent install arguments were supplied. Provide -AdobeAcrobatProInstallArgumentLine or -AdobeAcrobatProInstallArguments for your licensed Adobe package, or deliberately add -AllowAcrobatProInstallerWithoutArguments."
+        throw "Acrobat Pro was selected, but no silent install arguments were supplied. Provide -AdobeAcrobatProInstallArgumentLine or -AdobeAcrobatProInstallArguments for your licensed Adobe package before starting the run, or deliberately add -AllowAcrobatProInstallerWithoutArguments."
     }
 
     if ($acrobatProArguments.Count -eq 0) {
@@ -1598,7 +1622,7 @@ function Get-AdobeAcrobatProInstallerPath {
         return $installer
     }
 
-    throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied."
+    throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied. Provide -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl before starting the run."
 }
 
 function Get-AdobeSelectedInstallerPath {
@@ -2609,7 +2633,7 @@ function Assert-AdobeInstallerSourceAvailable {
     $hasUrl = -not [string]::IsNullOrWhiteSpace($AdobeAcrobatProInstallerUrl)
 
     if (-not $hasPath -and -not $hasUrl) {
-        throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied. Provide -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl before running a real cleanup."
+        throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied. Provide -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl before starting the run. The script cannot reinstall Pro from an already-installed copy because Adobe cleanup removes existing Reader/Acrobat first."
     }
 
     if ($hasPath) {
@@ -2631,7 +2655,7 @@ function Assert-AdobeInstallerSourceAvailable {
 
     $acrobatProArguments = @(Get-AdobeAcrobatProInstallArgumentList)
     if ($acrobatProArguments.Count -eq 0 -and (-not $AllowAcrobatProInstallerWithoutArguments)) {
-        throw "Acrobat Pro was selected, but no silent install arguments were supplied. Provide -AdobeAcrobatProInstallArgumentLine or -AdobeAcrobatProInstallArguments for your licensed Adobe package, or deliberately add -AllowAcrobatProInstallerWithoutArguments."
+        throw "Acrobat Pro was selected, but no silent install arguments were supplied. Provide -AdobeAcrobatProInstallArgumentLine or -AdobeAcrobatProInstallArguments for your licensed Adobe package before starting the run, or deliberately add -AllowAcrobatProInstallerWithoutArguments."
     }
 
     if ($acrobatProArguments.Count -eq 0) {

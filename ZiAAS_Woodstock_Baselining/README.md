@@ -44,7 +44,8 @@ Adobe Reader only:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p -InstallMode Adobe -AdobeProduct Reader -Unattended
 ```
 
-Acrobat Pro requires a licensed enterprise installer source and silent arguments:
+Acrobat Pro requires a licensed enterprise installer source and silent arguments before the run starts.
+Do not rely on an already-installed Acrobat Pro copy; the Adobe cleanup phase removes existing Reader/Acrobat first.
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p -InstallMode Adobe -AdobeProduct AcrobatPro -AdobeAcrobatProInstallerPath C:\Installers\AcrobatPro.exe -AdobeAcrobatProInstallArgumentLine '/sAll /rs /msi /qn EULA_ACCEPT=YES REBOOT=ReallySuppress LANG_LIST=en_GB' -Unattended

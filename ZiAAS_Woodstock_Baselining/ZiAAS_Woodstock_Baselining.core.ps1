@@ -125,7 +125,8 @@ Key arguments
 
 -AdobeProduct
   Reader or AcrobatPro. Reader uses the public 64-bit MUI installer with LANG_LIST=en_GB.
-  AcrobatPro requires a licensed enterprise installer path or URL.
+  AcrobatPro requires a licensed enterprise installer path or URL before the run starts.
+  Do not rely on an already-installed Acrobat Pro copy; Adobe cleanup removes existing Reader/Acrobat first.
 
 -Unattended
   Fails early if a prompt would be required. Use this for RMM/Intune scripts.
@@ -156,7 +157,7 @@ Key arguments
   The default install step also closes known LEAP client/tray processes if the installer auto-launches them.
 
 -AdobeAcrobatProInstallerPath / -AdobeAcrobatProInstallerUrl
-  Required for Acrobat Pro real deployments.
+  Required for Acrobat Pro real deployments before cleanup begins.
 
 -AdobeAcrobatProInstallArguments / -AdobeAcrobatProInstallArgumentLine
   Silent install arguments for the licensed Acrobat Pro package. Use ArgumentLine for one-line calls.
