@@ -17,9 +17,14 @@ Set-StrictMode -Version 2.0
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$defaultRawBase = "https://raw.githubusercontent.com/benflanagan-ziaas/ZiAAS/refs/heads/main/ZiAAS_Woodstock_Baselining"
+$defaultRawBase = "https://raw.githubusercontent.com/benflanagan-ziaas/ZiAAS/refs/heads/main"
 $rawBase = if ([string]::IsNullOrWhiteSpace($env:ZIAAS_WOODSTOCK_RAW_BASE)) { $defaultRawBase } else { $env:ZIAAS_WOODSTOCK_RAW_BASE.TrimEnd("/") }
-$scriptUrl = "$rawBase/ZiAAS_Woodstock_Baselining.ps1"
+$scriptUrl = if ([string]::IsNullOrWhiteSpace($env:ZIAAS_WOODSTOCK_ENTRYPOINT_URL)) {
+    "$rawBase/ZiAAS_Woodstock_Baselining/ZiAAS_Woodstock_Baselining.ps1"
+}
+else {
+    $env:ZIAAS_WOODSTOCK_ENTRYPOINT_URL
+}
 $root = if ([string]::IsNullOrWhiteSpace($env:ZIAAS_WOODSTOCK_BOOTSTRAP_ROOT)) {
     Join-Path $env:ProgramData "ZiAAS_Woodstock_Baselining"
 }

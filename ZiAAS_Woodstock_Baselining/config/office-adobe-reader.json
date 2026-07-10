@@ -1,0 +1,10 @@
+{
+  "InstallMode": "OfficeAndAdobe",
+  "AdobeProduct": "Reader",
+  "Unattended": true,
+  "KeepDownloads": false,
+  "DownloadRetryCount": 3,
+  "DownloadRetryDelaySeconds": 5,
+  "PostCleanupWaitSeconds": 60,
+  "PreLeapWaitSeconds": 0
+}

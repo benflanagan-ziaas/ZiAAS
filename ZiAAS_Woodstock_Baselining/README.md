@@ -1,60 +1,85 @@
 # ZiAAS Woodstock Baselining
 
-MSP deployment tooling for clean Office, Adobe Reader/Acrobat, and LEAP baselining.
+PowerShell-first MSP tool for baselining Office, Adobe Reader/Acrobat Pro, and LEAP on Windows client machines.
 
-## Recommended Invocation
+## What it does
 
-The original root URL is preserved and now launches this foldered app:
+The orchestrator removes selected products in a safe order, performs allowlisted cleanup, waits for installer state to settle, then reinstalls the selected products in dependency order:
 
-```powershell
-$u='https://raw.githubusercontent.com/benflanagan-ziaas/ZiAAS/refs/heads/main/ZiAAS_Woodstock_Baselining.ps1'
-$p="$env:ProgramData\ZiAAS_Woodstock_Baselining.ps1"
-Invoke-WebRequest $u -OutFile $p -UseBasicParsing
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p
-```
+1. LEAP uninstall and cleanup, if selected
+2. Adobe Reader/Acrobat uninstall and cleanup, if selected
+3. Office uninstall and cleanup, if selected
+4. Wait 60 seconds by default
+5. Install Microsoft 365 Apps for enterprise, 64-bit, en-GB, Semi-Annual Enterprise
+6. Install Adobe Reader 64-bit MUI with `LANG_LIST=en_GB`, or install a supplied Acrobat Pro package
+7. Disable New Acrobat policy
+8. Wait 60 seconds by default before LEAP
+9. Install LEAP last so Office and Adobe add-ins can bind correctly
+10. Write logs, JSON/text reports, and an optional support bundle
 
-For engineer-led use from a batch file, use:
+## Common commands
 
-```cmd
-Run-ZiAAS_Woodstock_Baselining.cmd
-```
-
-The batch launcher is deliberately plain and auditable: it downloads the root
-entrypoint to `ProgramData`, verifies its SHA-256 hash, then runs it locally
-with `RemoteSigned`. It does not use encoded PowerShell, hidden execution,
-`Invoke-Expression`, or in-memory script execution.
-
-## Common Unattended Examples
-
-Full Office + Adobe Reader + LEAP flow:
+Interactive run:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p -InstallMode All -AdobeProduct Reader -Unattended
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1
 ```
 
-Office only:
+Full unattended Reader deployment:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p -InstallMode Office -Unattended
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -InstallMode All -AdobeProduct Reader -Unattended
 ```
 
-Adobe Reader only:
+Preflight only:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p -InstallMode Adobe -AdobeProduct Reader -Unattended
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -PreflightOnly -InstallMode All -AdobeProduct Reader
 ```
 
-Acrobat Pro requires a licensed enterprise installer source and silent arguments before the run starts.
-Do not rely on an already-installed Acrobat Pro copy; the Adobe cleanup phase removes existing Reader/Acrobat first.
+Simulation:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p -InstallMode Adobe -AdobeProduct AcrobatPro -AdobeAcrobatProInstallerPath C:\Installers\AcrobatPro.exe -AdobeAcrobatProInstallArgumentLine '/sAll /rs /msi /qn EULA_ACCEPT=YES REBOOT=ReallySuppress LANG_LIST=en_GB' -Unattended
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -Simulation -InstallMode All -AdobeProduct Reader -WorkingRoot .\sandbox-test
 ```
 
-## Runtime Guarantees
+Show built-in guide:
 
-- Office installs as Microsoft 365 Apps for enterprise, x64, en-GB, Semi-Annual Enterprise channel.
-- Adobe Reader installs as the 64-bit MUI package with `LANG_LIST=en_GB`.
-- Adobe New Acrobat is disabled with enterprise FeatureLockDown policy.
-- LEAP is removed first and installed last so Office/Adobe add-ins can bind after both applications are present.
-- Component logs, summary reports, and JSON reports are written under the working root.
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -ShowGuide
+```
+
+## Acrobat Pro rule
+
+Reader is fully autonomous. Acrobat Pro is not. Acrobat Pro deployments require a licensed enterprise installer path or URL and silent install arguments before cleanup begins. Include `LANG_LIST=en_GB` unless the package is already pre-configured and `-AllowAcrobatProLanguageNotVerified` is intentionally supplied.
+
+## Safety model
+
+- Default behaviour is guided fail-fast.
+- `-PreflightOnly` validates requirements without changing the machine.
+- Blocking Office, Adobe, and LEAP apps stop the run unless `-ForceCloseApps` is supplied.
+- Cleanup paths are allowlisted.
+- LEAP profile cleanup preserves `AppData\Roaming\LEAP Accounting`.
+- Raw URL bootstrap downloads a manifest first, then verifies SHA-256 hashes for the core script and component package before execution.
+
+## Build and release
+
+Canonical source lives under `src`. Generated artifacts live under `..\outputs`.
+
+Build generated artifacts:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build\Build-ZiAAS_Woodstock_Baselining.ps1
+```
+
+Run release checks:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build\Test-ZiAASRelease.ps1
+```
+
+Before publishing from a Git worktree, enforce publish checks:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build\Test-ZiAASRelease.ps1 -ForPublish
+```

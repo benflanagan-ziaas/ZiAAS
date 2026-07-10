@@ -1,0 +1,12 @@
+{
+  "InstallMode": "All",
+  "AdobeProduct": "Reader",
+  "Simulation": true,
+  "Unattended": true,
+  "KeepDownloads": true,
+  "DownloadRetryCount": 2,
+  "DownloadRetryDelaySeconds": 0,
+  "PostCleanupWaitSeconds": 0,
+  "PreLeapWaitSeconds": 0,
+  "NoComponentDownload": true
+}

@@ -26,6 +26,25 @@ $corePath = Join-Path $root "ZiAAS_Woodstock_Baselining.core.ps1"
 $coreB64Path = "$corePath.b64"
 $packageB64Path = Join-Path $root "ZiAAS_Woodstock_Baselining.components.zip.b64"
 $packageZipPath = Join-Path $root "ZiAAS_Woodstock_Baselining.components.zip"
+$manifestPath = Join-Path $root "app.manifest.json"
+
+function Get-ZiaasForwardedArgumentValue {
+    param(
+        [Parameter(Mandatory = $true)][string]$Name,
+        [object[]]$ScriptArguments
+    )
+
+    for ($index = 0; $index -lt @($ScriptArguments).Count; $index++) {
+        if ([string]$ScriptArguments[$index] -ieq "-$Name") {
+            if ($index + 1 -lt @($ScriptArguments).Count) {
+                return [string]$ScriptArguments[$index + 1]
+            }
+            return ""
+        }
+    }
+
+    return ""
+}
 
 function Save-ZiaasRawFile {
     param(
@@ -80,6 +99,64 @@ function Test-ZiaasArgumentPresent {
     return $false
 }
 
+function Get-ZiaasManifestArtifactHash {
+    param(
+        [Parameter(Mandatory = $true)]$Manifest,
+        [Parameter(Mandatory = $true)][string]$Name
+    )
+
+    foreach ($artifact in @($Manifest.artifacts)) {
+        if ([string]$artifact.name -eq $Name) {
+            return [string]$artifact.sha256
+        }
+    }
+
+    return ""
+}
+
+function Get-ZiaasManifestArtifactPartCount {
+    param(
+        [Parameter(Mandatory = $true)]$Manifest,
+        [Parameter(Mandatory = $true)][string]$Name
+    )
+
+    foreach ($artifact in @($Manifest.artifacts)) {
+        if ([string]$artifact.name -eq $Name) {
+            if ($null -eq $artifact.PSObject.Properties["partCount"]) {
+                throw "Manifest artifact '$Name' does not declare a partCount."
+            }
+
+            $partCount = [int]$artifact.partCount
+            if ($partCount -lt 1) {
+                throw "Manifest artifact '$Name' has an invalid partCount: $partCount."
+            }
+
+            return $partCount
+        }
+    }
+
+    throw "Manifest artifact '$Name' was not found."
+}
+
+function Assert-ZiaasFileHash {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$ExpectedHash,
+        [Parameter(Mandatory = $true)][string]$Description
+    )
+
+    if ([string]::IsNullOrWhiteSpace($ExpectedHash)) {
+        throw "Manifest did not contain a SHA-256 hash for $Description."
+    }
+
+    $actualHash = (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash
+    if ($actualHash -ine $ExpectedHash) {
+        throw "$Description hash mismatch. Expected $ExpectedHash, got $actualHash."
+    }
+
+    Write-Host "$Description hash verified."
+}
+
 if (-not (Test-Path -LiteralPath $root)) {
     New-Item -Path $root -ItemType Directory -Force | Out-Null
 }
@@ -88,12 +165,34 @@ if (-not (Test-Path -LiteralPath $componentDir)) {
 }
 
 Write-Host "Downloading ZiAAS Woodstock Baselining core..."
-Save-ZiaasRawFileParts -UrlPrefix "$rawBase/ZiAAS_Woodstock_Baselining.core.ps1.b64" -PartCount 6 -Path $coreB64Path
+$manifestUrl = Get-ZiaasForwardedArgumentValue -Name "ManifestUrl" -ScriptArguments $ForwardedArguments
+if ([string]::IsNullOrWhiteSpace($manifestUrl)) {
+    $manifestUrl = "$rawBase/app.manifest.json"
+}
+
+Write-Host "Downloading ZiAAS Woodstock Baselining manifest..."
+Save-ZiaasRawFile -Url $manifestUrl -Path $manifestPath
+$expectedManifestHash = Get-ZiaasForwardedArgumentValue -Name "ExpectedManifestHash" -ScriptArguments $ForwardedArguments
+if (-not [string]::IsNullOrWhiteSpace($expectedManifestHash)) {
+    Assert-ZiaasFileHash -Path $manifestPath -ExpectedHash $expectedManifestHash -Description "Release manifest"
+}
+$manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+if ($null -eq $manifest.PSObject.Properties["artifacts"]) {
+    throw "Release manifest is missing the artifacts contract."
+}
+
+$corePartCount = Get-ZiaasManifestArtifactPartCount -Manifest $manifest -Name "coreBase64"
+Save-ZiaasRawFileParts -UrlPrefix "$rawBase/ZiAAS_Woodstock_Baselining.core.ps1.b64" -PartCount $corePartCount -Path $coreB64Path
+Assert-ZiaasFileHash -Path $coreB64Path -ExpectedHash (Get-ZiaasManifestArtifactHash -Manifest $manifest -Name "coreBase64") -Description "Core base64 payload"
 [System.IO.File]::WriteAllBytes($corePath, [Convert]::FromBase64String((Get-Content -LiteralPath $coreB64Path -Raw).Trim()))
+Assert-ZiaasFileHash -Path $corePath -ExpectedHash (Get-ZiaasManifestArtifactHash -Manifest $manifest -Name "coreScript") -Description "Core script"
 
 Write-Host "Downloading ZiAAS Woodstock Baselining component package..."
-Save-ZiaasRawFileParts -UrlPrefix "$rawBase/ZiAAS_Woodstock_Baselining.components.zip.b64" -PartCount 4 -Path $packageB64Path
+$componentPartCount = Get-ZiaasManifestArtifactPartCount -Manifest $manifest -Name "componentsBase64"
+Save-ZiaasRawFileParts -UrlPrefix "$rawBase/ZiAAS_Woodstock_Baselining.components.zip.b64" -PartCount $componentPartCount -Path $packageB64Path
+Assert-ZiaasFileHash -Path $packageB64Path -ExpectedHash (Get-ZiaasManifestArtifactHash -Manifest $manifest -Name "componentsBase64") -Description "Component package base64 payload"
 [System.IO.File]::WriteAllBytes($packageZipPath, [Convert]::FromBase64String((Get-Content -LiteralPath $packageB64Path -Raw).Trim()))
+Assert-ZiaasFileHash -Path $packageZipPath -ExpectedHash (Get-ZiaasManifestArtifactHash -Manifest $manifest -Name "componentsZip") -Description "Component package zip"
 Expand-Archive -LiteralPath $packageZipPath -DestinationPath $componentDir -Force
 
 Write-Host "Starting ZiAAS Woodstock Baselining..."
