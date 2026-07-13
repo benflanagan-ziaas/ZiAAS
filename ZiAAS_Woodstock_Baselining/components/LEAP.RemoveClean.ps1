@@ -17,4 +17,3 @@ Invoke-ZiaasComponent -Name "LEAP uninstall and cleanup" -FailureExitCode 101 -S
     Remove-StaleLeapMachineRemnants
     Write-LeapResidualCleanupSummary
 }
-
