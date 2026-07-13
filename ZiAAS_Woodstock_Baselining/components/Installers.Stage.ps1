@@ -54,3 +54,4 @@ Invoke-ZiaasComponent -Name "Pre-cleanup installer staging and verification" -Fa
     Write-ZiaasStagingManifest -Files @($stagedFiles) -OfficePayloadPath $officePayloadPath | Out-Null
     Write-Log "All selected reinstall media passed the pre-cleanup staging gate."
 }
+
