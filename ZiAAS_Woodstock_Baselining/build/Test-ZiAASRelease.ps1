@@ -295,18 +295,24 @@ function Test-GitState {
         return
     }
 
-    $repoRoot = Split-Path -Parent (Split-Path -Parent $ProjectRoot)
+    $repoRoot = Split-Path -Parent $ProjectRoot
     $inside = & $git.Source -C $repoRoot rev-parse --is-inside-work-tree 2>$null
-    if ($LASTEXITCODE -ne 0 -or [string]$inside -ne "true") {
+    $insideExitCode = $LASTEXITCODE
+    if ($insideExitCode -ne 0 -or [string]$inside -ne "true") {
         if ($ForPublish) {
             throw "Cannot publish because $repoRoot is not a git worktree."
         }
 
         Write-Check "$repoRoot is not a git worktree; publish cleanliness was not checked." "Info"
+        $global:LASTEXITCODE = 0
         return
     }
 
     $status = & $git.Source -C $repoRoot status --porcelain
+    $statusExitCode = $LASTEXITCODE
+    if ($statusExitCode -ne 0 -and $ForPublish) {
+        throw "Cannot publish because git status could not be read for $repoRoot."
+    }
     if ($ForPublish -and -not [string]::IsNullOrWhiteSpace(($status -join ""))) {
         throw "Cannot publish because the git working tree has uncommitted changes."
     }
@@ -317,6 +323,7 @@ function Test-GitState {
     else {
         Write-Check "Git working tree has uncommitted changes; run with -ForPublish to enforce failure." "Info"
     }
+    $global:LASTEXITCODE = 0
 }
 
 Assert-Condition -Condition (Test-Path -LiteralPath $ProjectRoot) -Message "Project root not found: $ProjectRoot"
@@ -331,3 +338,4 @@ Test-Manifest
 Test-GitState
 
 Write-Host "ZiAAS Woodstock Baselining release checks passed."
+
