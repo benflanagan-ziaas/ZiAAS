@@ -19,6 +19,7 @@ if ([string]::IsNullOrWhiteSpace($OutputRoot)) {
 
 $requiredComponents = @(
     "Common.ps1",
+    "Installers.Stage.ps1",
     "LEAP.RemoveClean.ps1",
     "Adobe.RemoveClean.ps1",
     "Office.RemoveClean.ps1",
@@ -96,6 +97,60 @@ function Test-PowerShellParse {
     }
 
     Write-Check "Parsed $($files.Count) PowerShell files."
+}
+
+function Test-HighSignalScriptAnalysis {
+    $analyzer = Get-Module -ListAvailable PSScriptAnalyzer | Sort-Object Version -Descending | Select-Object -First 1
+    if (-not $analyzer) {
+        Write-Check "PSScriptAnalyzer is not installed; high-signal analyzer checks were skipped." "Info"
+        return
+    }
+
+    Import-Module $analyzer.Path -Force -ErrorAction Stop
+    $rules = @(
+        "PSAvoidAssignmentToAutomaticVariable",
+        "PSAvoidUsingInvokeExpression",
+        "PSAvoidUsingPlainTextForPassword",
+        "PSAvoidUsingConvertToSecureStringWithPlainText",
+        "PSAvoidUsingUsernameAndPasswordParams"
+    )
+    $findings = @(Invoke-ScriptAnalyzer -Path $ProjectRoot -Recurse -IncludeRule $rules)
+    if ($findings.Count -gt 0) {
+        $details = @($findings | ForEach-Object {
+            "{0}:{1} [{2}] {3}" -f $_.ScriptName, $_.Line, $_.RuleName, $_.Message
+        })
+        throw "High-signal PowerShell static analysis failed: $($details -join '; ')"
+    }
+
+    Write-Check "High-signal PowerShell static-analysis rules returned no findings."
+}
+
+function Test-DuplicateFunctionDefinitions {
+    param([Parameter(Mandatory = $true)][string[]]$Roots)
+
+    $files = @()
+    foreach ($root in $Roots) {
+        if (Test-Path -LiteralPath $root) {
+            $files += @(Get-ChildItem -LiteralPath $root -Recurse -Filter *.ps1 -File)
+        }
+    }
+
+    foreach ($file in $files) {
+        $tokens = $null
+        $errors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors)
+        $functions = @($ast.FindAll({ param($node) $node -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $true))
+        $duplicates = @($functions | Group-Object Name | Where-Object { $_.Count -gt 1 })
+        if ($duplicates.Count -gt 0) {
+            $detail = @($duplicates | ForEach-Object {
+                $lines = @($_.Group | ForEach-Object { $_.Extent.StartLineNumber }) -join ", "
+                "$($_.Name) at lines $lines"
+            }) -join "; "
+            throw "Duplicate function definitions found in $($file.FullName): $detail"
+        }
+    }
+
+    Write-Check "No PowerShell file contains duplicate function definitions."
 }
 
 function Test-JsonFiles {
@@ -268,6 +323,8 @@ Assert-Condition -Condition (Test-Path -LiteralPath $ProjectRoot) -Message "Proj
 Assert-Condition -Condition (Test-Path -LiteralPath $OutputRoot) -Message "Output root not found: $OutputRoot"
 
 Test-PowerShellParse -Roots @($ProjectRoot, $OutputRoot)
+Test-HighSignalScriptAnalysis
+Test-DuplicateFunctionDefinitions -Roots @($ProjectRoot, $OutputRoot)
 Test-JsonFiles -Roots @($ProjectRoot, $OutputRoot)
 Test-SourceOutputSync
 Test-Manifest

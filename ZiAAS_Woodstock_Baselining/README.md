@@ -4,18 +4,23 @@ PowerShell-first MSP tool for baselining Office, Adobe Reader/Acrobat Pro, and L
 
 ## What it does
 
-The orchestrator removes selected products in a safe order, performs allowlisted cleanup, waits for installer state to settle, then reinstalls the selected products in dependency order:
+The orchestrator validates and stages all selected reinstall media first, removes selected products in a safe order, performs allowlisted cleanup, waits for installer state to settle, then reinstalls the selected products in dependency order:
 
-1. LEAP uninstall and cleanup, if selected
-2. Adobe Reader/Acrobat uninstall and cleanup, if selected
-3. Office uninstall and cleanup, if selected
-4. Wait 60 seconds by default
-5. Install Microsoft 365 Apps for enterprise, 64-bit, en-GB, Semi-Annual Enterprise
-6. Install Adobe Reader 64-bit MUI with `LANG_LIST=en_GB`, or install a supplied Acrobat Pro package
-7. Disable New Acrobat policy
-8. Wait 60 seconds by default before LEAP
-9. Install LEAP last so Office and Adobe add-ins can bind correctly
-10. Write logs, JSON/text reports, and an optional support bundle
+1. Download and verify all required installers and the Office payload before cleanup
+2. LEAP uninstall and cleanup, if selected
+3. Adobe Reader/Acrobat uninstall and cleanup, if selected
+4. Office uninstall and cleanup, if selected
+5. Wait 60 seconds by default
+6. Install Microsoft 365 Apps for enterprise, 64-bit, en-GB, requesting Semi-Annual Enterprise
+7. Install Adobe Reader 64-bit MUI with `LANG_LIST=en_GB`, or install a supplied Acrobat Pro package
+8. Disable New Acrobat and enforce Reader-only reduced mode when Reader is selected
+9. Wait 60 seconds by default before LEAP
+10. Install LEAP last so Office and Adobe add-ins can bind correctly
+11. Write logs, JSON/text reports, and an optional sanitized support bundle
+
+Microsoft is unifying Semi-Annual Enterprise Channel into Monthly Enterprise Channel from Version 2606 in July 2026. The tool still requests `Channel=SemiAnnual`, verifies the exact enterprise audience, and only accepts Monthly Enterprise reporting at or above Microsoft's documented transition build.
+
+Adobe officially maps International English `en_GB` to its `en_US` English resource transform. Verification therefore proves the 64-bit MUI installer request, the mapped English resources, the Reader-only machine policy, and the disabled New Acrobat policy.
 
 ## Common commands
 
@@ -57,10 +62,12 @@ Reader is fully autonomous. Acrobat Pro is not. Acrobat Pro deployments require 
 
 - Default behaviour is guided fail-fast.
 - `-PreflightOnly` validates requirements without changing the machine.
+- A real run stages and signature-checks all selected reinstall media before the first uninstall.
 - Blocking Office, Adobe, and LEAP apps stop the run unless `-ForceCloseApps` is supplied.
 - Cleanup paths are allowlisted.
 - LEAP profile cleanup preserves `AppData\Roaming\LEAP Accounting`.
 - Raw URL bootstrap downloads a manifest first, then verifies SHA-256 hashes for the core script and component package before execution.
+- Component exit codes are preserved by the orchestrator, including exit `100` for a pre-cleanup staging failure.
 
 ## Build and release
 
