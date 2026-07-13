@@ -17,3 +17,4 @@ Invoke-ZiaasComponent -Name "LEAP install" -FailureExitCode 106 -ScriptBlock {
     Install-Leap -InstallerPath $installerPath
     Write-LeapInstallSummary
 }
+
