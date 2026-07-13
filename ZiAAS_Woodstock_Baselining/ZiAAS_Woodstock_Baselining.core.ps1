@@ -719,7 +719,18 @@ function Add-ZiaasPreflightResult {
 }
 
 function Get-ZiaasErrorCategory {
-    param([string]$Message)
+    param(
+        [string]$Message,
+        [object[]]$PreflightResults = @()
+    )
+
+    $failedPreflight = @($PreflightResults | Where-Object { $_ -and $_.Status -eq "Fail" })
+    if ($failedPreflight.Count -gt 0) {
+        if (@($failedPreflight | Where-Object { $_.Name -match "(?i)office update policy|managed office policy|cloud update" }).Count -gt 0) {
+            return "MachineStateConflict"
+        }
+        return "UserCorrectable"
+    }
 
     if ([string]::IsNullOrWhiteSpace($Message)) { return "InternalToolBug" }
     if ($Message -match "(?i)preflight failed|preflight") { return "UserCorrectable" }
@@ -734,7 +745,8 @@ function Get-ZiaasErrorCategory {
 function Get-ZiaasNextAction {
     param(
         [Parameter(Mandatory = $true)][string]$Status,
-        [string]$FailureMessage
+        [string]$FailureMessage,
+        [string]$ErrorCategory
     )
 
     if ($Status -eq "Success") {
@@ -749,7 +761,11 @@ function Get-ZiaasNextAction {
         return "Review failed or warning preflight items. Run without -PreflightOnly only when the plan is acceptable."
     }
 
-    switch (Get-ZiaasErrorCategory -Message $FailureMessage) {
+    if ([string]::IsNullOrWhiteSpace($ErrorCategory)) {
+        $ErrorCategory = Get-ZiaasErrorCategory -Message $FailureMessage
+    }
+
+    switch ($ErrorCategory) {
         "UserCorrectable" { return "Correct the listed prerequisite, close blocking apps or supply the missing installer details, then rerun the same command." }
         "VendorOrDownloadFailure" { return "Check internet access, proxy/TLS inspection, vendor availability, or supply an explicit installer path/URL." }
         "VerificationFailure" { return "Do not continue until hashes, signatures, language proof, or publisher checks match the expected source." }
@@ -1253,8 +1269,11 @@ function Write-ZiaasSummaryReport {
     }
 
     $elapsed = New-TimeSpan -Start $Script:StartTime -End (Get-Date)
-    $errorCategory = if ($FailureMessage) { Get-ZiaasErrorCategory -Message $FailureMessage } else { "" }
-    $nextAction = Get-ZiaasNextAction -Status $Status -FailureMessage $FailureMessage
+    $errorCategory = if ($FailureMessage) {
+        Get-ZiaasErrorCategory -Message $FailureMessage -PreflightResults @($Script:PreflightResults)
+    }
+    else { "" }
+    $nextAction = Get-ZiaasNextAction -Status $Status -FailureMessage $FailureMessage -ErrorCategory $errorCategory
     $summary = [ordered]@{
         App = $Script:BrandBannerTitle
         Company = $Script:BrandCompanyName
