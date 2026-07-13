@@ -224,6 +224,31 @@ finally {
 Assert-Condition ($brokenExitCode -eq 1) "Missing-component preflight did not fail with exit code 1. Output: $($brokenOutput -join [Environment]::NewLine)"
 Write-Pass "Missing component preflight fails before component execution."
 
+$blockerRoot = Join-Path $testRoot "BlockingApps"
+New-Item -Path $blockerRoot -ItemType Directory -Force | Out-Null
+$blockerPath = Join-Path $blockerRoot "ms-teams.exe"
+Copy-Item -LiteralPath (Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe") -Destination $blockerPath -Force
+$blocker = Start-Process -FilePath $blockerPath -ArgumentList "-NoProfile", "-Command", "Start-Sleep -Seconds 60" -WindowStyle Hidden -PassThru
+try {
+    $blockingRoot = Join-Path $testRoot "BlockingAppsRun"
+    $blockingOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $corePath -WorkingRoot $blockingRoot -ComponentDirectory $componentPath -NoComponentDownload -NoLogo -NoColor -Quiet -LogLevel Warn -InstallMode Office -PostCleanupWaitSeconds 0 -PreLeapWaitSeconds 0 2>&1)
+    $blockingExitCode = $LASTEXITCODE
+    Assert-Condition ($blockingExitCode -eq 1) "Blocking-app preflight did not fail with exit code 1. Output: $($blockingOutput -join [Environment]::NewLine)"
+    $blockingSummary = Get-LatestSummary -WorkingRoot $blockingRoot
+    Assert-Condition ($null -ne $blockingSummary) "Blocking-app preflight did not create a summary report."
+    $blockingFailures = @($blockingSummary.Preflight | Where-Object { $_.Name -eq "Blocking apps" -and $_.Status -eq "Fail" })
+    Assert-Condition ($blockingFailures.Count -eq 1) "Blocking-app preflight result was not recorded as a failure."
+    $policyFailures = @($blockingSummary.Preflight | Where-Object { $_.Name -eq "Office update policy" -and $_.Status -eq "Fail" })
+    $expectedBlockingCategory = if ($policyFailures.Count -gt 0) { "MachineStateConflict" } else { "UserCorrectable" }
+    Assert-Condition ([string]$blockingSummary.ErrorCategory -eq $expectedBlockingCategory) "Preflight error category did not match the failed preflight results. Expected $expectedBlockingCategory, got $($blockingSummary.ErrorCategory)."
+}
+finally {
+    if ($blocker -and -not $blocker.HasExited) {
+        Stop-Process -Id $blocker.Id -Force -ErrorAction SilentlyContinue
+    }
+}
+Write-Pass "Blocked-app preflight reports a recoverable UserCorrectable failure before cleanup."
+
 $timeoutTestPath = Join-Path $PSScriptRoot "Test-ZiAASProcessTimeout.ps1"
 $timeoutOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $timeoutTestPath -CommonPath (Join-Path $OutputRoot "components\Common.ps1") -WorkingRoot (Join-Path $testRoot "ProcessTimeout"))
 Assert-Condition ($LASTEXITCODE -eq 0) "Vendor-process timeout regression failed: $($timeoutOutput -join [Environment]::NewLine)"
@@ -234,3 +259,4 @@ Write-Host "ZiAAS Woodstock runtime regression checks passed."
 if (-not $KeepTestData) {
     Remove-Item -LiteralPath $testRoot -Recurse -Force -ErrorAction SilentlyContinue
 }
+
