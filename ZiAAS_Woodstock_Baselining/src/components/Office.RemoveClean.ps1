@@ -15,3 +15,4 @@ Invoke-ZiaasComponent -Name "Office uninstall and cleanup" -FailureExitCode 103 
     $assets = Get-OfficeDeploymentAssets
     Invoke-OfficeUninstallAndCleanup -Assets $assets
 }
+
