@@ -333,4 +333,3140 @@ function Resolve-InstallSelection {
             return New-InstallSelection -InstallOffice $true -InstallAdobe $true -InstallLeap $true -Label "Office + Adobe + LEAP"
         }
         "OfficeAndAdobeReaderAndLeap" {
-            return New-InstallSelection -InstallOffice $true -InstallAdobe $true -InstallLeap $true -Label "Office + ß½·ÖÚ$z{-®éÜj×÷&V6‚‚FF—"–â‚G6fTF—'2Â6VÆV7BÔö&¦V7BÕVæ—VR’’°¢Ö÷fRÔÆV&W6–GVÅFô&6·WÕF‚FF—"ÔÆ&VÂ‚‚FF—"×&WÆ6R%å´Õ¦×¥Ó¥ÅÂ"Â""’×&WÆ6R%ÅÂ"Â"Ò"¢Ð§Ð ¦gVæ7F–öâw&—FRÔÆV&W6–GVÄ6ÆVçW7VÖÖ'’°¢–b‚E6–×VÆF–öâ’°¢w&—FRÔÆör%4”ÕTÄD”ôã¢ÄT&W6–GVÂ&6·WF‚v÷VÆB&RVæFW"E67&—C¤&6·WF—" ¢&WGW&à¢Ð ¢w&—FRÔÆör$ÄT&W6–GVÂ6ÆVçW&6·WFƒ¢B„¦ö–âÕF‚E67&—C¤&6·WF—"$ÄTÕ&W6–GVÂÒE67&—C¥'Vå7F×"’ ¢w&—FRÔÆör$ÄT&W6–GVÂföÆFW'2Ö÷fVBFò&6·W¢E67&—C¤ÆV&W6–GVÄÖ÷fVB ¢w&—FRÔÆör$ÄT&W6–GVÂföÆFW'2&VæÖVB–âÆ6S¢E67&—C¤ÆV&W6–GVÅ&VæÖVB ¢w&—FRÔÆör$ÄT&W6–GVÂF‡26¶—VB&V6W6RÖ—76–æs¢E67&—C¤ÆV&W6–GVÅ6¶—VB ¢w&—FRÔÆör$ÄT&W6–GVÂföÆFW'2&W6W'fVC¢E67&—C¤ÆV&W6–GVÅ&W6W'fVB ¢w&—FRÔÆör$ÄT&W6–GVÂ6ÆVçWW'&÷'3¢E67&—C¤ÆV&W6–GVÄW'&÷'2  ¢–b‚E67&—C¤ÆV&W6–GVÄW'&÷'2ÖwB’°¢F‡&÷r$ÄT&W6–GVÂ6ÆVçWVæ6÷VçFW&VBW'&÷'2â&W7F'BæB&W'Vâ&Vf÷&R6öçF–çV–ærv—F‚öff–6RÂFö&RÂ÷"ÄT&V–ç7FÆÂâ ¢Ð§Ð ¦gVæ7F–öâvWBÔFVfVÇDÆV–ç7FÆÄ&wVÖVçG2°¢&WGW&â€¢"÷2"À¢"õ4Õ2"À¢"÷f"÷â$T$ôõCÕ&VÆÇ•7W&W76" ¢§Ð ¦gVæ7F–öâ7F÷ÔÆV÷7D–ç7FÆÄÆVæ6†W2°¢&Ò€¢¶–çEÒEv—E6V6öæG2ÒRÀ¢·7v—F6…ÒD–æ6ÇVFU6WGW&ö6W76W0¢ ¢–b‚E6–×VÆF–öâ’°¢w&—FRÔÆör%4”ÕTÄD”ôã¢v÷VÆB6Æ÷6RÄT÷7BÖ–ç7FÆÂ6Æ–VçB÷G&’ÆVæ6†W2–bF†W’V"â ¢&WGW&à¢Ð ¢FFVFÆ–æRÒ„vWBÔFFR’äFE6V6öæG2…´ÖF…Ó£¤Ö‚ƒÂEv—E6V6öæG2’¢F6Æ÷6TGFV×FVBÒFfÇ6P¢Fò°¢–b„6Æ÷6RÔÆV÷7D–ç7FÆÅ&ö6W76W2ÔÆöuv†Vä6Æ÷6VBÔ–æ6ÇVFU6WGW&ö6W76W3¢D–æ6ÇVFU6WGW&ö6W76W2’°¢F6Æ÷6TGFV×FVBÒGG'VP¢Ð ¢–b‚„vWBÔFFR’ÖvRFFVFÆ–æR’°¢'&V°¢Ð¢7F'BÕ6ÆVWÔÖ–ÆÆ—6V6öæG2#S ¢Òv†–ÆR‚GG'VR ¢G&VÖ–æ–ærÒ„vWBÔÆV÷7D–ç7FÆÅ&ö6W76W2Ô–æ6ÇVFU6WGW&ö6W76W3¢D–æ6ÇVFU6WGW&ö6W76W2 ¢–b‚G&VÖ–æ–ærä6÷VçBÖwB’°¢G&VÖ–æ–ætæÖW2Ò‚G&VÖ–æ–ærÂ6VÆV7BÔö&¦V7BÔW‡æE&÷W'G’&ö6W74æÖRÕVæ—VRÂ6÷'BÔö&¦V7B’Ö¦ö–â"Â ¢w&—FRÔÆör$ÄT÷7BÖ–ç7FÆÂ&ö6W76W2&R7F–ÆÂ'Vææ–ærgFW"6Æ÷6RGFV×C¢G&VÖ–æ–ætæÖW2"%t$â ¢Ð¢VÇ6V–b‚F6Æ÷6TGFV×FVB’°¢w&—FRÔÆör$ÄT÷7BÖ–ç7FÆÂ6Æ–VçB÷G&’&ö6W76W26Æ÷6VB–ÖÖVF–FVÇ’gFW"FWFV7F–öââ ¢Ð¢VÇ6R°¢w&—FRÔÆör$æòÄT÷7BÖ–ç7FÆÂ6Æ–VçB÷G&’&ö6W76W2&VÖ–æVB÷Vââ ¢Ð§Ð ¦gVæ7F–öâ–ç7FÆÂÔÆV°¢&Ò…µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•Õ·7G&–æuÒD–ç7FÆÆW%F‚ ¢FÆVv–æF÷u7G–ÆRÒ$†–FFVâ ¢w&—FRÔÆör$ÄTw2öff–6–Â–ç7FÆÆW"Ö’WFòÖÆVæ6‚F†RÄT6Æ–VçBv†Vâ–ç7FÆÆF–öâ6ö×ÆWFW3²F†R÷7BÖ–ç7FÆÂvFRv–ÆÂ6Æ÷6RFWFV7FVB6Æ–VçB÷G&’&ö6W76W2&Vf÷&RfW&–f–6F–öââ"%t$â ¢FVffV7F—fTÆV–ç7FÆÄ&wVÖVçG2Ò‚DÆV–ç7FÆÄ&wVÖVçG2¢–b‚DÆV–ç7FÆÄ&wVÖVçG2ä6÷VçBÖW’°¢FVffV7F—fTÆV–ç7FÆÄ&wVÖVçG2Ò„vWBÔFVfVÇDÆV–ç7FÆÄ&wVÖVçG2¢w&—FRÔÆör$æòÄT–ç7FÆÂ&wVÖVçG2vW&R7WÆ–VBâW6–ærFWFV7FVB–ç7FÆÅ6†–VÆB6–ÆVçBFVfVÇG3¢B‚FVffV7F—fTÆV–ç7FÆÄ&wVÖVçG2Ö¦ö–ârr’â"%t$â ¢Ð ¢G'’°¢FÖ„GFV×G2Ò@¢F–ç7FÆÆF–öä6ö×ÆWFVBÒFfÇ6P¢f÷"‚FGFV×BÒ²FGFV×BÖÆRFÖ„GFV×G3²FGFV×B²²’°¢–çfö¶RÕ&ö6W746†V6¶VB ¢Ôf–ÆUF‚D–ç7FÆÆW%F‚ ¢Ô&wVÖVçDÆ—7BFVffV7F—fTÆV–ç7FÆÄ&wVÖVçG2 ¢ÔFW67&—F–öâ$ÄT–ç7FÆÆF–öâGFV×BFGFV×BöbFÖ„GFV×G2" ¢Õ7V66W74W†—D6öFW2ƒÂc‚Â3’ ¢Õv–æF÷u7G–ÆRFÆVv–æF÷u7G–ÆR ¢Õv†–ÆU'Vææ–ær²·fö–EÒ„6Æ÷6RÔÆV÷7D–ç7FÆÅ&ö6W76W2ÔÆöuv†Vä6Æ÷6VB’Ð¢FW†—D6öFRÒ¶–çEÒE67&—C¤Æ7E&ö6W74W†—D6öFP ¢–b‚FW†—D6öFRÖWc‚’°¢–b‚FGFV×BÖvRFÖ„GFV×G2’°¢F‡&÷r$ÄT–ç7FÆÆF–öâ&VÖ–æVB&Æö6¶VB'’v–æF÷w2–ç7FÆÆW"W'&÷"c‚gFW"FÖ„GFV×G2GFV×G2â&V&ö÷BF†RÖ6†–æRÂ6öæf—&Òæò÷F†W"–ç7FÆÆW"—27F—fRÂæB&W'Vââ ¢Ð ¢w&—FRÔÆör$ÄT–ç7FÆÆF–öâ&WGW&æVBv–æF÷w2–ç7FÆÆW"W'&÷"c‚†æ÷F†W"–ç7FÆÆF–öâ—2–â&öw&W72’â6Æ÷6–ærç’ÄT6†–ÆBÆVæ6†W2æBv—F–ær36V6öæG2&Vf÷&R&WG'’B‚FGFV×B²’öbFÖ„GFV×G2â"%t$â ¢7F÷ÔÆV÷7D–ç7FÆÄÆVæ6†W2Õv—E6V6öæG2¢7F'BÕ6ÆVWÕ6V6öæG23 ¢6öçF–çVP¢Ð ¢F–ç7FÆÆF–öä6ö×ÆWFVBÒGG'VP¢'&V°¢Ð ¢–b‚Öæ÷BF–ç7FÆÆF–öä6ö×ÆWFVB’°¢F‡&÷r$ÄT–ç7FÆÆF–öâF–Bæ÷B6ö×ÆWFRâ ¢Ð¢Ð¢f–æÆÇ’°¢7F÷ÔÆV÷7D–ç7FÆÄÆVæ6†W2Õv—E6V6öæG2RÔ–æ6ÇVFU6WGW&ö6W76W0¢Ð ¢–b‚E6–×VÆF–öâ’°¢E67&—C¥6–×VÆF–öäÆV–ç7FÆÆVBÒGG'VP¢Ð§Ð ¦gVæ7F–öâw&—FRÔÆV–ç7FÆÅ7VÖÖ'’°¢FVçG&–W2Ò„vWBÔÆVVçG&–W2¢–b‚FVçG&–W2ä6÷VçBÖW’°¢F‡&÷r$æòÄT–ç7FÆÂVçG'’f÷VæBgFW"–ç7FÆÂâ ¢Ð ¢f÷&V6‚‚FVçG'’–âFVçG&–W2’°¢w&—FRÔÆör$ÄT–ç7FÆÆVBVçG'“¢B‚FVçG'’äF—7Æ”æÖR’B‚FVçG'’äF—7Æ•fW'6–öâ’ ¢–b‚‚Öæ÷BE6–×VÆF–öâ’ÖæB…·7G&–æuÒFVçG'’åV&Æ—6†W"Öæ÷FÖF6‚"ƒö’”ÄT"’’°¢F‡&÷r$ÄTfW&–f–6F–öâf–ÆVC¢–ç7FÆÆVBVçG'’V&Æ—6†W"v2æ÷B&V6övæ—6VB2ÄTâ&öGV7BrB‚FVçG'’äF—7Æ”æÖR’rV&Æ—6†W"rB‚FVçG'’åV&Æ—6†W"’râ ¢Ð¢Ð§Ð ¦gVæ7F–öâ&VÖ÷fRÕv÷&¶–ætF÷væÆöG4–e&WVW7FVB°¢–b‚D¶VWF÷væÆöG2’°¢w&—FRÔÆör$¶VW–ærF÷væÆöG2–âE67&—C¤F÷væÆöDF—" ¢&WGW&à¢Ð ¢G'’°¢&VÖ÷fRÔ—FVÒÔÆ—FW&ÅF‚E67&—C¤F÷væÆöDF—"Õ&V7W'6RÔf÷&6RÔW'&÷$7F–öâ7F÷ ¢w&—FRÔÆör%&VÖ÷fVBFV×÷&'’F÷væÆöG3¢E67&—C¤F÷væÆöDF—" ¢Ð¢6F6‚°¢w&—FRÔÆör$6÷VÆBæ÷B&VÖ÷fRFV×÷&'’F÷væÆöG2âB‚EòäW†6WF–öâäÖW76vR’"%t$â ¢Ð§Ð ¦gVæ7F–öâ–çfö¶RÔFWÆ÷–ÖVçEW6R°¢&Ò€¢µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•Õ¶–çEÒE6V6öæG2À¢µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•Õ·7G&–æuÒE&V6öà¢ ¢–b‚E6V6öæG2ÖÆR’°¢w&—FRÔÆör%6¶—–ærW6Rf÷"E&V6öâ&V6W6RGW&F–öâ—2E6V6öæG26V6öæG2â ¢&WGW&à¢Ð ¢–b‚E6–×VÆF–öâ’°¢w&—FRÔÆör%4”ÕTÄD”ôã¢v÷VÆBv—BE6V6öæG26V6öæG2f÷"E&V6öââ ¢&WGW&à¢Ð ¢w&—FRÔÆör%v—F–ærE6V6öæG26V6öæG2f÷"E&V6öââ ¢7F'BÕ6ÆVWÕ6V6öæG2E6V6öæG0§Ð¦gVæ7F–öâ6öçfW'EFòÕ6fTf–ÆTæÖR°¢&Ò€¢µ&ÖWFW"„ÖæFF÷'’ÒFfÇ6R•Ð¢´Æ–2‚$æÖR"•Ð¢´ÆÆ÷tV×G•7G&–ær‚•Ð¢·7G&–æuÒDf–ÆTæÖP¢ ¢–b…·7G&–æuÓ£¤—4çVÆÄ÷%v†—FU76R‚Df–ÆTæÖR’’°¢&WGW&â%VææÖVB ¢Ð ¢G6fRÒDf–ÆTæÖP¢f÷&V6‚‚F6†&7FW"–âµ7—7FVÒä”òåF…Ó£¤vWD–çfÆ–Df–ÆTæÖT6†'2‚’’°¢G6fRÒG6fRå&WÆ6R…·7G&–æuÒF6†&7FW"Â%ò"¢Ð ¢–b…·7G&–æuÓ£¤—4çVÆÄ÷%v†—FU76R‚G6fR’’°¢&WGW&â%VææÖVB ¢Ð ¢&WGW&âG6fP§Ð ¦gVæ7F–öâ–çfö¶RÔöff–6UVæ–ç7FÆÄæD6ÆVçW°¢&Ò…µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•ÒD76WG2 ¢7F÷Ôöff–6T&Æö6¶–æt0 ¢G'’°¢–çfö¶RÕ&ö6W746†V6¶VB ¢Ôf–ÆUF‚D76WG2å6WGW ¢Ô&wVÖVçDÆ—7B‚"ö6öæf–wW&R"ÂD76WG2å&VÖ÷fT6öæf–r’ ¢ÔFW67&—F–öâ$öff–6R6Æ–6²×FòÕ'Vâ&VÖ÷fÂ" ¢Õv÷&¶–ætF—&V7F÷'’E67&—C¤öff–6TF— ¢Ð¢6F6‚°¢Föff–6U&VÖ÷fÄW'&÷"ÒEòäW†6WF–öâäÖW76vP¢w&—FRÔÆör$öff–6R6Æ–6²×FòÕ'Vâ&VÖ÷fÂ&WGW&æVBæöâ×7V66W72&W7VÇBâ6öçF–çV–ærFòÖ–7&÷6ögBöff–6R67'V"6ÆVçW&V6W6RôEB&VÖ÷fRÆÂ6âf–Âv†Vâöff–6R—2Ç&VG’'6VçB÷"'F–ÆÇ’&VÖ÷fVBâ"%t$â ¢w&—FRÔÆör$öff–6R6Æ–6²×FòÕ'Vâ&VÖ÷fÂFWF–Ã¢Föff–6U&VÖ÷fÄW'&÷""%t$â ¢Ð ¢–çfö¶RÔöff–6U67'V$6ÆVçW §Ð ¦gVæ7F–öâ–çfö¶RÔFö&T6ÆVæW$6ÆVçW°¢F6ÆVæW$W†RÒvWBÔFö&T6ÆVæW%F€ ¢f÷&V6‚‚G&öGV7D–B–âƒÂ’’°¢G&öGV7DæÖRÒ–b‚G&öGV7D–BÖW’²%&VFW""ÒVÇ6R²$7&ö&B"Ð ¢G'’°¢–çfö¶RÕ&ö6W746†V6¶VB ¢Ôf–ÆUF‚F6ÆVæW$W†R ¢Ô&wVÖVçDÆ—7B‚"÷6–ÆVçB"Â"÷&öGV7CÒG&öGV7D–B"Â"ö6ÆVæÆWfVÃÓ"Â"÷66æf÷&÷F†W'3Ó"’ ¢Õ7V66W74W†—D6öFW2ƒÂ3’ ¢ÔFW67&—F–öâ$Fö&R7&ô6ÆVæW"6ÆVçWf÷"G&öGV7DæÖR ¢Ð¢6F6‚°¢G&VÖ–æ–ærÒ„vWBÔFö&U&VFW$æD7&ö&DVçG&–W2 ¢–b‚G&VÖ–æ–ærä6÷VçBÖW’°¢w&—FRÔÆör$Fö&R7&ô6ÆVæW"6ÆVçWf÷"G&öGV7DæÖRf–ÆVB÷"f÷VæBæ÷F†–ærW6VgVÂFò6ÆVâgFW"7FæF&BFö&RVæ–ç7FÆÂÂ'WBæòFö&R&VFW"ô7&ö&BVæ–ç7FÆÂVçG&–W2&VÖ–ââ6öçF–çV–ærv—F‚&V–ç7FÆÂfÆ÷râ"%t$â ¢–b‚Öæ÷BE6–×VÆF–öâ’°¢E67&—C¥&V&ö÷E&WV—&VBÒGG'VP¢Ð¢'&V°¢Ð ¢f÷&V6‚‚FVçG'’–âG&VÖ–æ–ær’°¢w&—FRÔÆör$Fö&R&VFW"ô7&ö&B7F–ÆÂ&W6VçBgFW"7&ô6ÆVæW"f–ÇW&S¢B‚FVçG'’äF—7Æ”æÖR’B‚FVçG'’äF—7Æ•fW'6–öâ’"$U%$õ" ¢Ð ¢F‡&÷p¢Ð¢Ð ¢–b‚Öæ÷BE6–×VÆF–öâ’°¢E67&—C¥&V&ö÷E&WV—&VBÒGG'VP¢Ð¢w&—FRÔÆör$Fö&R&V6öÖÖVæG2&W7F'F–ærgFW"7&ô6ÆVæW"â6öçF–çV–ær&V6W6RF†—2FWÆ÷–ÖVçBfÆ÷r&V–ç7FÆÇ2&Vf÷&RÄTÂ'WB&V&ö÷B6†÷VÆB&R66†VGVÆVBgFW'v&Bâ"%t$â §Ð ¦gVæ7F–öâ76W'BÔFö&T7&ö&E&ôÆæwVvU6VÆV7F–öâ°¢–b‚DÆÆ÷t7&ö&E&ôÆæwVvTæ÷EfW&–f–VB’°¢w&—FRÔÆör$7&ö&B&òT²VævÆ—6‚ÆæwVvR&ööbv2W‡Æ–6—FÇ’'—76VBâVç7W&RF†R7WÆ–VBFö&RVçFW'&—6R6¶vR—2&RÖ6öæf–wW&VBf÷"Våôt"â"%t$â ¢&WGW&à¢Ð ¢F&wVÖVçEFW‡BÒ„„vWBÔFö&T7&ö&E&ô–ç7FÆÄ&wVÖVçDÆ—7B’Ö¦ö–â""¢–b‚F&wVÖVçEFW‡BÖÖF6‚"ƒö’’…çÅÇ2”ÄäuôÄ•5EÇ2£ÕÇ2¦Våôt"…Ç7ÂB’"’°¢G&Vf—‚Ò–b‚E6–×VÆF–öâ’²%4”ÕTÄD”ôã¢"ÒVÇ6R²""Ð¢w&—FRÔÆör"G·&Vf—‡Ô7&ö&B&òÆæwVvR&VfÆ–v‡B76VC¢ÄäuôÄ•5CÖVåôt"v27WÆ–VBâFö&RÖ2–çFW&æF–öæÂVævÆ—6‚Våôt"Fò—G2VåõU2VævÆ—6‚&W6÷W&6RG&ç6f÷&Òâ ¢&WGW&à¢Ð ¢F‡&÷r$7&ö&B&òv26VÆV7FVBÂ'WBT²ô'&—F—6‚VævÆ—6‚v2æ÷BfW&–f–VBâFBÄäuôÄ•5CÖVåôt"FòÔFö&T7&ö&E&ô–ç7FÆÄ&wVÖVçDÆ–æR÷"ÔFö&T7&ö&E&ô–ç7FÆÄ&wVÖVçG2Â÷"W6RÔÆÆ÷t7&ö&E&ôÆæwVvTæ÷EfW&–f–VBöæÇ’f÷"&RÖ6öæf–wW&VBFö&RVçFW'&—6R6¶vRâ §Ð ¦gVæ7F–öâ76W'BÔFö&T–ç7FÆÆW%6÷W&6Tf–Æ&ÆR°¢&Ò…µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•ÒDFö&U6VÆV7F–öâ ¢–b‚DFö&U6VÆV7F–öâå&öGV7BÖW%&VFW""’°¢G&VFW%W&’ÒFçVÆÀ¢–b‚Öæ÷BµW&•Ó£¥G'”7&VFR‚DFö&U&VFW$–ç7FÆÆW%W&ÂÂµW&”¶–æEÓ£¤'6öÇWFRÂ·&VeÒG&VFW%W&’’’°¢F‡&÷r$Fö&R&VFW"–ç7FÆÆW"U$Â—2æ÷BfÆ–B'6öÇWFRU$Ã¢DFö&U&VFW$–ç7FÆÆW%W&Â ¢Ð¢–b‚G&VFW%W&’å66†VÖRÖæR&‡GG2"’°¢F‡&÷r$Fö&R&VFW"–ç7FÆÆW"U$Â×W7BW6R…EE2â ¢Ð¢G&VFW$ÆVbÒ7Æ—BÕF‚ÔÆVbG&VFW%W&’ä'6öÇWFUF€¢–b‚G&VFW$ÆVbÖæ÷FÖF6‚"ƒö’•ä7&õ&G$D7ƒcBâ¥ôÕT•ÂæW†RB"’°¢F‡&÷r$Fö&R&VFW"–ç7FÆÆW"×W7B&RF†Röff–6–ÂcBÖ&—BÕT’6¶vRâ6öæf–wW&VBf–ÆVæÖS¢G&VFW$ÆVb ¢Ð¢76W'BÕ&VÖ÷FUW&Å&V6†&ÆRÕW&ÂDFö&U&VFW$–ç7FÆÆW%W&ÂÔFW67&—F–öâ$Fö&R&VFW"cBÖ&—BÕT’–ç7FÆÆW" ¢w&—FRÔÆör$Fö&R&VFW"–ç7FÆÆW"6÷W&6R&VfÆ–v‡B76VC¢öff–6–ÂÖf÷&ÖBcBÖ&—BÕT’U$Â6öæf–wW&VBv—F‚ÄäuôÄ•5CÖVåôt"âFö&RÖ2–çFW&æF–öæÂVævÆ—6‚Våôt"FòVåõU2VævÆ—6‚&W6÷W&6W2â ¢&WGW&à¢Ð ¢F†5F‚ÒÖæ÷B·7G&–æuÓ£¤—4çVÆÄ÷%v†—FU76R‚DFö&T7&ö&E&ô–ç7FÆÆW%F‚¢F†5W&ÂÒÖæ÷B·7G&–æuÓ£¤—4çVÆÄ÷%v†—FU76R‚DFö&T7&ö&E&ô–ç7FÆÆW%W&Â ¢–b‚Öæ÷BF†5F‚ÖæBÖæ÷BF†5W&Â’°¢F‡&÷r$7&ö&B&òv26VÆV7FVBÂ'WBæòÆ–6Vç6VB7&ö&B&ò–ç7FÆÆW"6÷W&6Rv27WÆ–VBâ&÷f–FRÔFö&T7&ö&E&ô–ç7FÆÆW%F‚÷"ÔFö&T7&ö&E&ô–ç7FÆÆW%W&Â&Vf÷&R7F'F–ærF†R'VââF†R67&—B6ææ÷B&V–ç7FÆÂ&òg&öÒâÇ&VG’Ö–ç7FÆÆVB6÷’&V6W6RFö&R6ÆVçW&VÖ÷fW2W†—7F–ær&VFW"ô7&ö&Bf—'7Bâ ¢Ð ¢–b‚F†5F‚’°¢76W'BÔFö&T7&ö&E&ô–ç7FÆÆW$f–ÆU7W÷'FVBÕF‚DFö&T7&ö&E&ô–ç7FÆÆW%F€¢–b‚‚Öæ÷BE6–×VÆF–öâ’ÖæB‚Öæ÷B…FW7BÕF‚ÔÆ—FW&ÅF‚DFö&T7&ö&E&ô–ç7FÆÆW%F‚’’’°¢F‡&÷r$7&ö&B&ò–ç7FÆÆW"F‚v27WÆ–VB'WBæ÷Bf÷VæC¢DFö&T7&ö&E&ô–ç7FÆÆW%F‚ ¢Ð¢–b‚Öæ÷BE6–×VÆF–öâ’°¢76W'BÕG'W7FVE6–væGW&RÕF‚DFö&T7&ö&E&ô–ç7FÆÆW%F‚ÔW‡V7FVEV&Æ—6†W$g&vÖVçG2DFö&T7&ö&E&õG'W7FVEV&Æ—6†W$g&vÖVçG0¢Ð¢G&Vf—‚Ò–b‚E6–×VÆF–öâ’²%4”ÕTÄD”ôã¢"ÒVÇ6R²""Ð¢w&—FRÔÆör"G·&Vf—‡Ô7&ö&B&ò–ç7FÆÆW"F‚&VfÆ–v‡B76VC¢DFö&T7&ö&E&ô–ç7FÆÆW%F‚ ¢Ð ¢–b‚F†5W&Â’°¢G&õW&’ÒFçVÆÀ¢–b‚Öæ÷BµW&•Ó£¥G'”7&VFR‚DFö&T7&ö&E&ô–ç7FÆÆW%W&ÂÂµW&”¶–æEÓ£¤'6öÇWFRÂ·&VeÒG&õW&’’’°¢F‡&÷r$7&ö&B&ò–ç7FÆÆW"U$Â—2æ÷BfÆ–B'6öÇWFRU$Ââ ¢Ð¢–b‚G&õW&’å66†VÖRÖæR&‡GG2"’°¢F‡&÷r$7&ö&B&ò–ç7FÆÆW"U$Â×W7BW6R…EE2â ¢Ð¢FÆVbÒ7Æ—BÕF‚ÔÆVbG&õW&’ä'6öÇWFUF€¢–b…·7G&–æuÓ£¤—4çVÆÄ÷%v†—FU76R‚FÆVb’’°¢F‡&÷r$7&ö&B&ò–ç7FÆÆW"U$Â×W7BVæBv—F‚â–ç7FÆÆW"f–ÆVæÖRâ ¢Ð¢76W'BÔFö&T7&ö&E&ô–ç7FÆÆW$f–ÆU7W÷'FVBÕF‚FÆV`¢76W'BÕ&VÖ÷FUW&Å&V6†&ÆRÕW&ÂDFö&T7&ö&E&ô–ç7FÆÆW%W&ÂÔFW67&—F–öâ$7&ö&B&òÆ–6Vç6VB–ç7FÆÆW" ¢G&Vf—‚Ò–b‚E6–×VÆF–öâ’²%4”ÕTÄD”ôã¢"ÒVÇ6R²""Ð¢w&—FRÔÆör"G·&Vf—‡Ô7&ö&B&ò–ç7FÆÆW"U$Â&VfÆ–v‡B76VBâ ¢Ð ¢F7&ö&E&ô&wVÖVçG2Ò„vWBÔFö&T7&ö&E&ô–ç7FÆÄ&wVÖVçDÆ—7B¢–b‚F7&ö&E&ô&wVÖVçG2ä6÷VçBÖWÖæB‚Öæ÷BDÆÆ÷t7&ö&E&ô–ç7FÆÆW%v—F†÷WD&wVÖVçG2’’°¢F‡&÷r$7&ö&B&òv26VÆV7FVBÂ'WBæò6–ÆVçB–ç7FÆÂ&wVÖVçG2vW&R7WÆ–VBâ&÷f–FRÔFö&T7&ö&E&ô–ç7FÆÄ&wVÖVçDÆ–æR÷"ÔFö&T7&ö&E&ô–ç7FÆÄ&wVÖVçG2f÷"–÷W"Æ–6Vç6VBFö&R6¶vR&Vf÷&R7F'F–ærF†R'VâÂ÷"FVÆ–&W&FVÇ’FBÔÆÆ÷t7&ö&E&ô–ç7FÆÆW%v—F†÷WD&wVÖVçG2â ¢Ð ¢–b‚F7&ö&E&ô&wVÖVçG2ä6÷VçBÖW’°¢w&—FRÔÆör$æò7&ö&B&ò–ç7FÆÂ&wVÖVçG2vW&R7WÆ–VBâF†—2v2W‡Æ–6—FÇ’ÆÆ÷vVC²–ç7FÆÆW"T’Ö’V"â"%t$â ¢Ð ¢76W'BÔFö&T7&ö&E&ôÆæwVvU6VÆV7F–öà§Ð ¦gVæ7F–öâ–çfö¶RÕ¦–46ö×öæVçB°¢&Ò€¢µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•Õ·7G&–æuÒDæÖRÀ¢µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•Õ¶–çEÒDf–ÇW&TW†—D6öFRÀ¢µ&ÖWFW"„ÖæFF÷'’ÒGG'VR•Õ·67&—F&Æö6µÒE67&—D&Æö6°¢ ¢G'’°¢–æ—F–Æ—¦RÔFWÆ÷–ÖVçDföÆFW'0¢w&—FRÔÆör"DæÖR7F'FVBâ ¢w&—FRÔÆör$Æörf–ÆS¢E67&—C¤Æötf–ÆR ¢w&—FRÔÆör%v÷&¶–ær&ö÷C¢E67&—C¥&ö÷B ¢76W'BÔFÖ–äæEÆFf÷&Ð ¢bE67&—D&Æö6° ¢FVÆ6VBÒæWrÕF–ÖU7âÕ7F'BE67&—C¥7F'EF–ÖRÔVæB„vWBÔFFR¢w&—FRÔÆör‚"DæÖR6ö×ÆWFVB–â³¦wÒâ"ÖbFVÆ6VB’%5T44U52 ¢–b‚E67&—C¥&V&ö÷E&WV—&VB’°¢w&—FRÔÆör"DæÖR6ö×ÆWFVB'WB&V&ö÷B—2&WV—&VBâ"%t$â ¢W†—B3 ¢Ð ¢W†—B ¢Ð¢6F6‚°¢G'’°¢w&—FRÔÆörEòäW†6WF–öâäÖW76vR$U%$õ" ¢w&—FRÔÆör"DæÖRf–ÆVBâ6VRE67&—C¤Æötf–ÆRâ"$U%$õ" ¢Ð¢6F6‚°¢w&—FRÔ†÷7B"DæÖRf–ÆVB&Vf÷&RÆövv–ærv2f–Æ&ÆRâB‚EòäW†6WF–öâäÖW76vR’ ¢Ð¢W†—BDf–ÇW&TW†—D6öFP¢Ð§ÐÐ 
+            return New-InstallSelection -InstallOffice $true -InstallAdobe $true -InstallLeap $true -Label "Office + Adobe + LEAP"
+        }
+        "All" {
+            return New-InstallSelection -InstallOffice $true -InstallAdobe $true -InstallLeap $true -Label "Office + Adobe + LEAP"
+        }
+        "Prompt" {
+            Write-Host ""
+            Write-Host "Choose what to install:"
+            Write-Host "  1. Office only"
+            Write-Host "  2. Office + Adobe"
+            Write-Host "  3. Adobe only"
+            Write-Host "  4. LEAP only"
+            Write-Host "  5. Office + LEAP"
+            Write-Host "  6. Adobe + LEAP"
+            Write-Host "  7. Office + Adobe + LEAP"
+            Write-Host ""
+
+            do {
+                $choice = Read-Host "Enter 1 to 7"
+            } until ($choice -in @("1", "2", "3", "4", "5", "6", "7"))
+
+            switch ($choice) {
+                "1" { return New-InstallSelection -InstallOffice $true -InstallAdobe $false -InstallLeap $false -Label "Office only" }
+                "2" { return New-InstallSelection -InstallOffice $true -InstallAdobe $true -InstallLeap $false -Label "Office + Adobe" }
+                "3" { return New-InstallSelection -InstallOffice $false -InstallAdobe $true -InstallLeap $false -Label "Adobe only" }
+                "4" { return New-InstallSelection -InstallOffice $false -InstallAdobe $false -InstallLeap $true -Label "LEAP only" }
+                "5" { return New-InstallSelection -InstallOffice $true -InstallAdobe $false -InstallLeap $true -Label "Office + LEAP" }
+                "6" { return New-InstallSelection -InstallOffice $false -InstallAdobe $true -InstallLeap $true -Label "Adobe + LEAP" }
+                "7" { return New-InstallSelection -InstallOffice $true -InstallAdobe $true -InstallLeap $true -Label "Office + Adobe + LEAP" }
+            }
+        }
+    }
+
+    throw "Unknown install mode: $InstallMode"
+}
+
+function Write-AdobeAcrobatProPrerequisiteNotice {
+    Write-Host ""
+    Write-Host "Adobe Acrobat Pro selected." -ForegroundColor Yellow
+    Write-Host "Acrobat Pro is licensed software; this tool cannot automatically download it like Reader." -ForegroundColor Yellow
+    Write-Host "Before continuing, supply a licensed enterprise Pro installer/package with -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl." -ForegroundColor Yellow
+    Write-Host "Also supply silent install arguments, including LANG_LIST=en_GB where applicable." -ForegroundColor Yellow
+    Write-Host "The Adobe cleanup step removes existing Reader/Acrobat first, so an already-installed copy is not a reinstall source." -ForegroundColor Yellow
+}
+
+function New-AdobeProductSelection {
+    param(
+        [Parameter(Mandatory = $true)][ValidateSet("Reader", "AcrobatPro")][string]$Product
+    )
+
+    $label = if ($Product -eq "Reader") { "Adobe Acrobat Reader" } else { "Adobe Acrobat Pro" }
+
+    return [pscustomobject]@{
+        Product = $Product
+        Label = $label
+    }
+}
+
+function Confirm-AdobeAcrobatProInteractiveSelection {
+    Write-AdobeAcrobatProPrerequisiteNotice
+    $confirmation = Read-Host "Type PRO to confirm the licensed Pro installer/package details are ready, or press Enter to choose again"
+    return ($confirmation -ieq "PRO")
+}
+
+function Resolve-AdobeProductSelection {
+    param([Parameter(Mandatory = $true)][bool]$InstallAdobe)
+
+    if (-not $InstallAdobe) {
+        return $null
+    }
+
+    switch ($AdobeProduct) {
+        "Reader" {
+            return New-AdobeProductSelection -Product "Reader"
+        }
+        "AcrobatPro" {
+            Write-AdobeAcrobatProPrerequisiteNotice
+            return New-AdobeProductSelection -Product "AcrobatPro"
+        }
+        "Prompt" {
+            Write-Host ""
+            Write-Host "Choose Adobe product:"
+            Write-Host "  1. Adobe Acrobat Reader"
+            Write-Host "  2. Adobe Acrobat Pro (licensed installer/package required)"
+            Write-Host ""
+
+            while ($true) {
+                do {
+                    $choice = Read-Host "Enter 1 or 2"
+                } until ($choice -in @("1", "2"))
+
+                switch ($choice) {
+                    "1" {
+                        return New-AdobeProductSelection -Product "Reader"
+                    }
+                    "2" {
+                        if (Confirm-AdobeAcrobatProInteractiveSelection) {
+                            return New-AdobeProductSelection -Product "AcrobatPro"
+                        }
+
+                        Write-Host ""
+                        Write-Host "Acrobat Pro was not confirmed. Choose Reader or Pro again." -ForegroundColor Yellow
+                    }
+                }
+            }
+        }
+    }
+
+    throw "Unknown Adobe product: $AdobeProduct"
+}
+
+function Get-ObjectPropertyValue {
+    param(
+        [Parameter(Mandatory = $true)]$InputObject,
+        [Parameter(Mandatory = $true)][string]$Name
+    )
+
+    $property = $InputObject.PSObject.Properties[$Name]
+    if ($null -eq $property) {
+        return $null
+    }
+
+    return $property.Value
+}
+
+function Escape-XmlAttribute {
+    param([Parameter(Mandatory = $true)][string]$Value)
+
+    return [System.Security.SecurityElement]::Escape($Value)
+}
+
+function Invoke-ProcessChecked {
+    param(
+        [Parameter(Mandatory = $true)][string]$FilePath,
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
+        [string[]]$ArgumentList,
+        [int[]]$SuccessExitCodes = @(0, 3010),
+        [string]$Description = $FilePath,
+        [string]$WorkingDirectory,
+        [ValidateRange(1, 86400)]
+        [int]$TimeoutSeconds = 7200,
+        [ValidateSet("Hidden", "Normal", "Minimized", "Maximized")]
+        [string]$WindowStyle = "Hidden",
+        [scriptblock]$WhileRunning
+    )
+
+    $displayArgs = $ArgumentList -join " "
+    Write-Log "$Description started."
+    Write-Log "Command: `"$FilePath`" $displayArgs"
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would run process and treat exit code as 0."
+        Write-Log "$Description finished with exit code 0."
+        $Script:LastProcessExitCode = 0
+        return
+    }
+
+    $startInfo = @{
+        FilePath = $FilePath
+        PassThru = $true
+        WindowStyle = $WindowStyle
+    }
+    if ($ArgumentList.Count -gt 0) {
+        $startInfo.ArgumentList = $ArgumentList
+    }
+    if ($WorkingDirectory) {
+        $startInfo.WorkingDirectory = $WorkingDirectory
+    }
+
+    $process = Start-Process @startInfo
+    Write-Log "$Description process ID: $($process.Id); timeout: $TimeoutSeconds seconds."
+    if ($WhileRunning) {
+        $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
+        $finished = $false
+        do {
+            if ($process.HasExited) {
+                $finished = $true
+                break
+            }
+
+            try {
+                [void](& $WhileRunning)
+            }
+            catch {
+                Write-Log "Process monitor callback failed for $Description. $($_.Exception.Message)" "WARN"
+            }
+
+            if ((Get-Date) -ge $deadline) {
+                break
+            }
+            Start-Sleep -Milliseconds 250
+        } while ($true)
+    }
+    else {
+        $finished = $process.WaitForExit($TimeoutSeconds * 1000)
+    }
+    if (-not $finished) {
+        Write-Log "$Description exceeded its $TimeoutSeconds second timeout. Terminating process tree $($process.Id)." "ERROR"
+        try {
+            & "$env:SystemRoot\System32\taskkill.exe" /PID $process.Id /T /F 2>&1 | ForEach-Object { Write-Log "taskkill: $_" "WARN" }
+        }
+        catch {
+            Write-Log "Process-tree termination was unavailable for $($process.Id). $($_.Exception.Message)" "WARN"
+        }
+        $process.Refresh()
+        if (-not $process.HasExited) {
+            try {
+                $process.Kill()
+                $process.WaitForExit(5000) | Out-Null
+                Write-Log "Terminated timed-out parent process $($process.Id) through its process handle." "WARN"
+            }
+            catch {
+                Write-Log "Could not terminate timed-out parent process $($process.Id). $($_.Exception.Message)" "ERROR"
+            }
+        }
+        $process.Refresh()
+        if (-not $process.HasExited) {
+            throw "$Description timed out after $TimeoutSeconds seconds and process $($process.Id) could not be terminated. Stop it manually before rerunning."
+        }
+        $timeoutException = New-Object System.TimeoutException("$Description timed out after $TimeoutSeconds seconds. Its process was terminated and no later deployment step was started.")
+        $timeoutException.Data["ZiaasTimedOutProcessId"] = [int]$process.Id
+        throw $timeoutException
+    }
+    $process.WaitForExit()
+    $exitCode = $process.ExitCode
+    $Script:LastProcessExitCode = [int]$exitCode
+    Write-Log "$Description finished with exit code $exitCode."
+
+    if ($exitCode -eq 3010) {
+        $Script:RebootRequired = $true
+        Write-Log "$Description requested a reboot." "WARN"
+    }
+
+    if ($SuccessExitCodes -notcontains $exitCode) {
+        throw "$Description failed with exit code $exitCode. See $Script:LogFile."
+    }
+
+}
+
+function Get-AdobeAcrobatProInstallArgumentList {
+    $arguments = @($AdobeAcrobatProInstallArguments | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+    if (-not [string]::IsNullOrWhiteSpace($AdobeAcrobatProInstallArgumentLine)) {
+        $arguments += $AdobeAcrobatProInstallArgumentLine.Trim()
+    }
+
+    return [string[]]$arguments
+}
+
+function Split-CommandLine {
+    param([Parameter(Mandatory = $true)][string]$CommandLine)
+
+    $trimmed = $CommandLine.Trim()
+    if ([string]::IsNullOrWhiteSpace($trimmed)) {
+        throw "Command line is empty."
+    }
+
+    if ($trimmed -match '^"([^"]+)"\s*(.*)$') {
+        return [pscustomobject]@{
+            FilePath = $matches[1]
+            Arguments = if ($matches[2]) { @($matches[2]) } else { @() }
+        }
+    }
+
+    if ($trimmed -match '^(\S+)\s*(.*)$') {
+        return [pscustomobject]@{
+            FilePath = $matches[1]
+            Arguments = if ($matches[2]) { @($matches[2]) } else { @() }
+        }
+    }
+
+    throw "Could not parse command line: $CommandLine"
+}
+
+function Invoke-WebRequestWithRetry {
+    param(
+        [Parameter(Mandatory = $true)][string]$Uri,
+        [string]$OutFile,
+        [int]$TimeoutSec = 120,
+        [string]$Description = "Web request"
+    )
+
+    $attemptLimit = [Math]::Max(1, $DownloadRetryCount)
+    $lastError = $null
+    for ($attempt = 1; $attempt -le $attemptLimit; $attempt++) {
+        try {
+            if ($attempt -gt 1) {
+                Write-Log "Retrying $Description ($attempt of $attemptLimit)."
+            }
+
+            if ([string]::IsNullOrWhiteSpace($OutFile)) {
+                return Invoke-WebRequest -Uri $Uri -UseBasicParsing -TimeoutSec $TimeoutSec
+            }
+
+            Invoke-WebRequest -Uri $Uri -OutFile $OutFile -UseBasicParsing -TimeoutSec $TimeoutSec
+            return $null
+        }
+        catch {
+            $lastError = $_.Exception.Message
+            if ($attempt -ge $attemptLimit) {
+                break
+            }
+
+            Write-Log "$Description attempt $attempt failed. Retrying in $DownloadRetryDelaySeconds seconds. $lastError" "WARN"
+            if ($DownloadRetryDelaySeconds -gt 0) {
+                Start-Sleep -Seconds $DownloadRetryDelaySeconds
+            }
+        }
+    }
+
+    throw "$Description failed after $attemptLimit attempt(s). Last error: $lastError"
+}
+
+function Assert-RemoteUrlReachable {
+    param(
+        [Parameter(Mandatory = $true)][string]$Url,
+        [Parameter(Mandatory = $true)][string]$Description
+    )
+
+    $uri = $null
+    if (-not [Uri]::TryCreate($Url, [UriKind]::Absolute, [ref]$uri)) {
+        throw "$Description URL is not a valid absolute URL."
+    }
+    if ($uri.Scheme -ne "https") {
+        throw "$Description URL must use HTTPS."
+    }
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would test $Description URL reachability: $($uri.GetLeftPart([UriPartial]::Path))"
+        return
+    }
+
+    $lastError = $null
+    for ($attempt = 1; $attempt -le [Math]::Max(1, $DownloadRetryCount); $attempt++) {
+        $response = $null
+        try {
+            $request = [System.Net.HttpWebRequest]::Create($uri)
+            $request.Method = "HEAD"
+            $request.AllowAutoRedirect = $true
+            $request.Timeout = 30000
+            $request.ReadWriteTimeout = 30000
+            $request.UserAgent = "ZiAAS-Woodstock-Baselining"
+            $response = [System.Net.HttpWebResponse]$request.GetResponse()
+            $statusCode = [int]$response.StatusCode
+            if (($statusCode -ge 200 -and $statusCode -lt 400) -or $statusCode -eq 405) {
+                Write-Log "$Description URL reachability passed with HTTP $statusCode."
+                return
+            }
+            throw "HTTP $statusCode"
+        }
+        catch [System.Net.WebException] {
+            $webResponse = $_.Exception.Response
+            if ($webResponse -and [int]$webResponse.StatusCode -eq 405) {
+                Write-Log "$Description endpoint is reachable and does not support HEAD (HTTP 405); the staging gate will verify the GET download."
+                return
+            }
+            $lastError = $_.Exception.Message
+        }
+        catch {
+            $lastError = $_.Exception.Message
+        }
+        finally {
+            if ($response) { $response.Close() }
+        }
+
+        if ($attempt -lt [Math]::Max(1, $DownloadRetryCount) -and $DownloadRetryDelaySeconds -gt 0) {
+            Start-Sleep -Seconds $DownloadRetryDelaySeconds
+        }
+    }
+    throw "$Description URL was not reachable after $([Math]::Max(1, $DownloadRetryCount)) attempt(s). Last error: $lastError"
+}
+
+function Get-ZiaasStagingManifestPath {
+    return (Join-Path (Join-Path $Script:Root "RunState") "staged-installers-$Script:RunStamp.json")
+}
+
+function Write-ZiaasStagingManifest {
+    param(
+        [string[]]$Files = @(),
+        [string]$OfficePayloadPath = ""
+    )
+
+    $runStateDir = Join-Path $Script:Root "RunState"
+    if (-not (Test-Path -LiteralPath $runStateDir)) {
+        New-Item -Path $runStateDir -ItemType Directory -Force | Out-Null
+    }
+
+    $fileRecords = @()
+    foreach ($path in @($Files | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)) {
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+            throw "Cannot register missing staged installer file: $path"
+        }
+        $item = Get-Item -LiteralPath $path
+        $fileRecords += [pscustomobject]@{
+            Path = $item.FullName
+            Bytes = [int64]$item.Length
+            Sha256 = (Get-FileHash -LiteralPath $item.FullName -Algorithm SHA256).Hash
+        }
+    }
+
+    $officePayload = [ordered]@{ Ready = $false; Path = ""; FileCount = 0; TotalBytes = 0 }
+    if (-not [string]::IsNullOrWhiteSpace($OfficePayloadPath)) {
+        if ($Simulation) {
+            $officePayload = [ordered]@{ Ready = $true; Path = $OfficePayloadPath; FileCount = 1; TotalBytes = 1 }
+        }
+        elseif (Test-Path -LiteralPath $OfficePayloadPath -PathType Container) {
+            $payloadFiles = @(Get-ChildItem -LiteralPath $OfficePayloadPath -Recurse -File -ErrorAction SilentlyContinue)
+            $payloadBytes = [int64]0
+            foreach ($payloadFile in $payloadFiles) { $payloadBytes += [int64]$payloadFile.Length }
+            $officePayload = [ordered]@{
+                Ready = ($payloadFiles.Count -gt 0 -and $payloadBytes -gt 100MB)
+                Path = (Resolve-Path -LiteralPath $OfficePayloadPath).Path
+                FileCount = $payloadFiles.Count
+                TotalBytes = $payloadBytes
+            }
+        }
+    }
+
+    $manifest = [ordered]@{
+        RunStamp = $Script:RunStamp
+        Created = (Get-Date).ToString("s")
+        Files = $fileRecords
+        OfficePayload = $officePayload
+    }
+    $manifestPath = Get-ZiaasStagingManifestPath
+    $manifest | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $manifestPath -Encoding UTF8
+    Write-Log "Wrote verified installer staging manifest: $manifestPath"
+    return $manifestPath
+}
+
+function Test-ZiaasStagedInstallerFile {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [int64]$MinimumBytes = 1
+    )
+
+    $manifestPath = Get-ZiaasStagingManifestPath
+    if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf) -or -not (Test-Path -LiteralPath $Path -PathType Leaf)) {
+        return $false
+    }
+
+    try {
+        $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+        if ([string]$manifest.RunStamp -ne $Script:RunStamp) { return $false }
+        $resolvedPath = (Resolve-Path -LiteralPath $Path).Path
+        $record = @($manifest.Files | Where-Object { [string]$_.Path -ieq $resolvedPath } | Select-Object -First 1)
+        if ($record.Count -eq 0) { return $false }
+        $item = Get-Item -LiteralPath $resolvedPath
+        if ($item.Length -lt $MinimumBytes -or [int64]$record[0].Bytes -ne [int64]$item.Length) { return $false }
+        $actualHash = (Get-FileHash -LiteralPath $resolvedPath -Algorithm SHA256).Hash
+        if ($actualHash -ine [string]$record[0].Sha256) { return $false }
+        Write-Log "Reusing installer verified during this run's staging gate: $resolvedPath"
+        return $true
+    }
+    catch {
+        Write-Log "Staged installer validation failed and the file will be downloaded again. $($_.Exception.Message)" "WARN"
+        return $false
+    }
+}
+
+function Test-ZiaasStagedOfficePayload {
+    $manifestPath = Get-ZiaasStagingManifestPath
+    if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) { return $false }
+    try {
+        $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+        if ([string]$manifest.RunStamp -ne $Script:RunStamp -or -not [bool]$manifest.OfficePayload.Ready) { return $false }
+        if ($Simulation) { return $true }
+        $path = [string]$manifest.OfficePayload.Path
+        if (-not (Test-Path -LiteralPath $path -PathType Container)) { return $false }
+        $files = @(Get-ChildItem -LiteralPath $path -Recurse -File -ErrorAction SilentlyContinue)
+        $bytes = [int64]0
+        foreach ($file in $files) { $bytes += [int64]$file.Length }
+        return ($files.Count -ge [int]$manifest.OfficePayload.FileCount -and $bytes -ge [int64]$manifest.OfficePayload.TotalBytes -and $bytes -gt 100MB)
+    }
+    catch {
+        Write-Log "Staged Office payload validation failed. $($_.Exception.Message)" "WARN"
+        return $false
+    }
+}
+
+function Save-Download {
+    param(
+        [Parameter(Mandatory = $true)][string]$Url,
+        [Parameter(Mandatory = $true)][string]$Destination,
+        [int64]$MinimumBytes = 1024,
+        [switch]$AlwaysDownload
+    )
+
+    if (Test-ZiaasStagedInstallerFile -Path $Destination -MinimumBytes $MinimumBytes) {
+        return
+    }
+
+    if (Test-Path -LiteralPath $Destination) {
+        $existingLength = (Get-Item -LiteralPath $Destination).Length
+        if ((-not $AlwaysDownload) -and $UseCachedInstallers -and ($existingLength -ge $MinimumBytes)) {
+            Write-Log "Using cached installer after size preflight: $Destination"
+            return
+        }
+
+        if ($UseCachedInstallers -and ($existingLength -lt $MinimumBytes)) {
+            Write-Log "Cached file is too small and will be refreshed: $Destination" "WARN"
+        }
+        elseif (-not $UseCachedInstallers) {
+            Write-Log "Refreshing installer/cache file because -UseCachedInstallers was not supplied: $Destination" "DEBUG"
+        }
+        else {
+            Write-Log "Refreshing existing download: $Destination"
+        }
+    }
+
+    if ($Simulation) {
+        $simulationContent = "SIMULATION ONLY - would download $Url"
+        Set-Content -LiteralPath $Destination -Value $simulationContent -Encoding ASCII
+        Write-Log "SIMULATION: Would download $Url to $Destination"
+        return
+    }
+
+    $tmp = "$Destination.tmp"
+    if (Test-Path -LiteralPath $tmp) {
+        Remove-Item -LiteralPath $tmp -Force
+    }
+
+    Write-Log "Downloading $Url"
+    $attemptLimit = [Math]::Max(1, $DownloadRetryCount)
+    $lastError = $null
+    for ($attempt = 1; $attempt -le $attemptLimit; $attempt++) {
+        if (Test-Path -LiteralPath $tmp) {
+            Remove-Item -LiteralPath $tmp -Force
+        }
+
+        try {
+            if ($attempt -gt 1) {
+                Write-Log "Retrying download ($attempt of $attemptLimit): $Url"
+            }
+
+            try {
+                Start-BitsTransfer -Source $Url -Destination $tmp -ErrorAction Stop
+            }
+            catch {
+                Write-Log "BITS download failed, falling back to direct web download. $($_.Exception.Message)" "WARN"
+                Invoke-WebRequest -Uri $Url -OutFile $tmp -UseBasicParsing -TimeoutSec 120
+            }
+
+            $downloaded = Get-Item -LiteralPath $tmp
+            if ($downloaded.Length -lt $MinimumBytes) {
+                throw "Downloaded file is unexpectedly small: $tmp"
+            }
+
+            Move-Item -LiteralPath $tmp -Destination $Destination -Force
+            Write-Log "Downloaded to $Destination ($($downloaded.Length) bytes)."
+            return
+        }
+        catch {
+            $lastError = $_.Exception.Message
+            if ($attempt -ge $attemptLimit) {
+                break
+            }
+
+            Write-Log "Download attempt $attempt failed. Retrying in $DownloadRetryDelaySeconds seconds. $lastError" "WARN"
+            if ($DownloadRetryDelaySeconds -gt 0) {
+                Start-Sleep -Seconds $DownloadRetryDelaySeconds
+            }
+        }
+    }
+
+    if (Test-Path -LiteralPath $tmp) {
+        Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue
+    }
+
+    throw "Download failed after $attemptLimit attempt(s): $Url. Last error: $lastError"
+}
+
+function Assert-TrustedSignature {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string[]]$ExpectedPublisherFragments
+    )
+
+    if ($Simulation) {
+        $publisher = $ExpectedPublisherFragments -join " or "
+        Write-Log "SIMULATION: Would verify trusted signature for $Path from $publisher."
+        return
+    }
+
+    $signature = Get-AuthenticodeSignature -LiteralPath $Path
+    if ($signature.Status -ne "Valid") {
+        throw "Signature check failed for $Path. Status: $($signature.Status)"
+    }
+
+    $subject = $signature.SignerCertificate.Subject
+    $isExpectedPublisher = $false
+    foreach ($fragment in $ExpectedPublisherFragments) {
+        if ($subject -like "*$fragment*") {
+            $isExpectedPublisher = $true
+            break
+        }
+    }
+
+    if (-not $isExpectedPublisher) {
+        throw "Unexpected publisher for $Path. Signer: $subject"
+    }
+
+    Write-Log "Signature OK: $Path signed by $subject"
+}
+
+function Test-TrustedSignature {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string[]]$ExpectedPublisherFragments
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        return $false
+    }
+
+    try {
+        $signature = Get-AuthenticodeSignature -LiteralPath $Path
+        if ($signature.Status -ne "Valid") {
+            return $false
+        }
+
+        $subject = $signature.SignerCertificate.Subject
+        foreach ($fragment in $ExpectedPublisherFragments) {
+            if ($subject -like "*$fragment*") {
+                return $true
+            }
+        }
+    }
+    catch {
+        return $false
+    }
+
+    return $false
+}
+
+function Resolve-AbsoluteUrl {
+    param(
+        [Parameter(Mandatory = $true)][string]$BaseUrl,
+        [Parameter(Mandatory = $true)][string]$Url
+    )
+
+    if ([System.Uri]::IsWellFormedUriString($Url, [System.UriKind]::Absolute)) {
+        return $Url
+    }
+
+    $baseUri = New-Object System.Uri -ArgumentList $BaseUrl
+    $resolvedUri = New-Object System.Uri -ArgumentList $baseUri, $Url
+    return $resolvedUri.AbsoluteUri
+}
+
+function New-QueryString {
+    param([Parameter(Mandatory = $true)][hashtable]$Parameters)
+
+    $parts = @()
+    foreach ($key in $Parameters.Keys) {
+        $parts += ([System.Uri]::EscapeDataString([string]$key) + "=" + [System.Uri]::EscapeDataString([string]$Parameters[$key]))
+    }
+
+    return ($parts -join "&")
+}
+
+function Get-RemoteFileNameFromContentDisposition {
+    param([object]$ContentDisposition)
+
+    $value = @($ContentDisposition | Select-Object -First 1)
+    if ([string]::IsNullOrWhiteSpace($value)) {
+        return $null
+    }
+
+    if ($value -match "filename\*=utf-8''(?<name>[^;]+)") {
+        return (ConvertTo-SafeFileName -FileName ([System.Uri]::UnescapeDataString($matches["name"])))
+    }
+
+    if ($value -match 'filename="(?<name>[^"]+)"') {
+        return (ConvertTo-SafeFileName -FileName $matches["name"])
+    }
+
+    if ($value -match 'filename=(?<name>[^;]+)') {
+        return (ConvertTo-SafeFileName -FileName $matches["name"].Trim())
+    }
+
+    return $null
+}
+
+function Get-RemoteFileNameFromUrl {
+    param(
+        [Parameter(Mandatory = $true)][string]$Url,
+        [Parameter(Mandatory = $true)][string]$FallbackFileName
+    )
+
+    try {
+        $response = Invoke-WebRequest -Uri $Url -Method Head -MaximumRedirection 10 -UseBasicParsing -TimeoutSec 60
+        $contentDisposition = $null
+        try {
+            if ($response.Headers) {
+                if ($response.Headers -is [System.Collections.IDictionary]) {
+                    if ($response.Headers.Contains("Content-Disposition")) {
+                        $contentDisposition = $response.Headers["Content-Disposition"]
+                    }
+                    elseif ($response.Headers.Contains("content-disposition")) {
+                        $contentDisposition = $response.Headers["content-disposition"]
+                    }
+                }
+                elseif ($response.Headers.PSObject.Methods["Get"]) {
+                    $contentDisposition = $response.Headers.Get("Content-Disposition")
+                }
+            }
+        }
+        catch {
+            $contentDisposition = $null
+        }
+
+        try {
+            if ((-not $contentDisposition) -and $response.BaseResponse -and $response.BaseResponse.Headers -and $response.BaseResponse.Headers.PSObject.Methods["Get"]) {
+                $contentDisposition = $response.BaseResponse.Headers.Get("Content-Disposition")
+            }
+        }
+        catch {
+            $contentDisposition = $null
+        }
+
+        $fileName = Get-RemoteFileNameFromContentDisposition -ContentDisposition $contentDisposition
+        if ((-not [string]::IsNullOrWhiteSpace($fileName)) -and $fileName -ne "Unnamed") {
+            return $fileName
+        }
+
+        if ($fileName -eq "Unnamed") {
+            Write-Log "Remote filename header was blank; using fallback filename $FallbackFileName." "WARN"
+        }
+    }
+    catch {
+        Write-Log "Could not read remote filename from download headers. $($_.Exception.Message)" "WARN"
+    }
+
+    return $FallbackFileName
+}
+
+function Get-LeapInstallerLinkFromContent {
+    param([Parameter(Mandatory = $true)][string]$Content)
+
+    $normalized = $Content -replace '\\/', '/'
+    $normalized = $normalized -replace '\\u0026', '&'
+    $normalized = [System.Net.WebUtility]::HtmlDecode($normalized)
+
+    $version = $null
+    $versionMatch = [regex]::Match($normalized, 'Latest Version:\s*(?<version>[0-9][^<"\\\r\n]*)', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    if ($versionMatch.Success) {
+        $version = $versionMatch.Groups["version"].Value.Trim()
+    }
+
+    $labelledMatch = [regex]::Match(
+        $normalized,
+        '(?is)"label"\s*:\s*\{[^}]*"value"\s*:\s*"Download\s+LEAP\s+Desktop".*?"url"\s*:\s*\{[^}]*"value"\s*:\s*"(?<url>https://leaphome\.sharepoint\.com[^"]+)"'
+    )
+    if ($labelledMatch.Success) {
+        return [pscustomobject]@{
+            Url = $labelledMatch.Groups["url"].Value
+            Version = $version
+        }
+    }
+
+    $anchorMatch = [regex]::Match(
+        $normalized,
+        '(?is)<a[^>]+href="(?<url>https://leaphome\.sharepoint\.com[^"]+)"[^>]*>\s*Download\s+LEAP\s+Desktop\s*</a>'
+    )
+    if ($anchorMatch.Success) {
+        return [pscustomobject]@{
+            Url = $anchorMatch.Groups["url"].Value
+            Version = $version
+        }
+    }
+
+    $urlMatches = [regex]::Matches($normalized, 'https://leaphome\.sharepoint\.com[^"''<>\s\\]+')
+    foreach ($match in $urlMatches) {
+        $start = [Math]::Max(0, $match.Index - 800)
+        $length = [Math]::Min(1600, $normalized.Length - $start)
+        $nearbyText = $normalized.Substring($start, $length)
+        if (($nearbyText -match '(?i)Download\s+LEAP\s+Desktop|LEAPDesktopX64setup|LEAP\s+Desktop') -and ($nearbyText -notmatch '(?i)System\s+Audit')) {
+            return [pscustomobject]@{
+                Url = $match.Value
+                Version = $version
+            }
+        }
+    }
+
+    return $null
+}
+
+function Resolve-LeapInstallerFromWebsite {
+    if ($Script:ResolvedLeapInstallerUrl) {
+        return [pscustomobject]@{
+            Url = $Script:ResolvedLeapInstallerUrl
+            Version = $Script:ResolvedLeapInstallerVersion
+            FileName = $Script:ResolvedLeapInstallerFileName
+        }
+    }
+
+    Write-Log "Resolving latest LEAP Desktop installer from $LeapDownloadsPageUrl"
+    $pageResponse = Invoke-WebRequestWithRetry -Uri $LeapDownloadsPageUrl -TimeoutSec 60 -Description "LEAP downloads page request"
+    $pageContent = $pageResponse.Content
+
+    $directInfo = Get-LeapInstallerLinkFromContent -Content $pageContent
+    if ($directInfo) {
+        $fallbackFileName = "LEAPDesktopX64setup.exe"
+        if ($directInfo.Version -match '^(?<version>[0-9.]+)') {
+            $fallbackFileName = "$($matches["version"])_LEAPDesktopX64setup.exe"
+        }
+
+        $fileName = Get-RemoteFileNameFromUrl -Url $directInfo.Url -FallbackFileName $fallbackFileName
+        $Script:ResolvedLeapInstallerUrl = $directInfo.Url
+        $Script:ResolvedLeapInstallerVersion = $directInfo.Version
+        $Script:ResolvedLeapInstallerFileName = $fileName
+        Write-Log "Resolved LEAP Desktop installer from downloads page: $fileName"
+        if ($directInfo.Version) {
+            Write-Log "LEAP downloads page reports latest version: $($directInfo.Version)"
+        }
+        return [pscustomobject]@{
+            Url = $directInfo.Url
+            Version = $directInfo.Version
+            FileName = $fileName
+        }
+    }
+
+    $bootstrapMatch = [regex]::Match($pageContent, '<script[^>]+src="(?<src>[^"]*bootstrap\.js[^"]*)"', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    if (-not $bootstrapMatch.Success) {
+        throw "Could not find LEAP downloads page bootstrap data."
+    }
+
+    $bootstrapUrl = Resolve-AbsoluteUrl -BaseUrl $LeapDownloadsPageUrl -Url $bootstrapMatch.Groups["src"].Value
+    $bootstrapResponse = Invoke-WebRequestWithRetry -Uri $bootstrapUrl -TimeoutSec 60 -Description "LEAP downloads bootstrap request"
+    $bootstrapContent = $bootstrapResponse.Content
+
+    $marker = 'Object.assign(window.Aura.appBootstrap, '
+    $jsonStart = $bootstrapContent.IndexOf($marker)
+    if ($jsonStart -lt 0) {
+        throw "Could not find LEAP downloads page bootstrap payload."
+    }
+
+    $jsonStart = $jsonStart + $marker.Length
+    $jsonEnd = $bootstrapContent.IndexOf(";(function()", $jsonStart)
+    if ($jsonEnd -lt $jsonStart) {
+        $jsonEnd = $bootstrapContent.IndexOf(";(function", $jsonStart)
+    }
+
+    if ($jsonEnd -lt $jsonStart) {
+        throw "Could not parse LEAP downloads page bootstrap payload."
+    }
+
+    $bootstrapJson = $bootstrapContent.Substring($jsonStart, $jsonEnd - $jsonStart).Trim()
+    if ($bootstrapJson.EndsWith(");")) {
+        $bootstrapJson = $bootstrapJson.Substring(0, $bootstrapJson.Length - 2).Trim()
+    }
+    elseif ($bootstrapJson.EndsWith(")")) {
+        $bootstrapJson = $bootstrapJson.Substring(0, $bootstrapJson.Length - 1).Trim()
+    }
+
+    $bootstrap = $bootstrapJson | ConvertFrom-Json
+
+    $router = @($bootstrap.data.components | Where-Object { $_.componentDef.descriptor -eq "markup://siteforce:routerInitializer" } | Select-Object -First 1)
+    if ($router.Count -eq 0) {
+        throw "Could not find LEAP downloads page router data."
+    }
+
+    $downloadsPath = ([Uri]$LeapDownloadsPageUrl).AbsolutePath
+    $routeKey = if ($downloadsPath.StartsWith("/s/")) { $downloadsPath.Substring(2) } else { $downloadsPath }
+    if ([string]::IsNullOrWhiteSpace($routeKey)) {
+        $routeKey = "/downloads"
+    }
+
+    $routeProperty = $router[0].model.routes.PSObject.Properties[$routeKey]
+    if (-not $routeProperty) {
+        throw "Could not find LEAP downloads route metadata for $routeKey."
+    }
+
+    $route = $routeProperty.Value
+    $viewUuid = $route.view_uuid
+    $viewId = $route.id
+    $routeType = $route.event
+    $themeLayoutType = $route.themeLayoutType
+    $publishedChangelistNum = [int]$bootstrap.data.app.attributes.values.publishedChangelistNum
+    $brandingSetId = $bootstrap.data.app.attributes.values.brandingSetId
+    $descriptor = "sitelayout://siteforce-generatedpage-$viewUuid.c$publishedChangelistNum"
+
+    $dca = @{
+        _pl = @{
+            _cn = $descriptor
+            _vc = @{
+                viewId = $viewId
+                routeType = $routeType
+                themeLayoutType = $themeLayoutType
+                params = @{
+                    viewid = $viewUuid
+                    view_uddid = ""
+                    entity_name = ""
+                    audience_name = ""
+                    picasso_id = ""
+                    routeId = ""
+                }
+                hasAttrVaringCmps = $false
+                pageLoadType = "STANDARD_PAGE_CONTENT"
+                includeLayout = $true
+            }
+            _bsi = $brandingSetId
+            _pcn = $publishedChangelistNum
+            _ff = "DESKTOP"
+        }
+    } | ConvertTo-Json -Depth 20 -Compress
+
+    $componentQuery = New-QueryString -Parameters @{
+        "_def" = $descriptor
+        "_dca" = $dca
+        "aura.app" = "markup://siteforce:communityApp"
+        "aura.mode" = "PROD"
+        "_l" = "true"
+        "_ff" = "DESKTOP"
+        "_l10n" = "en_US"
+    }
+
+    $componentUrl = (Resolve-AbsoluteUrl -BaseUrl $LeapDownloadsPageUrl -Url "/s/sfsites/auraCmpDef") + "?" + $componentQuery
+    $componentResponse = Invoke-WebRequestWithRetry -Uri $componentUrl -TimeoutSec 60 -Description "LEAP downloads component request"
+    $componentInfo = Get-LeapInstallerLinkFromContent -Content $componentResponse.Content
+    if (-not $componentInfo) {
+        throw "Could not find the Download LEAP Desktop installer link on the official LEAP downloads page."
+    }
+
+    $fallbackResolvedFileName = "LEAPDesktopX64setup.exe"
+    if ($componentInfo.Version -match '^(?<version>[0-9.]+)') {
+        $fallbackResolvedFileName = "$($matches["version"])_LEAPDesktopX64setup.exe"
+    }
+
+    $resolvedFileName = Get-RemoteFileNameFromUrl -Url $componentInfo.Url -FallbackFileName $fallbackResolvedFileName
+    if ($resolvedFileName -notmatch '(?i)\.(exe|msi)$') {
+        throw "LEAP download did not resolve to an installer filename. Resolved filename: $resolvedFileName"
+    }
+
+    if ($resolvedFileName -notmatch '(?i)x64|64') {
+        Write-Log "Resolved LEAP installer filename does not explicitly include x64: $resolvedFileName" "WARN"
+    }
+
+    $Script:ResolvedLeapInstallerUrl = $componentInfo.Url
+    $Script:ResolvedLeapInstallerVersion = $componentInfo.Version
+    $Script:ResolvedLeapInstallerFileName = $resolvedFileName
+
+    Write-Log "Resolved LEAP Desktop installer from official downloads page: $resolvedFileName"
+    if ($componentInfo.Version) {
+        Write-Log "LEAP downloads page reports latest version: $($componentInfo.Version)"
+    }
+
+    return [pscustomobject]@{
+        Url = $componentInfo.Url
+        Version = $componentInfo.Version
+        FileName = $resolvedFileName
+    }
+}
+
+function Stop-DeploymentBlockingApps {
+    param(
+        [string[]]$ProcessNames,
+        [string[]]$AutoForceProcessNames = @()
+    )
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would check and close blocking apps if needed: $($ProcessNames -join ', ')"
+        return
+    }
+
+    $running = @()
+    foreach ($name in $ProcessNames) {
+        $running += @(Get-Process -Name $name -ErrorAction SilentlyContinue)
+    }
+
+    $running = @($running | Sort-Object Id -Unique)
+    if ($running.Count -eq 0) {
+        return
+    }
+
+    $names = ($running | Select-Object -ExpandProperty ProcessName -Unique | Sort-Object) -join ", "
+
+    if ($ForceCloseApps) {
+        Write-Log "Closing running apps with force: $names" "WARN"
+        foreach ($process in $running) {
+            Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+        }
+        Start-Sleep -Seconds 5
+        return
+    }
+
+    Write-Log "Running apps may block installation: $names" "WARN"
+    Write-Log "Trying a normal close request. Use -ForceCloseApps only after work is saved." "WARN"
+
+    foreach ($process in $running) {
+        try {
+            if ($process.MainWindowHandle -ne 0) {
+                [void]$process.CloseMainWindow()
+            }
+        }
+        catch {
+            Write-Log "Could not send close request to $($process.ProcessName) PID $($process.Id)." "WARN"
+        }
+    }
+
+    Start-Sleep -Seconds 30
+
+    $stillRunning = @()
+    foreach ($name in $ProcessNames) {
+        $stillRunning += @(Get-Process -Name $name -ErrorAction SilentlyContinue)
+    }
+
+    if ($stillRunning.Count -gt 0 -and $AutoForceProcessNames.Count -gt 0) {
+        $autoForceSet = @{}
+        foreach ($name in $AutoForceProcessNames) {
+            if (-not [string]::IsNullOrWhiteSpace($name)) {
+                $autoForceSet[$name.ToLowerInvariant()] = $true
+            }
+        }
+
+        $autoForceRunning = @($stillRunning | Where-Object { $autoForceSet.ContainsKey($_.ProcessName.ToLowerInvariant()) })
+        if ($autoForceRunning.Count -gt 0) {
+            $autoForceNames = ($autoForceRunning | Select-Object -ExpandProperty ProcessName -Unique | Sort-Object) -join ", "
+            Write-Log "Force-closing known background/helper processes after normal close timeout: $autoForceNames" "WARN"
+            foreach ($process in $autoForceRunning) {
+                Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+            }
+
+            Start-Sleep -Seconds 5
+            $stillRunning = @()
+            foreach ($name in $ProcessNames) {
+                $stillRunning += @(Get-Process -Name $name -ErrorAction SilentlyContinue)
+            }
+        }
+    }
+
+    if ($stillRunning.Count -gt 0) {
+        $stillNames = ($stillRunning | Select-Object -ExpandProperty ProcessName -Unique | Sort-Object) -join ", "
+        throw "These apps are still running and could cause data loss if forced: $stillNames. Save work, close them, and rerun, or rerun with -ForceCloseApps."
+    }
+}
+
+function Write-OfficeConfigurationFiles {
+    $removeXmlPath = Join-Path $Script:OfficeDir "remove-office.xml"
+    $installXmlPath = Join-Path $Script:OfficeDir "install-m365-semiannual-en-gb.xml"
+    $officeSourcePath = Escape-XmlAttribute -Value $Script:OfficeDir
+
+    $removeXml = @"
+<Configuration>
+  <Remove All="TRUE" />
+  <Display Level="None" AcceptEULA="TRUE" />
+  <Property Name="FORCEAPPSHUTDOWN" Value="FALSE" />
+</Configuration>
+"@
+
+    $installXml = @"
+<Configuration>
+  <Add OfficeClientEdition="64" Channel="SemiAnnual" SourcePath="$officeSourcePath" AllowCdnFallback="True">
+    <Product ID="O365ProPlusRetail">
+      <Language ID="en-gb" />
+    </Product>
+  </Add>
+  <RemoveMSI />
+  <Updates Enabled="TRUE" Channel="SemiAnnual" />
+  <Display Level="None" AcceptEULA="TRUE" />
+  <Property Name="FORCEAPPSHUTDOWN" Value="FALSE" />
+  <Property Name="PinIconsToTaskbar" Value="FALSE" />
+</Configuration>
+"@
+
+    Set-Content -LiteralPath $removeXmlPath -Value $removeXml -Encoding UTF8
+    Set-Content -LiteralPath $installXmlPath -Value $installXml -Encoding UTF8
+
+    Write-Log "Wrote Office remove configuration: $removeXmlPath"
+    Write-Log "Wrote Office install configuration: $installXmlPath"
+
+    return @{
+        Remove = $removeXmlPath
+        Install = $installXmlPath
+    }
+}
+
+function Install-OfficeDeploymentTool {
+    $odtExe = Join-Path $Script:DownloadDir (Split-Path -Leaf $OfficeDeploymentToolUrl)
+    Save-Download -Url $OfficeDeploymentToolUrl -Destination $odtExe -MinimumBytes 1000000
+    Assert-TrustedSignature -Path $odtExe -ExpectedPublisherFragments @("Microsoft Corporation")
+
+    $setupPath = Join-Path $Script:OfficeDir "setup.exe"
+    if (Test-Path -LiteralPath $setupPath) {
+        Remove-Item -LiteralPath $setupPath -Force
+    }
+
+    Invoke-ProcessChecked `
+        -FilePath $odtExe `
+        -ArgumentList @("/quiet", "/extract:$Script:OfficeDir") `
+        -Description "Office Deployment Tool extraction"
+
+    if ($Simulation -and (-not (Test-Path -LiteralPath $setupPath))) {
+        Set-Content -LiteralPath $setupPath -Value "SIMULATION ONLY - Office Deployment Tool setup.exe placeholder" -Encoding ASCII
+        Write-Log "SIMULATION: Created placeholder Office setup.exe at $setupPath"
+    }
+
+    if (-not (Test-Path -LiteralPath $setupPath)) {
+        throw "Office Deployment Tool setup.exe was not extracted to $setupPath."
+    }
+
+    Assert-TrustedSignature -Path $setupPath -ExpectedPublisherFragments @("Microsoft Corporation")
+    return $setupPath
+}
+
+function Get-OfficeDeploymentAssets {
+    $setupPath = Install-OfficeDeploymentTool
+    $configs = Write-OfficeConfigurationFiles
+
+    return [pscustomobject]@{
+        Setup = $setupPath
+        RemoveConfig = $configs.Remove
+        InstallConfig = $configs.Install
+    }
+}
+
+function Stop-OfficeBlockingApps {
+    $officeProcesses = @(
+        "winword", "excel", "powerpnt", "outlook", "onenote", "msaccess", "mspub",
+        "visio", "winproj", "lync", "teams", "ms-teams"
+    )
+
+    Stop-DeploymentBlockingApps -ProcessNames $officeProcesses
+}
+
+function Get-OfficeScrubToolPath {
+    $zipLeaf = Split-Path -Leaf ([Uri]$OfficeScrubToolUrl).AbsolutePath
+    if ([string]::IsNullOrWhiteSpace($zipLeaf) -or $zipLeaf -notmatch "\.zip$") {
+        $zipLeaf = "GetHelpCmd.zip"
+    }
+    $zipPath = Join-Path $Script:DownloadDir $zipLeaf
+    if ([string]::IsNullOrWhiteSpace((Split-Path -Leaf $zipPath))) {
+        $zipPath = Join-Path $Script:DownloadDir "GetHelpCmd.zip"
+    }
+
+    $extractDir = Join-Path $Script:Root "OfficeScrubTool"
+
+    if ($Simulation) {
+        if (-not (Test-Path -LiteralPath $extractDir)) {
+            New-Item -Path $extractDir -ItemType Directory -Force | Out-Null
+        }
+        $tool = Join-Path $extractDir "GetHelpCmd.exe"
+        if (-not (Test-Path -LiteralPath $tool)) {
+            Set-Content -LiteralPath $tool -Value "SIMULATION ONLY - GetHelpCmd placeholder" -Encoding ASCII
+        }
+        Write-Log "SIMULATION: Using placeholder Microsoft Office scrub tool at $tool"
+        return $tool
+    }
+
+    Save-Download -Url $OfficeScrubToolUrl -Destination $zipPath -MinimumBytes 1000000
+
+    if (Test-Path -LiteralPath $extractDir) {
+        Remove-Item -LiteralPath $extractDir -Recurse -Force
+    }
+    New-Item -Path $extractDir -ItemType Directory -Force | Out-Null
+    Expand-Archive -LiteralPath $zipPath -DestinationPath $extractDir -Force
+
+    $tool = Get-ChildItem -LiteralPath $extractDir -Recurse -Filter "GetHelpCmd.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $tool) {
+        $tool = Get-ChildItem -LiteralPath $extractDir -Recurse -Filter "SaRACmd.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+    }
+
+    if (-not $tool) {
+        throw "Could not find GetHelpCmd.exe or SaRACmd.exe after extracting the Office scrub tool."
+    }
+
+    Assert-TrustedSignature -Path $tool.FullName -ExpectedPublisherFragments @("Microsoft Corporation")
+    return $tool.FullName
+}
+
+function Invoke-OfficeScrubCleanup {
+    $scrubTool = Get-OfficeScrubToolPath
+    $scrubLogDir = Join-Path $Script:LogDir "OfficeScrub-$Script:RunStamp"
+    if (-not (Test-Path -LiteralPath $scrubLogDir)) {
+        New-Item -Path $scrubLogDir -ItemType Directory -Force | Out-Null
+    }
+
+    Invoke-ProcessChecked `
+        -FilePath $scrubTool `
+        -ArgumentList @("-S", "OfficeScrubScenario", "-AcceptEula", "-OfficeVersion", "All", "-LogFolder", $scrubLogDir) `
+        -SuccessExitCodes @(0, 3010) `
+        -Description "Microsoft Office scrub cleanup"
+}
+
+function Invoke-OfficeInstall {
+    param([Parameter(Mandatory = $true)]$Assets)
+
+    if (Test-ZiaasStagedOfficePayload) {
+        Write-Log "Using Office installation payload verified by the pre-cleanup staging gate."
+    }
+    else {
+        Invoke-ProcessChecked `
+            -FilePath $Assets.Setup `
+            -ArgumentList @("/download", $Assets.InstallConfig) `
+            -Description "Microsoft 365 Apps installation file download" `
+            -WorkingDirectory $Script:OfficeDir
+    }
+
+    Invoke-ProcessChecked `
+        -FilePath $Assets.Setup `
+        -ArgumentList @("/configure", $Assets.InstallConfig) `
+        -Description "Microsoft 365 Apps for enterprise installation" `
+        -WorkingDirectory $Script:OfficeDir
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Office Click-to-Run ProductReleaseIds: O365ProPlusRetail"
+        Write-Log "SIMULATION: Office Platform: x64"
+        Write-Log "SIMULATION: Office ClientCulture: en-gb"
+        Write-Log "SIMULATION: Office UpdateChannel: SemiAnnual"
+        return
+    }
+
+    $configKey = "HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\Configuration"
+    if (Test-Path -LiteralPath $configKey) {
+        $cfg = Get-ItemProperty -LiteralPath $configKey
+        $productReleaseIds = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'ProductReleaseIds')
+        $platform = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'Platform')
+        $clientCulture = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'ClientCulture')
+        $cdnBaseUrl = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'CDNBaseUrl')
+        $updateChannel = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'UpdateChannel')
+        $audienceId = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'AudienceId')
+        $audienceData = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'AudienceData')
+        $versionToReport = [string](Get-ObjectPropertyValue -InputObject $cfg -Name 'VersionToReport')
+
+        Write-Log "Office Click-to-Run ProductReleaseIds: $productReleaseIds"
+        Write-Log "Office Platform: $platform"
+        Write-Log "Office ClientCulture: $clientCulture"
+        Write-Log "Office CDNBaseUrl: $cdnBaseUrl"
+        Write-Log "Office UpdateChannel: $updateChannel"
+        Write-Log "Office AudienceId: $audienceId"
+        Write-Log "Office AudienceData: $audienceData"
+        Write-Log "Office VersionToReport: $versionToReport"
+
+        if ($productReleaseIds -notmatch "(?i)\bO365ProPlusRetail\b") {
+            throw "Office verification failed: expected Microsoft 365 Apps for enterprise ProductReleaseIds to include O365ProPlusRetail, found '$productReleaseIds'."
+        }
+
+        if ($platform -ne "x64") {
+            throw "Office verification failed: expected x64 platform, found '$platform'."
+        }
+
+        if ($clientCulture -notmatch "(?i)^en-gb$") {
+            throw "Office verification failed: expected en-gb client culture, found '$clientCulture'."
+        }
+
+        $semiAnnualAudienceId = "7ffbc6bf-bc32-4f92-8982-f9dd17fd3114"
+        $monthlyEnterpriseAudienceId = "55336b82-a18d-4dd6-b5f6-9e5095c314a6"
+        $channelEvidence = @($audienceId, $audienceData, $updateChannel, $cdnBaseUrl) -join " "
+        if ($channelEvidence -match [regex]::Escape($semiAnnualAudienceId)) {
+            Write-Log "Verified Office Semi-Annual Enterprise channel audience: $semiAnnualAudienceId"
+        }
+        elseif ($channelEvidence -match [regex]::Escape($monthlyEnterpriseAudienceId)) {
+            $versionBuild = 0
+            $versionRevision = 0
+            if ($versionToReport -match "^16\.0\.(?<build>\d+)\.(?<revision>\d+)$") {
+                $versionBuild = [int]$matches["build"]
+                $versionRevision = [int]$matches["revision"]
+            }
+            $isMicrosoftUnifiedChannelBuild = ($versionBuild -gt 20131) -or ($versionBuild -eq 20131 -and $versionRevision -ge 20000)
+            if (-not $isMicrosoftUnifiedChannelBuild) {
+                throw "Office verification failed: XML requested Semi-Annual Enterprise, but this pre-unification build reports Monthly Enterprise audience $monthlyEnterpriseAudienceId. Version='$versionToReport', AudienceData='$audienceData'."
+            }
+            Write-Log "Office requested Semi-Annual Enterprise, but Microsoft unifies SAEC into Monthly Enterprise from Version 2606 (build 20131.20000+) in July 2026. Verified expected unified enterprise audience $monthlyEnterpriseAudienceId for version $versionToReport." "WARN"
+        }
+        else {
+            throw "Office verification failed: Semi-Annual Enterprise channel could not be proven. AudienceId='$audienceId', AudienceData='$audienceData', UpdateChannel='$updateChannel', CDNBaseUrl='$cdnBaseUrl'."
+        }
+    }
+    else {
+        throw "Office verification failed: Click-to-Run configuration registry key was not found after install."
+    }
+}
+
+function Invoke-OfficeDeployment {
+    $assets = Get-OfficeDeploymentAssets
+    Invoke-OfficeUninstallAndCleanup -Assets $assets
+    Invoke-OfficeInstall -Assets $assets
+}
+
+function Get-LocalUserProfileRecords {
+    $profileListPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*"
+    $usersRoot = [IO.Path]::GetFullPath((Join-Path $env:SystemDrive "Users"))
+
+    foreach ($profileRecord in @(Get-ItemProperty -Path $profileListPath -ErrorAction SilentlyContinue)) {
+        $sid = [string](Get-ObjectPropertyValue -InputObject $profileRecord -Name "PSChildName")
+        $profileImagePath = [string](Get-ObjectPropertyValue -InputObject $profileRecord -Name "ProfileImagePath")
+        if ([string]::IsNullOrWhiteSpace($sid) -or [string]::IsNullOrWhiteSpace($profileImagePath)) {
+            continue
+        }
+
+        try {
+            [void](New-Object Security.Principal.SecurityIdentifier($sid))
+            $expandedPath = [Environment]::ExpandEnvironmentVariables($profileImagePath)
+            $fullPath = [IO.Path]::GetFullPath($expandedPath).TrimEnd('\')
+            if (-not $fullPath.StartsWith("$usersRoot\", [StringComparison]::OrdinalIgnoreCase)) {
+                continue
+            }
+            if (-not (Test-Path -LiteralPath $fullPath -PathType Container)) {
+                continue
+            }
+
+            [pscustomobject]@{
+                Sid = $sid
+                LocalPath = $fullPath
+                HiveLoaded = Test-Path -LiteralPath "Registry::HKEY_USERS\$sid"
+            }
+        }
+        catch {
+            Write-Log "Ignoring invalid or inaccessible local profile record '$sid' at '$profileImagePath'. $($_.Exception.Message)" "DEBUG"
+        }
+    }
+}
+
+function Get-UninstallEntries {
+    $paths = @(
+        [pscustomobject]@{ Path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*"; Scope = "Machine64"; UserSid = $null; UserProfilePath = $null },
+        [pscustomobject]@{ Path = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"; Scope = "Machine32"; UserSid = $null; UserProfilePath = $null }
+    )
+
+    $profiles = @(Get-LocalUserProfileRecords)
+    $loadedUserSids = @($profiles | Where-Object { $_.HiveLoaded } | Select-Object -ExpandProperty Sid -Unique)
+    foreach ($profileRecord in @($profiles | Where-Object { $_.HiveLoaded })) {
+        $paths += [pscustomobject]@{
+            Path = "Registry::HKEY_USERS\$($profileRecord.Sid)\Software\Microsoft\Windows\CurrentVersion\Uninstall\*"
+            Scope = "User:$($profileRecord.Sid)"
+            UserSid = $profileRecord.Sid
+            UserProfilePath = $profileRecord.LocalPath
+        }
+    }
+
+    $currentSid = [Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+    if ($loadedUserSids -notcontains $currentSid) {
+        $currentProfilePath = [Environment]::GetFolderPath("UserProfile")
+        $paths += [pscustomobject]@{ Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*"; Scope = "CurrentUser:$currentSid"; UserSid = $currentSid; UserProfilePath = $currentProfilePath }
+    }
+
+    foreach ($location in $paths) {
+        Get-ItemProperty -Path $location.Path -ErrorAction SilentlyContinue | ForEach-Object {
+            [pscustomobject]@{
+                DisplayName = Get-ObjectPropertyValue -InputObject $_ -Name "DisplayName"
+                DisplayVersion = Get-ObjectPropertyValue -InputObject $_ -Name "DisplayVersion"
+                Publisher = Get-ObjectPropertyValue -InputObject $_ -Name "Publisher"
+                PSChildName = Get-ObjectPropertyValue -InputObject $_ -Name "PSChildName"
+                UninstallString = Get-ObjectPropertyValue -InputObject $_ -Name "UninstallString"
+                QuietUninstallString = Get-ObjectPropertyValue -InputObject $_ -Name "QuietUninstallString"
+                InstallLocation = Get-ObjectPropertyValue -InputObject $_ -Name "InstallLocation"
+                WindowsInstaller = Get-ObjectPropertyValue -InputObject $_ -Name "WindowsInstaller"
+                RegistryPath = Get-ObjectPropertyValue -InputObject $_ -Name "PSPath"
+                Scope = $location.Scope
+                UserSid = $location.UserSid
+                UserProfilePath = $location.UserProfilePath
+            }
+        }
+    }
+}
+
+function Get-AdobeReaderAndAcrobatEntries {
+    if ($Simulation) {
+        if ($Script:SimulationAdobeProductsRemoved) {
+            return @()
+        }
+
+        return @(
+            [pscustomobject]@{
+                DisplayName = "Adobe Acrobat Reader DC"
+                DisplayVersion = "simulated-existing-reader"
+                Publisher = "Adobe Inc."
+                PSChildName = "{AC76BA86-7AD7-1033-7B44-AC0F074E4100}"
+                UninstallString = "MsiExec.exe /I{AC76BA86-7AD7-1033-7B44-AC0F074E4100}"
+                QuietUninstallString = $null
+                WindowsInstaller = 1
+                RegistryPath = "SIMULATION"
+            },
+            [pscustomobject]@{
+                DisplayName = "Adobe Acrobat"
+                DisplayVersion = "simulated-existing-acrobat"
+                Publisher = "Adobe Inc."
+                PSChildName = "{AC76BA86-1033-FFFF-7760-BC15014EA700}"
+                UninstallString = "MsiExec.exe /I{AC76BA86-1033-FFFF-7760-BC15014EA700}"
+                QuietUninstallString = $null
+                WindowsInstaller = 1
+                RegistryPath = "SIMULATION"
+            }
+        )
+    }
+
+    Get-UninstallEntries | Where-Object {
+        $name = $_.DisplayName
+        if ([string]::IsNullOrWhiteSpace($name)) {
+            $false
+        }
+        else {
+            $isAcrobatProduct =
+                $name -match "(?i)^Adobe Acrobat(\s|$|\()" -or
+                $name -match "(?i)^Adobe Reader(\s|$|\()" -or
+                $name -match "(?i)^Adobe Acrobat Reader(\s|$|\()"
+
+            $isExcluded =
+                $name -match "(?i)Update Service" -or
+                $name -match "(?i)Genuine" -or
+                $name -match "(?i)Creative Cloud" -or
+                $name -match "(?i)Notification" -or
+                $name -match "(?i)Refresh Manager"
+
+            $isAcrobatProduct -and (-not $isExcluded)
+        }
+    } | Sort-Object DisplayName, DisplayVersion -Unique
+}
+
+function Get-MsiProductCode {
+    param([Parameter(Mandatory = $true)]$Entry)
+
+    if ($Entry.PSChildName -match "^\{[0-9A-Fa-f-]{36}\}$") {
+        return $Entry.PSChildName
+    }
+
+    foreach ($candidate in @($Entry.UninstallString, $Entry.QuietUninstallString)) {
+        if ($candidate -match "\{[0-9A-Fa-f-]{36}\}") {
+            return $matches[0]
+        }
+    }
+
+    return $null
+}
+
+function Invoke-MsiUninstallWithRetry {
+    param(
+        [Parameter(Mandatory = $true)][string]$ProductCode,
+        [Parameter(Mandatory = $true)][string]$MsiLog,
+        [Parameter(Mandatory = $true)][string]$ProductName,
+        [string]$VendorLabel = "MSI"
+    )
+
+    $maxAttempts = 4
+    $uninstallCompleted = $false
+    for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+        Invoke-ProcessChecked `
+            -FilePath "$env:SystemRoot\System32\msiexec.exe" `
+            -ArgumentList @("/x", $ProductCode, "/qn", "/norestart", "/L*v", $MsiLog) `
+            -SuccessExitCodes @(0, 1605, 1614, 1618, 3010) `
+            -Description "$VendorLabel uninstall: $ProductName attempt $attempt of $maxAttempts"
+        $exitCode = [int]$Script:LastProcessExitCode
+
+        if ($exitCode -eq 1618) {
+            if ($attempt -ge $maxAttempts) {
+                throw "$VendorLabel uninstall remained blocked by Windows Installer error 1618 after $maxAttempts attempts. Reboot the machine, confirm no other installer is active, and rerun."
+            }
+
+            Write-Log "$VendorLabel uninstall returned Windows Installer error 1618 (another installation is in progress). Waiting 30 seconds before retry $($attempt + 1) of $maxAttempts." "WARN"
+            Start-Sleep -Seconds 30
+            continue
+        }
+
+        $uninstallCompleted = $true
+        break
+    }
+
+    if (-not $uninstallCompleted) {
+        throw "$VendorLabel uninstall did not complete for $ProductName."
+    }
+}
+
+function Invoke-AdobeMsiUninstallWithRetry {
+    param(
+        [Parameter(Mandatory = $true)][string]$ProductCode,
+        [Parameter(Mandatory = $true)][string]$MsiLog,
+        [Parameter(Mandatory = $true)][string]$ProductName
+    )
+
+    Invoke-MsiUninstallWithRetry `
+        -ProductCode $ProductCode `
+        -MsiLog $MsiLog `
+        -ProductName $ProductName `
+        -VendorLabel "Adobe"
+}
+
+function Get-AdobeSafeRemnantEntries {
+    if ($Simulation) {
+        return @()
+    }
+
+    Get-UninstallEntries | Where-Object {
+        $_.DisplayName -match "(?i)^Adobe Refresh Manager$"
+    } | Sort-Object DisplayName, DisplayVersion -Unique
+}
+
+function Remove-AdobeSafeRemnantEntries {
+    $entries = @(Get-AdobeSafeRemnantEntries)
+    if ($entries.Count -eq 0) {
+        Write-Log "No allowlisted Adobe remnant MSI entries found."
+        return
+    }
+
+    foreach ($entry in $entries) {
+        Write-Log "Found allowlisted Adobe remnant: $($entry.DisplayName) $($entry.DisplayVersion)"
+        $productCode = Get-MsiProductCode -Entry $entry
+        if (-not $productCode) {
+            throw "Allowlisted Adobe remnant '$($entry.DisplayName)' has no MSI product code. Refusing to remove it by an unverified command."
+        }
+
+        $safeName = ($entry.DisplayName -replace "[^A-Za-z0-9._-]", "_")
+        $msiLog = Join-Path $Script:LogDir "Uninstall-$safeName-$Script:RunStamp.log"
+        Invoke-AdobeMsiUninstallWithRetry `
+            -ProductCode $productCode `
+            -MsiLog $msiLog `
+            -ProductName ([string]$entry.DisplayName)
+    }
+
+    $remaining = @(Get-AdobeSafeRemnantEntries)
+    if ($remaining.Count -gt 0) {
+        $names = ($remaining | ForEach-Object { "$($_.DisplayName) $($_.DisplayVersion)" }) -join "; "
+        throw "Allowlisted Adobe remnants remain after uninstall: $names"
+    }
+}
+
+function Uninstall-AdobeReaderAndAcrobat {
+    $entries = @(Get-AdobeReaderAndAcrobatEntries)
+    if ($entries.Count -eq 0) {
+        Write-Log "No existing Adobe Reader/Acrobat uninstall entries found."
+        return
+    }
+
+    foreach ($entry in $entries) {
+        Write-Log "Found Adobe product: $($entry.DisplayName) $($entry.DisplayVersion)"
+    }
+
+    $adobeProcesses = @("AcroRd32", "Acrobat", "AcroCEF", "RdrCEF")
+    Stop-DeploymentBlockingApps -ProcessNames $adobeProcesses
+
+    foreach ($entry in $entries) {
+        $productCode = Get-MsiProductCode -Entry $entry
+        if (-not $productCode) {
+            Write-Log "Skipping non-MSI uninstall entry without a product code: $($entry.DisplayName)" "WARN"
+            continue
+        }
+
+        $safeName = ($entry.DisplayName -replace "[^A-Za-z0-9._-]", "_")
+        $msiLog = Join-Path $Script:LogDir "Uninstall-$safeName-$Script:RunStamp.log"
+
+        Invoke-AdobeMsiUninstallWithRetry `
+            -ProductCode $productCode `
+            -MsiLog $msiLog `
+            -ProductName ([string]$entry.DisplayName)
+    }
+
+    if ($Simulation) {
+        $Script:SimulationAdobeProductsRemoved = $true
+    }
+
+    $remaining = @(Get-AdobeReaderAndAcrobatEntries)
+    if ($remaining.Count -gt 0) {
+        foreach ($entry in $remaining) {
+            Write-Log "Still present after uninstall attempt: $($entry.DisplayName) $($entry.DisplayVersion)" "WARN"
+        }
+        throw "One or more Adobe Reader/Acrobat products remain installed. Stopping before folder cleanup and fresh Adobe install."
+    }
+}
+
+function Remove-StaleAdobeMachineRemnants {
+    Write-Log "Cleaning safe Adobe machine-level remnants."
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would stop Adobe update service, unregister stale Adobe update tasks, and remove known machine-level Adobe cache/remnant folders only."
+        return
+    }
+
+    Remove-AdobeSafeRemnantEntries
+
+    $serviceNames = @("AdobeARMservice")
+    foreach ($serviceName in $serviceNames) {
+        $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
+        if ($service) {
+            try {
+                if ($service.Status -ne "Stopped") {
+                    Stop-Service -Name $serviceName -Force -ErrorAction SilentlyContinue
+                }
+                Write-Log "Stopped stale service: $serviceName"
+            }
+            catch {
+                Write-Log "Could not stop service $serviceName. $($_.Exception.Message)" "WARN"
+            }
+        }
+    }
+
+    try {
+        Get-ScheduledTask -TaskName "Adobe Acrobat Update Task*" -ErrorAction SilentlyContinue | ForEach-Object {
+            Unregister-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -Confirm:$false -ErrorAction SilentlyContinue
+            Write-Log "Removed stale scheduled task: $($_.TaskPath)$($_.TaskName)"
+        }
+    }
+    catch {
+        Write-Log "Could not enumerate/remove Adobe scheduled tasks. $($_.Exception.Message)" "WARN"
+    }
+
+    $safeDirs = @(
+        "$env:ProgramFiles\Adobe\Acrobat DC",
+        "${env:ProgramFiles(x86)}\Adobe\Acrobat Reader DC",
+        "${env:ProgramFiles(x86)}\Adobe\Reader 11.0",
+        "$env:ProgramData\Adobe\ARM",
+        "$env:ProgramData\Adobe\Setup"
+    )
+
+    foreach ($dir in $safeDirs) {
+        if ([string]::IsNullOrWhiteSpace($dir) -or (-not (Test-Path -LiteralPath $dir))) {
+            continue
+        }
+
+        try {
+            Assert-ZiaasSafePath -Path $dir -AllowedRoots @($env:ProgramFiles, ${env:ProgramFiles(x86)}, $env:ProgramData) -Purpose "Adobe machine-level cleanup"
+            Remove-Item -LiteralPath $dir -Recurse -Force -ErrorAction Stop
+            Write-Log "Removed stale Adobe folder: $dir"
+        }
+        catch {
+            Write-Log "Could not remove stale Adobe folder $dir. $($_.Exception.Message)" "WARN"
+        }
+    }
+}
+
+function Get-AdobeCleanerPath {
+    $cleanerExe = Join-Path $Script:DownloadDir (Split-Path -Leaf ([Uri]$AdobeCleanerToolUrl).AbsolutePath)
+    if ([string]::IsNullOrWhiteSpace((Split-Path -Leaf $cleanerExe))) {
+        $cleanerExe = Join-Path $Script:DownloadDir "AdobeAcroCleaner.exe"
+    }
+
+    Save-Download -Url $AdobeCleanerToolUrl -Destination $cleanerExe -MinimumBytes 1000000
+    Assert-TrustedSignature -Path $cleanerExe -ExpectedPublisherFragments @("Adobe", "Adobe Inc.")
+    return $cleanerExe
+}
+
+function Get-AdobeReaderInstallerPath {
+    $readerFileName = Get-RemoteFileNameFromUrl -Url $AdobeReaderInstallerUrl -FallbackFileName "AcroRdrDCx64_MUI.exe"
+    $readerExe = Join-Path $Script:DownloadDir $readerFileName
+    Save-Download -Url $AdobeReaderInstallerUrl -Destination $readerExe -MinimumBytes 100000000
+    Assert-TrustedSignature -Path $readerExe -ExpectedPublisherFragments @("Adobe", "Adobe Inc.")
+
+    return $readerExe
+}
+
+function Assert-AdobeAcrobatProInstallerFileSupported {
+    param([Parameter(Mandatory = $true)][string]$Path)
+
+    $extension = [System.IO.Path]::GetExtension($Path)
+    if ($extension -notin @(".exe", ".msi")) {
+        throw "Acrobat Pro installer must be an .exe or .msi. If Adobe supplied an archive, extract it first and pass the setup executable or MSI."
+    }
+}
+
+function Get-AdobeAcrobatProInstallerPath {
+    if ($AdobeAcrobatProInstallerPath) {
+        if (-not (Test-Path -LiteralPath $AdobeAcrobatProInstallerPath)) {
+            throw "Acrobat Pro installer path was supplied but not found: $AdobeAcrobatProInstallerPath"
+        }
+
+        $resolved = (Resolve-Path -LiteralPath $AdobeAcrobatProInstallerPath).Path
+        Assert-AdobeAcrobatProInstallerFileSupported -Path $resolved
+        if (-not $Simulation) {
+            Assert-TrustedSignature -Path $resolved -ExpectedPublisherFragments $AdobeAcrobatProTrustedPublisherFragments
+        }
+        else {
+            Write-Log "SIMULATION: Would use local Acrobat Pro installer path $resolved"
+        }
+        return $resolved
+    }
+
+    if ($AdobeAcrobatProInstallerUrl) {
+        $leaf = Split-Path -Leaf ([Uri]$AdobeAcrobatProInstallerUrl).AbsolutePath
+        if ([string]::IsNullOrWhiteSpace($leaf)) {
+            $leaf = "Adobe-Acrobat-Pro-Installer.exe"
+        }
+
+        Assert-AdobeAcrobatProInstallerFileSupported -Path $leaf
+        $installer = Join-Path $Script:DownloadDir $leaf
+        Save-Download -Url $AdobeAcrobatProInstallerUrl -Destination $installer -MinimumBytes 1000000
+        Assert-TrustedSignature -Path $installer -ExpectedPublisherFragments $AdobeAcrobatProTrustedPublisherFragments
+        return $installer
+    }
+
+    if ($Simulation) {
+        $installer = Join-Path $Script:DownloadDir "Adobe-Acrobat-Pro-Installer-Simulation.exe"
+        if (-not (Test-Path -LiteralPath $installer)) {
+            Set-Content -LiteralPath $installer -Value "SIMULATION ONLY - Acrobat Pro installer placeholder" -Encoding ASCII
+        }
+        Write-Log "SIMULATION: Using placeholder Acrobat Pro installer at $installer"
+        return $installer
+    }
+
+    throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied. Provide -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl before starting the run."
+}
+
+function Get-AdobeSelectedInstallerPath {
+    param([Parameter(Mandatory = $true)]$AdobeSelection)
+
+    switch ($AdobeSelection.Product) {
+        "Reader" {
+            return Get-AdobeReaderInstallerPath
+        }
+        "AcrobatPro" {
+            return Get-AdobeAcrobatProInstallerPath
+        }
+    }
+
+    throw "Unknown Adobe product: $($AdobeSelection.Product)"
+}
+
+function Install-AdobeReader {
+    param([Parameter(Mandatory = $true)][string]$ReaderInstallerPath)
+
+    $readerExe = $ReaderInstallerPath
+    $installLog = Join-Path $Script:LogDir "AdobeReader-Install-$Script:RunStamp.log"
+    $arguments = @(
+        "/sAll",
+        "/rs",
+        "/rps",
+        "/msi",
+        "/qn",
+        "EULA_ACCEPT=YES",
+        "REBOOT=ReallySuppress",
+        "DISABLEDESKTOPSHORTCUT=1",
+        "SUPPRESSLANGSELECTION=YES",
+        "LANG_LIST=en_GB",
+        "/L*v",
+        $installLog
+    )
+
+    Invoke-ProcessChecked `
+        -FilePath $readerExe `
+        -ArgumentList $arguments `
+        -Description "Adobe Acrobat Reader 64-bit MUI installation"
+}
+
+function Install-AdobeAcrobatPro {
+    param([Parameter(Mandatory = $true)][string]$InstallerPath)
+
+    $extension = [System.IO.Path]::GetExtension($InstallerPath)
+    $description = "Adobe Acrobat Pro installation"
+    $filePath = $InstallerPath
+    $arguments = @(Get-AdobeAcrobatProInstallArgumentList)
+
+    if ($extension -ieq ".msi") {
+        $filePath = "$env:SystemRoot\System32\msiexec.exe"
+        $arguments = @("/i", $InstallerPath) + $arguments
+        $description = "Adobe Acrobat Pro MSI installation"
+    }
+
+    if ($arguments.Count -eq 0 -and $Simulation) {
+        Write-Log "SIMULATION: No Acrobat Pro install arguments were supplied. A real run would require -AdobeAcrobatProInstallArgumentLine or -AdobeAcrobatProInstallArguments unless -AllowAcrobatProInstallerWithoutArguments is supplied." "WARN"
+    }
+    elseif ($arguments.Count -eq 0) {
+        Write-Log "No Acrobat Pro install arguments were supplied. This was explicitly allowed; installer UI may appear." "WARN"
+    }
+
+    Invoke-ProcessChecked `
+        -FilePath $filePath `
+        -ArgumentList $arguments `
+        -Description $description
+}
+
+function Install-AdobeProduct {
+    param(
+        [Parameter(Mandatory = $true)]$AdobeSelection,
+        [Parameter(Mandatory = $true)][string]$InstallerPath
+    )
+
+    switch ($AdobeSelection.Product) {
+        "Reader" {
+            Install-AdobeReader -ReaderInstallerPath $InstallerPath
+            return
+        }
+        "AcrobatPro" {
+            Install-AdobeAcrobatPro -InstallerPath $InstallerPath
+            return
+        }
+    }
+
+    throw "Unknown Adobe product: $($AdobeSelection.Product)"
+}
+
+function Set-AdobeEnterprisePolicies {
+    param([Parameter(Mandatory = $true)]$AdobeSelection)
+
+    Write-Log "Applying Adobe Reader/Acrobat enterprise policies."
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would set bEnableAV2Enterprise=0 and bWhatsNewExp=1 under Adobe FeatureLockDown policy keys."
+        if ($AdobeSelection.Product -eq "Reader") {
+            Write-Log "SIMULATION: Would enforce Adobe unified-app Reader mode with bIsSCReducedModeEnforcedEx=1."
+        }
+        else {
+            Write-Log "SIMULATION: Would remove any Reader reduced-mode enforcement before Acrobat Pro verification."
+        }
+        if ($DisableAdobeAutoUpdate) {
+            Write-Log "SIMULATION: Would also set bUpdater=0 and disable Adobe update tasks." "WARN"
+        }
+        return
+    }
+
+    $featureLockdownPaths = @(
+        "HKLM:\SOFTWARE\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown",
+        "HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobat\DC\FeatureLockDown"
+    )
+
+    foreach ($path in $featureLockdownPaths) {
+        if (-not (Test-Path -LiteralPath $path)) {
+            New-Item -Path $path -Force | Out-Null
+        }
+
+        New-ItemProperty -LiteralPath $path -Name "bEnableAV2Enterprise" -Value 0 -PropertyType DWord -Force | Out-Null
+        New-ItemProperty -LiteralPath $path -Name "bWhatsNewExp" -Value 1 -PropertyType DWord -Force | Out-Null
+        Write-Log "Set modern Acrobat UI off and What's New off at $path"
+
+        if ($DisableAdobeAutoUpdate) {
+            New-ItemProperty -LiteralPath $path -Name "bUpdater" -Value 0 -PropertyType DWord -Force | Out-Null
+            Write-Log "Disabled Adobe product auto-updater by policy at $path" "WARN"
+        }
+    }
+
+    $unifiedPolicyPath = "HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobat\DC\FeatureLockDown"
+    if ($AdobeSelection.Product -eq "Reader") {
+        New-ItemProperty -LiteralPath $unifiedPolicyPath -Name "bIsSCReducedModeEnforcedEx" -Value 1 -PropertyType DWord -Force | Out-Null
+        Write-Log "Enforced Reader-only reduced mode for Adobe's 64-bit unified app at $unifiedPolicyPath"
+    }
+    else {
+        Remove-ItemProperty -LiteralPath $unifiedPolicyPath -Name "bIsSCReducedModeEnforcedEx" -Force -ErrorAction SilentlyContinue
+        Write-Log "Removed Reader reduced-mode enforcement for Acrobat Pro deployment."
+    }
+
+    if ($DisableAdobeAutoUpdate) {
+        try {
+            Get-ScheduledTask -TaskName "Adobe Acrobat Update Task*" -ErrorAction SilentlyContinue | ForEach-Object {
+                Disable-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -ErrorAction SilentlyContinue | Out-Null
+                Write-Log "Disabled Adobe scheduled update task: $($_.TaskPath)$($_.TaskName)"
+            }
+        }
+        catch {
+            Write-Log "Could not disable Adobe scheduled update task. $($_.Exception.Message)" "WARN"
+        }
+    }
+}
+
+function Test-AdobeEnterprisePolicies {
+    param([Parameter(Mandatory = $true)]$AdobeSelection)
+
+    $policyPath = "HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobat\DC\FeatureLockDown"
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would verify bEnableAV2Enterprise=0 under $($AdobeSelection.Label) FeatureLockDown policy."
+        if ($AdobeSelection.Product -eq "Reader") {
+            Write-Log "SIMULATION: Would verify bIsSCReducedModeEnforcedEx=1 for Reader-only mode."
+        }
+        return
+    }
+
+    if (-not (Test-Path -LiteralPath $policyPath)) {
+        throw "$($AdobeSelection.Label) FeatureLockDown policy key was not created."
+    }
+
+    $policy = Get-ItemProperty -LiteralPath $policyPath
+    $modernViewerValue = Get-ObjectPropertyValue -InputObject $policy -Name "bEnableAV2Enterprise"
+    if ($modernViewerValue -ne 0) {
+        throw "Adobe New Acrobat/Modern Viewer policy is not disabled. Expected bEnableAV2Enterprise=0, found '$modernViewerValue'."
+    }
+
+    $reducedModeValue = Get-ObjectPropertyValue -InputObject $policy -Name "bIsSCReducedModeEnforcedEx"
+    if ($AdobeSelection.Product -eq "Reader" -and $reducedModeValue -ne 1) {
+        throw "Adobe Reader-only reduced mode is not enforced. Expected bIsSCReducedModeEnforcedEx=1, found '$reducedModeValue'."
+    }
+    if ($AdobeSelection.Product -eq "AcrobatPro" -and $reducedModeValue -eq 1) {
+        throw "Acrobat Pro verification failed because Reader reduced mode is still enforced."
+    }
+
+    Write-Log "Verified Adobe New Acrobat/Modern Viewer is disabled by policy for $($AdobeSelection.Label)."
+    if ($AdobeSelection.Product -eq "Reader") {
+        Write-Log "Verified Adobe unified app is locked to Reader-only reduced mode."
+    }
+}
+
+function Test-AdobeReaderInstallEntry {
+    param([Parameter(Mandatory = $true)]$Entry)
+
+    $name = [string]$Entry.DisplayName
+    $productCodeText = @($Entry.PSChildName, $Entry.UninstallString, $Entry.QuietUninstallString) -join " "
+
+    if ($name -match "(?i)^Adobe Acrobat Reader(\s|$|\()") {
+        return $true
+    }
+
+    if ($name -match "(?i)^Adobe Reader(\s|$|\()") {
+        return $true
+    }
+
+    return ($productCodeText -match "(?i)\{AC76BA86-[0-9A-F]{4}-FF00-7760-BC15014EA700\}")
+}
+
+function Test-AdobeUnified64BitInstallEntry {
+    param([Parameter(Mandatory = $true)]$Entry)
+
+    $name = [string]$Entry.DisplayName
+    $productCodeText = @($Entry.PSChildName, $Entry.UninstallString, $Entry.QuietUninstallString) -join " "
+    return (($name -match "(?i)^Adobe Acrobat(\s|$|\()") -and ($productCodeText -match "(?i)\{AC76BA86-" -or $name -match "(?i)64-bit"))
+}
+
+function Get-AdobeCurrentUserEntitlementLevel {
+    $path = "HKCU:\Software\Adobe\Adobe Acrobat\DC\AVEntitlement"
+    if (-not (Test-Path -LiteralPath $path)) {
+        return $null
+    }
+
+    $value = Get-ObjectPropertyValue -InputObject (Get-ItemProperty -LiteralPath $path) -Name "iEntitlementLevel"
+    $parsed = 0
+    if ([int]::TryParse([string]$value, [ref]$parsed)) {
+        return $parsed
+    }
+    return $null
+}
+
+function Write-AdobeInstallSummary {
+    param([Parameter(Mandatory = $true)]$AdobeSelection)
+
+    if ($Simulation) {
+        if ($AdobeSelection.Product -eq "AcrobatPro") {
+            Write-Log "SIMULATION: Adobe installed entry: Adobe Acrobat Pro from supplied enterprise installer/package."
+        }
+        else {
+            Write-Log "SIMULATION: Adobe installed entry: 64-bit unified Adobe app locked to Reader mode, MUI requested with LANG_LIST=en_GB (mapped by Adobe to en_US English resources)."
+        }
+        return
+    }
+
+    $entries = @(Get-AdobeReaderAndAcrobatEntries)
+    if ($entries.Count -eq 0) {
+        throw "No Adobe Reader/Acrobat install entry found after install."
+    }
+
+    foreach ($entry in $entries) {
+        Write-Log "Adobe installed entry: $($entry.DisplayName) $($entry.DisplayVersion)"
+    }
+
+    $readerEntries = @($entries | Where-Object { Test-AdobeReaderInstallEntry -Entry $_ })
+    $unifiedEntries = @($entries | Where-Object { Test-AdobeUnified64BitInstallEntry -Entry $_ })
+    $explicitProEntries = @($entries | Where-Object { [string]$_.DisplayName -match "(?i)^Adobe Acrobat (Pro|Standard)(\s|$|\()" })
+    $acrobat64Path = Join-Path $env:ProgramFiles "Adobe\Acrobat DC\Acrobat\Acrobat.exe"
+    $readerLegacyX86Path = Join-Path ${env:ProgramFiles(x86)} "Adobe\Acrobat Reader DC\Reader\AcroRd32.exe"
+    $acrobatLegacyX86Path = Join-Path ${env:ProgramFiles(x86)} "Adobe\Acrobat DC\Acrobat\Acrobat.exe"
+    $entitlementLevel = Get-AdobeCurrentUserEntitlementLevel
+
+    if ($AdobeSelection.Product -eq "Reader") {
+        if (($readerEntries.Count + $unifiedEntries.Count) -eq 0) {
+            throw "Adobe Reader verification failed: neither a Reader entry nor Adobe's 64-bit unified app entry was found."
+        }
+
+        if ($explicitProEntries.Count -gt 0) {
+            $names = ($explicitProEntries | ForEach-Object { "$($_.DisplayName) $($_.DisplayVersion)" }) -join "; "
+            throw "Adobe Acrobat Pro/Standard product remains installed after Reader deployment: $names"
+        }
+
+        if (-not (Test-Path -LiteralPath $acrobat64Path)) {
+            throw "Adobe Reader verification failed: expected 64-bit unified executable was not found: $acrobat64Path"
+        }
+        if ((Test-Path -LiteralPath $readerLegacyX86Path) -or (Test-Path -LiteralPath $acrobatLegacyX86Path)) {
+            throw "Adobe Reader verification failed: a legacy 32-bit Adobe executable path remains after x64 deployment."
+        }
+
+        $englishLocalePath = Join-Path (Split-Path -Parent $acrobat64Path) "Locale\en_US"
+        if (-not (Test-Path -LiteralPath $englishLocalePath)) {
+            throw "Adobe Reader language verification failed: expected English resource folder was not found at $englishLocalePath."
+        }
+
+        Write-Log "Verified Adobe Reader executable under 64-bit Program Files path: $acrobat64Path"
+        Write-Log "Verified Reader-only enforcement policy. Installer requested LANG_LIST=en_GB; Adobe officially maps International English en_GB to its en_US English resource transform at $englishLocalePath."
+        if ($null -ne $entitlementLevel) {
+            Write-Log "Adobe current-user entitlement level after Reader deployment: $entitlementLevel. Machine policy keeps the unified app in Reader-only reduced mode."
+        }
+        return
+    }
+
+    if (($unifiedEntries.Count + $explicitProEntries.Count) -eq 0) {
+        throw "Adobe Acrobat Pro was not found after install."
+    }
+
+    if ($readerEntries.Count -gt 0) {
+        $names = ($readerEntries | ForEach-Object { "$($_.DisplayName) $($_.DisplayVersion)" }) -join "; "
+        throw "Adobe Reader product remains installed after Acrobat Pro deployment: $names"
+    }
+
+    if (-not (Test-Path -LiteralPath $acrobat64Path)) {
+        throw "Adobe Acrobat Pro verification failed: expected 64-bit executable was not found: $acrobat64Path"
+    }
+    if ((Test-Path -LiteralPath $readerLegacyX86Path) -or (Test-Path -LiteralPath $acrobatLegacyX86Path)) {
+        throw "Adobe Acrobat Pro verification failed: a legacy 32-bit Adobe executable path remains."
+    }
+    if ($entitlementLevel -eq 200) {
+        throw "Adobe Acrobat Pro verification found a Standard entitlement (200), not Pro (300), for the current user."
+    }
+    if ($entitlementLevel -eq 300) {
+        Write-Log "Verified current-user Acrobat Pro entitlement level 300."
+    }
+    else {
+        Write-Log "Acrobat Pro binaries are present, but a Pro entitlement is not yet visible for the deployment account. The licensed user may need to sign in before entitlement level 300 can be verified." "WARN"
+    }
+    Write-Log "Verified Adobe Acrobat Pro 64-bit deployment. Locale selection depends on the supplied licensed enterprise package and required LANG_LIST=en_GB preflight."
+}
+
+function Get-LeapEntries {
+    if ($Simulation) {
+        if ($Script:SimulationLeapProductsRemoved -and (-not $Script:SimulationLeapInstalled)) {
+            return @()
+        }
+
+        if ($Script:SimulationLeapInstalled) {
+            return @(
+                [pscustomobject]@{
+                    DisplayName = "LEAP Desktop"
+                    DisplayVersion = "simulated-fresh-install"
+                    Publisher = "LEAP"
+                    PSChildName = "{11111111-2222-3333-4444-555555555555}"
+                    UninstallString = "MsiExec.exe /I{11111111-2222-3333-4444-555555555555}"
+                    QuietUninstallString = $null
+                    WindowsInstaller = 1
+                    RegistryPath = "SIMULATION"
+                }
+            )
+        }
+
+        return @(
+            [pscustomobject]@{
+                DisplayName = "LEAP Desktop"
+                DisplayVersion = "simulated-existing-leap"
+                Publisher = "LEAP"
+                PSChildName = "{11111111-2222-3333-4444-555555555555}"
+                UninstallString = "MsiExec.exe /I{11111111-2222-3333-4444-555555555555}"
+                QuietUninstallString = $null
+                WindowsInstaller = 1
+                RegistryPath = "SIMULATION"
+            }
+        )
+    }
+
+    $entries = @(Get-UninstallEntries | Where-Object {
+        $name = $_.DisplayName
+        $publisher = $_.Publisher
+        if ([string]::IsNullOrWhiteSpace($name)) {
+            $false
+        }
+        else {
+            $looksLikeLeap =
+                $name -match "(?i)^(LEAP|LEAP Desktop|LEAP Office|LEAP Legal)(\s|$|\()" -or
+                $name -match "(?i)\bLEAP Desktop\b" -or
+                $name -match "(?i)\bLEAP Office\b"
+
+            $publisherLooksLikeLeap =
+                -not [string]::IsNullOrWhiteSpace($publisher) -and
+                $publisher -match "(?i)LEAP"
+
+            $looksLikeLeap -or ($publisherLooksLikeLeap -and $name -match "(?i)\bLEAP\b")
+        }
+    })
+
+    foreach ($profileRecord in @(Get-LocalUserProfileRecords)) {
+        $installLocation = Join-Path $profileRecord.LocalPath "AppData\Local\LEAP-Accounting-Plus"
+        $updateExe = Join-Path $installLocation "Update.exe"
+        if (-not (Test-Path -LiteralPath $updateExe -PathType Leaf)) {
+            continue
+        }
+
+        $alreadyRegistered = @($entries | Where-Object {
+            -not [string]::IsNullOrWhiteSpace($_.InstallLocation) -and
+            ([IO.Path]::GetFullPath([string]$_.InstallLocation).TrimEnd('\') -eq [IO.Path]::GetFullPath($installLocation).TrimEnd('\'))
+        }).Count -gt 0
+        if ($alreadyRegistered) {
+            continue
+        }
+
+        Write-Log "Found LEAP Accounting Plus from its per-user installation path because that user's uninstall hive is not available: $installLocation" "WARN"
+        $entries += [pscustomobject]@{
+            DisplayName = "LEAP Accounting Plus"
+            DisplayVersion = "profile-install"
+            Publisher = "LEAP Software Developments"
+            PSChildName = "LEAP-Accounting-Plus"
+            UninstallString = "`"$updateExe`" --uninstall"
+            QuietUninstallString = "`"$updateExe`" --uninstall -s"
+            InstallLocation = $installLocation
+            WindowsInstaller = 0
+            RegistryPath = $null
+            Scope = "UserProfile:$($profileRecord.Sid)"
+            UserSid = $profileRecord.Sid
+            UserProfilePath = $profileRecord.LocalPath
+        }
+    }
+
+    $entries | Sort-Object DisplayName, DisplayVersion, InstallLocation -Unique
+}
+
+function Find-TrustedLeapInstallerPath {
+    if ($Script:AutoDiscoveredLeapInstallerPath -and (Test-Path -LiteralPath $Script:AutoDiscoveredLeapInstallerPath)) {
+        return $Script:AutoDiscoveredLeapInstallerPath
+    }
+
+    $roots = @($LeapInstallerSearchRoots | Where-Object {
+        -not [string]::IsNullOrWhiteSpace($_)
+    } | Select-Object -Unique)
+
+    if ($roots.Count -eq 0) {
+        return $null
+    }
+
+    Write-Log "Searching for a local LEAP installer in: $($roots -join '; ')"
+
+    $candidates = @()
+    foreach ($root in $roots) {
+        if (-not (Test-Path -LiteralPath $root)) {
+            continue
+        }
+
+        try {
+            $candidates += @(Get-ChildItem -LiteralPath $root -File -ErrorAction SilentlyContinue |
+                Where-Object {
+                    $_.Extension -match "(?i)^\.(exe|msi)$" -and
+                    $_.Name -match "(?i)leap"
+                })
+        }
+        catch {
+            Write-Log "Could not search LEAP installer folder $root. $($_.Exception.Message)" "WARN"
+        }
+    }
+
+    $candidates = @($candidates | Sort-Object FullName -Unique)
+    if ($candidates.Count -eq 0) {
+        Write-Log "No local LEAP installer candidates were found in configured search folders." "WARN"
+        return $null
+    }
+
+    $trustedCandidates = @()
+    foreach ($candidate in $candidates) {
+        if (Test-TrustedSignature -Path $candidate.FullName -ExpectedPublisherFragments $LeapTrustedPublisherFragments) {
+            $trustedCandidates += $candidate
+        }
+        else {
+            Write-Log "Ignoring LEAP-named installer candidate without a trusted LEAP signature: $($candidate.FullName)" "WARN"
+        }
+    }
+
+    if ($trustedCandidates.Count -eq 0) {
+        Write-Log "LEAP-named installer files were found, but none had a trusted LEAP signature." "WARN"
+        return $null
+    }
+
+    if ($trustedCandidates.Count -gt 1) {
+        $candidateList = ($trustedCandidates | ForEach-Object { $_.FullName }) -join "; "
+        throw "Multiple trusted LEAP installer candidates were found. Supply -LeapInstallerPath explicitly. Candidates: $candidateList"
+    }
+
+    $resolved = $trustedCandidates[0].FullName
+    $Script:AutoDiscoveredLeapInstallerPath = $resolved
+    Write-Log "Auto-discovered trusted LEAP installer: $resolved"
+    return $resolved
+}
+
+function Get-LeapInstallerPath {
+    if ($LeapInstallerPath) {
+        if (-not (Test-Path -LiteralPath $LeapInstallerPath)) {
+            throw "LEAP installer path was supplied but not found: $LeapInstallerPath"
+        }
+
+        $resolved = (Resolve-Path -LiteralPath $LeapInstallerPath).Path
+        if (-not $Simulation) {
+            Assert-TrustedSignature -Path $resolved -ExpectedPublisherFragments $LeapTrustedPublisherFragments
+        }
+        else {
+            Write-Log "SIMULATION: Would use local LEAP installer path $resolved"
+        }
+        return $resolved
+    }
+
+    if ($LeapInstallerUrl) {
+        $leaf = Get-RemoteFileNameFromUrl -Url $LeapInstallerUrl -FallbackFileName "LEAP-Installer.exe"
+
+        $installer = Join-Path $Script:DownloadDir $leaf
+        Save-Download -Url $LeapInstallerUrl -Destination $installer -MinimumBytes 10000000
+        Assert-TrustedSignature -Path $installer -ExpectedPublisherFragments $LeapTrustedPublisherFragments
+        return $installer
+    }
+
+    if ($Simulation) {
+        $installer = Join-Path $Script:DownloadDir "LEAP-Installer-Simulation.exe"
+        if (-not (Test-Path -LiteralPath $installer)) {
+            Set-Content -LiteralPath $installer -Value "SIMULATION ONLY - LEAP installer placeholder" -Encoding ASCII
+        }
+        Write-Log "SIMULATION: Using placeholder LEAP installer at $installer"
+        return $installer
+    }
+
+    try {
+        $websiteInstaller = Resolve-LeapInstallerFromWebsite
+        $installerFileName = $websiteInstaller.FileName
+        if ([string]::IsNullOrWhiteSpace($installerFileName)) {
+            $installerFileName = "LEAPDesktopX64setup.exe"
+        }
+
+        $installer = Join-Path $Script:DownloadDir $installerFileName
+        Save-Download -Url $websiteInstaller.Url -Destination $installer -MinimumBytes 10000000 -AlwaysDownload:(-not $UseCachedInstallers)
+        Assert-TrustedSignature -Path $installer -ExpectedPublisherFragments $LeapTrustedPublisherFragments
+        return $installer
+    }
+    catch {
+        if (-not $AllowLocalLeapInstallerFallback) {
+            throw
+        }
+
+        Write-Log "LEAP website installer resolution failed; checking local fallback because -AllowLocalLeapInstallerFallback was supplied. $($_.Exception.Message)" "WARN"
+    }
+
+    if ($AllowLocalLeapInstallerFallback) {
+        $autoDiscoveredInstaller = Find-TrustedLeapInstallerPath
+        if ($autoDiscoveredInstaller) {
+            Assert-TrustedSignature -Path $autoDiscoveredInstaller -ExpectedPublisherFragments $LeapTrustedPublisherFragments
+            return $autoDiscoveredInstaller
+        }
+    }
+
+    throw "LEAP was selected, but the latest LEAP Desktop installer could not be resolved from $LeapDownloadsPageUrl."
+}
+
+function Assert-LeapInstallerSourceAvailable {
+    if ($Simulation) {
+        Write-Log "SIMULATION: LEAP installer source preflight would pass."
+        return
+    }
+
+    if ($LeapInstallerPath) {
+        if (-not (Test-Path -LiteralPath $LeapInstallerPath)) {
+            throw "LEAP installer path was supplied but not found: $LeapInstallerPath"
+        }
+        Assert-TrustedSignature -Path $LeapInstallerPath -ExpectedPublisherFragments $LeapTrustedPublisherFragments
+        Write-Log "LEAP installer source preflight passed: $LeapInstallerPath"
+        return
+    }
+
+    if ($LeapInstallerUrl) {
+        Assert-RemoteUrlReachable -Url $LeapInstallerUrl -Description "LEAP installer"
+        Write-Log "LEAP installer source preflight passed: direct URL supplied."
+        return
+    }
+
+    try {
+        $websiteInstaller = Resolve-LeapInstallerFromWebsite
+        if ($websiteInstaller -and $websiteInstaller.Url) {
+            Write-Log "LEAP installer source preflight passed: latest installer resolved from official LEAP downloads page."
+            return
+        }
+    }
+    catch {
+        if (-not $AllowLocalLeapInstallerFallback) {
+            throw
+        }
+
+        Write-Log "LEAP website installer preflight failed; checking local fallback because -AllowLocalLeapInstallerFallback was supplied. $($_.Exception.Message)" "WARN"
+    }
+
+    if ($AllowLocalLeapInstallerFallback) {
+        $autoDiscoveredInstaller = Find-TrustedLeapInstallerPath
+        if ($autoDiscoveredInstaller) {
+            Write-Log "LEAP installer source preflight passed: auto-discovered trusted local installer fallback."
+            return
+        }
+    }
+
+    throw "LEAP was selected, but the latest LEAP Desktop installer could not be resolved from $LeapDownloadsPageUrl. Stopping before cleanup."
+}
+
+function Get-LeapProcessNames {
+    return @(
+        "LEAP",
+        "LEAP Accounting Plus",
+        "LEAPDesktop",
+        "LEAP.Office",
+        "LEAPOffice",
+        "LEAPLauncher",
+        "LEAPCloud",
+        "LeapOfficeXE.NetClient",
+        "leapsystray"
+    )
+}
+
+function Get-LeapBackgroundHelperProcessNames {
+    return @(
+        "LEAPLauncher",
+        "LEAPCloud",
+        "LeapOfficeXE.NetClient",
+        "leapsystray"
+    )
+}
+
+function Get-LeapPostInstallProcesses {
+    param([switch]$IncludeSetupProcesses)
+
+    if ($Simulation) {
+        return @()
+    }
+
+    $backgroundProcessNames = @(
+        "leaplauncher",
+        "leapcloud",
+        "leapofficexe.netclient",
+        "leapsystray"
+    )
+
+    $processes = @(Get-Process -ErrorAction SilentlyContinue | Where-Object {
+        $processName = [string]$_.ProcessName
+        $normalisedName = $processName.ToLowerInvariant()
+        $windowTitle = [string]$_.MainWindowTitle
+        $hasVisibleLeapWindow = ($_.MainWindowHandle -ne [IntPtr]::Zero) -and ($windowTitle -match "(?i)LEAP|Accounting")
+        $knownClientProcess = $processName -match "(?i)^(LEAP|LEAP Desktop|LEAP Accounting Plus|LEAPDesktop|LEAP\.Office|LEAPOffice|LEAPLauncher|LEAPCloud)$"
+        $knownSetupProcess = $processName -match "(?i)LEAP.*setup|setup.*LEAP"
+
+        # Never terminate the active installer or its setup child from the
+        # while-running watcher. The post-install gate may close a setup UI
+        # only after the installer wrapper has finished.
+        if ($knownSetupProcess -and (-not $IncludeSetupProcesses)) {
+            return $false
+        }
+
+        if (($backgroundProcessNames -contains $normalisedName) -and (-not $hasVisibleLeapWindow)) {
+            return $false
+        }
+
+        if ($knownClientProcess -or ($knownSetupProcess -and $IncludeSetupProcesses) -or $hasVisibleLeapWindow) {
+            return $true
+        }
+
+        try {
+            $processPath = [string]$_.Path
+            return (($processPath -match "(?i)\\LEAP(?:[^\\]*)\\") -and ($_.MainWindowHandle -ne [IntPtr]::Zero))
+        }
+        catch {
+            return $false
+        }
+    })
+    return @($processes | Sort-Object Id -Unique)
+}
+
+function Close-LeapPostInstallProcesses {
+    param(
+        [switch]$LogWhenClosed,
+        [switch]$IncludeSetupProcesses
+    )
+
+    $running = @(Get-LeapPostInstallProcesses -IncludeSetupProcesses:$IncludeSetupProcesses)
+    if ($running.Count -eq 0) {
+        return $false
+    }
+
+    if ($LogWhenClosed) {
+        $names = ($running | Select-Object -ExpandProperty ProcessName -Unique | Sort-Object) -join ", "
+        Write-Log "Closing LEAP post-install client processes immediately after detection: $names" "WARN"
+    }
+
+    foreach ($process in $running) {
+        Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+    }
+    return $true
+}
+
+function Test-LeapAccountingPlusFallbackEligibility {
+    param([Parameter(Mandatory = $true)]$Entry)
+
+    if ([string]$Entry.DisplayName -notmatch "(?i)^LEAP Accounting Plus$") {
+        return $false
+    }
+
+    $profileRoot = [string]$Entry.UserProfilePath
+    $installLocation = [string]$Entry.InstallLocation
+    if ([string]::IsNullOrWhiteSpace($profileRoot) -or [string]::IsNullOrWhiteSpace($installLocation)) {
+        return $false
+    }
+
+    try {
+        $profileRoot = [IO.Path]::GetFullPath($profileRoot).TrimEnd('\')
+        $installLocation = [IO.Path]::GetFullPath($installLocation).TrimEnd('\')
+        $expectedLocation = [IO.Path]::GetFullPath((Join-Path $profileRoot "AppData\Local\LEAP-Accounting-Plus")).TrimEnd('\')
+        if ($installLocation -ne $expectedLocation) {
+            Write-Log "Refusing LEAP Accounting Plus fallback because the registered install path is outside its expected per-user location: $installLocation" "WARN"
+            return $false
+        }
+
+        $usersRoot = [IO.Path]::GetFullPath((Join-Path $env:SystemDrive "Users")).TrimEnd('\')
+        if (-not $profileRoot.StartsWith("$usersRoot\", [StringComparison]::OrdinalIgnoreCase)) {
+            Write-Log "Refusing LEAP Accounting Plus fallback because its profile path is outside the local Users root: $profileRoot" "WARN"
+            return $false
+        }
+
+        return Test-Path -LiteralPath (Join-Path $installLocation "Update.exe") -PathType Leaf
+    }
+    catch {
+        Write-Log "Could not validate LEAP Accounting Plus fallback scope. $($_.Exception.Message)" "WARN"
+        return $false
+    }
+}
+
+function Remove-LeapPerUserUninstallRegistration {
+    param([Parameter(Mandatory = $true)]$Entry)
+
+    if ([string]::IsNullOrWhiteSpace([string]$Entry.RegistryPath)) {
+        return
+    }
+
+    $registryPath = ([string]$Entry.RegistryPath) -replace "^Microsoft\.PowerShell\.Core\\", ""
+    $expectedRegistryRoots = @(
+        "Registry::HKEY_USERS\$($Entry.UserSid)\Software\Microsoft\Windows\CurrentVersion\Uninstall\",
+        "Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\"
+    )
+    if (-not (@($expectedRegistryRoots | Where-Object { $registryPath.StartsWith($_, [StringComparison]::OrdinalIgnoreCase) }).Count -gt 0)) {
+        throw "Refusing to remove unexpected LEAP per-user uninstall registration path: $registryPath"
+    }
+
+    if (Test-Path -LiteralPath $Entry.RegistryPath) {
+        Remove-Item -LiteralPath $Entry.RegistryPath -Recurse -Force -ErrorAction Stop
+        Write-Log "Removed stale LEAP per-user uninstall registration: $registryPath"
+    }
+}
+
+function Invoke-LeapAccountingPlusFallbackRemoval {
+    param([Parameter(Mandatory = $true)]$Entry)
+
+    if (-not (Test-LeapAccountingPlusFallbackEligibility -Entry $Entry)) {
+        throw "LEAP Accounting Plus vendor uninstall failed and its fallback scope could not be validated. Stopping safely."
+    }
+
+    $installLocation = [string]$Entry.InstallLocation
+    $running = @(Get-Process -Name "LEAP Accounting Plus" -ErrorAction SilentlyContinue)
+    if ($running.Count -gt 0) {
+        if (-not $ForceCloseApps) {
+            throw "LEAP Accounting Plus is still running after its vendor uninstall failed. Close it and rerun, or use -ForceCloseApps after confirming user work is saved."
+        }
+
+        foreach ($process in $running) {
+            Stop-Process -Id $process.Id -Force -ErrorAction Stop
+        }
+        Start-Sleep -Seconds 2
+    }
+
+    Assert-ZiaasSafePath -Path $installLocation -AllowedRoots @([string]$Entry.UserProfilePath) -Purpose "LEAP Accounting Plus fallback removal"
+    Write-Log "Moving only the validated LEAP Accounting Plus per-user application folder to the run backup and preserving roaming LEAP Accounting data." "WARN"
+    Move-LeapResidualToBackup -Path $installLocation -Label "$(Split-Path -Leaf ([string]$Entry.UserProfilePath))-Local-LEAP-Accounting-Plus-Fallback"
+    if (Test-Path -LiteralPath $installLocation) {
+        throw "LEAP Accounting Plus fallback could not move its application folder: $installLocation"
+    }
+
+    Remove-LeapPerUserUninstallRegistration -Entry $Entry
+    Write-Log "LEAP Accounting Plus fallback removal completed without touching AppData\Roaming\LEAP Accounting." "WARN"
+}
+
+function Uninstall-Leap {
+    $maxPasses = 3
+    $foundAnyLeapEntry = $false
+
+    for ($pass = 1; $pass -le $maxPasses; $pass++) {
+        $entries = @(Get-LeapEntries)
+        if ($entries.Count -eq 0) {
+            if ($foundAnyLeapEntry) {
+                Write-Log "No LEAP uninstall entries remain after uninstall pass $($pass - 1)."
+            }
+            else {
+                Write-Log "No existing LEAP uninstall entries found."
+            }
+            return
+        }
+
+        $foundAnyLeapEntry = $true
+        Write-Log "LEAP uninstall pass $pass found $($entries.Count) uninstall entr$(if ($entries.Count -eq 1) { 'y' } else { 'ies' })."
+        foreach ($entry in $entries) {
+            Write-Log "Found LEAP product: $($entry.DisplayName) $($entry.DisplayVersion)"
+        }
+
+        Stop-DeploymentBlockingApps -ProcessNames (Get-LeapProcessNames) -AutoForceProcessNames (Get-LeapBackgroundHelperProcessNames)
+
+        $processedEntries = @()
+        foreach ($entry in $entries) {
+            if (Test-LeapAccountingPlusFallbackEligibility -Entry $entry) {
+                Write-Log "Using the validated LEAP Accounting Plus local-app fallback directly; its per-user Squirrel uninstaller is skipped because it can launch a visible window under an elevated administrator context." "WARN"
+                Invoke-LeapAccountingPlusFallbackRemoval -Entry $entry
+                $processedEntries += $entry
+                continue
+            }
+
+            $productCode = Get-MsiProductCode -Entry $entry
+            if ($productCode) {
+                $safeName = ($entry.DisplayName -replace "[^A-Za-z0-9._-]", "_")
+                $msiLog = Join-Path $Script:LogDir "Uninstall-$safeName-$Script:RunStamp-pass$pass.log"
+
+                Invoke-MsiUninstallWithRetry `
+                    -ProductCode $productCode `
+                    -MsiLog $msiLog `
+                    -ProductName "LEAP uninstall pass ${pass}: $($entry.DisplayName)" `
+                    -VendorLabel "LEAP"
+                $processedEntries += $entry
+                continue
+            }
+
+            if (-not [string]::IsNullOrWhiteSpace($entry.QuietUninstallString)) {
+                $quietUninstall = Split-CommandLine -CommandLine $entry.QuietUninstallString
+                try {
+                    Invoke-ProcessChecked `
+                        -FilePath $quietUninstall.FilePath `
+                        -ArgumentList $quietUninstall.Arguments `
+                        -SuccessExitCodes @(0, 3010) `
+                        -Description "LEAP quiet uninstall pass ${pass}: $($entry.DisplayName)"
+                }
+                catch {
+                    if (-not (Test-LeapAccountingPlusFallbackEligibility -Entry $entry)) {
+                        throw
+                    }
+
+                    Write-Log "LEAP Accounting Plus quiet uninstaller failed: $($_.Exception.Message)" "WARN"
+                    Invoke-LeapAccountingPlusFallbackRemoval -Entry $entry
+                }
+                $processedEntries += $entry
+                continue
+            }
+
+            throw "LEAP product '$($entry.DisplayName)' does not expose an MSI product code or QuietUninstallString. Stopping rather than guessing a silent uninstall command."
+        }
+
+        if ($Simulation) {
+            $Script:SimulationLeapProductsRemoved = $true
+            $Script:SimulationLeapInstalled = $false
+        }
+        else {
+            Start-Sleep -Seconds 5
+
+            foreach ($entry in $processedEntries) {
+                if ($entry.DisplayName -notmatch "(?i)^LEAP Accounting Plus$") {
+                    continue
+                }
+
+                $installLocation = [string]$entry.InstallLocation
+                if (-not [string]::IsNullOrWhiteSpace($installLocation) -and (Test-Path -LiteralPath $installLocation)) {
+                    $allowedProfileRoot = if ([string]::IsNullOrWhiteSpace([string]$entry.UserProfilePath)) { Join-Path $env:SystemDrive "Users" } else { [string]$entry.UserProfilePath }
+                    Assert-ZiaasSafePath -Path $installLocation -AllowedRoots @($allowedProfileRoot) -Purpose "LEAP Accounting Plus post-uninstall residual"
+                    Move-LeapResidualToBackup -Path $installLocation -Label "$(Split-Path -Leaf $allowedProfileRoot)-Local-LEAP-Accounting-Plus"
+                    if (Test-Path -LiteralPath $installLocation) {
+                        Write-Log "Keeping the LEAP Accounting Plus uninstall registration because its installation folder could not be removed: $installLocation" "WARN"
+                        continue
+                    }
+                }
+
+                if (-not [string]::IsNullOrWhiteSpace([string]$entry.RegistryPath) -and (Test-Path -LiteralPath $entry.RegistryPath)) {
+                    Remove-LeapPerUserUninstallRegistration -Entry $entry
+                }
+            }
+        }
+    }
+
+    $remaining = @(Get-LeapEntries)
+    if ($remaining.Count -gt 0) {
+        foreach ($entry in $remaining) {
+            Write-Log "Still present after $maxPasses LEAP uninstall pass(es): $($entry.DisplayName) $($entry.DisplayVersion)" "WARN"
+        }
+        throw "One or more LEAP products remain installed. Stopping before LEAP folder cleanup and reinstall."
+    }
+}
+
+function Get-LeapResidualBackupDir {
+    $backupDir = Join-Path $Script:BackupDir "LEAP-Residual-$Script:RunStamp"
+    if (-not (Test-Path -LiteralPath $backupDir)) {
+        New-Item -Path $backupDir -ItemType Directory -Force | Out-Null
+    }
+
+    return $backupDir
+}
+
+function Move-LeapResidualToBackup {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$Label
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        Write-Log "LEAP residual not present, skipping: $Path"
+        $Script:LeapResidualSkipped++
+        return
+    }
+
+    $backupDir = Get-LeapResidualBackupDir
+    $safeLabel = ConvertTo-SafeFileName -FileName $Label
+    $destination = Get-UniquePath -Path (Join-Path $backupDir $safeLabel)
+
+    try {
+        Assert-ZiaasSafePath -Path $Path -AllowedRoots @($env:ProgramFiles, ${env:ProgramFiles(x86)}, $env:ProgramData, (Join-Path $env:SystemDrive "Users")) -Purpose "LEAP residual move"
+        Write-Log "Moving LEAP residual to backup: $Path -> $destination"
+        Move-Item -LiteralPath $Path -Destination $destination -Force -ErrorAction Stop
+        $Script:LeapResidualMoved++
+    }
+    catch {
+        Write-Log "Could not move LEAP residual $Path. $($_.Exception.Message)" "ERROR"
+        $Script:LeapResidualErrors++
+    }
+}
+
+function Rename-LeapResidualFolder {
+    param([Parameter(Mandatory = $true)][string]$Path)
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        Write-Log "LEAP residual not present, skipping: $Path"
+        $Script:LeapResidualSkipped++
+        return
+    }
+
+    $oldPath = "$Path.old"
+    if (Test-Path -LiteralPath $oldPath) {
+        $oldPath = "$Path.old.$Script:RunStamp"
+    }
+
+    try {
+        Assert-ZiaasSafePath -Path $Path -AllowedRoots @($env:ProgramFiles, ${env:ProgramFiles(x86)}, $env:ProgramData, (Join-Path $env:SystemDrive "Users")) -Purpose "LEAP residual rename"
+        Write-Log "Renaming LEAP residual: $Path -> $oldPath"
+        Rename-Item -LiteralPath $Path -NewName (Split-Path -Leaf $oldPath) -Force -ErrorAction Stop
+        $Script:LeapResidualRenamed++
+    }
+    catch {
+        Write-Log "Could not rename LEAP residual $Path. $($_.Exception.Message)" "ERROR"
+        $Script:LeapResidualErrors++
+    }
+}
+
+function Remove-StaleLeapServices {
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would stop and remove the known LEAP Office integration services before reinstall or final cleanup."
+        return
+    }
+
+    foreach ($serviceName in @("LeapOfficeXE", "PrintToLEAP")) {
+        $service = Get-CimInstance Win32_Service -Filter "Name='$serviceName'" -ErrorAction SilentlyContinue
+        if (-not $service) {
+            continue
+        }
+
+        $servicePath = [string]$service.PathName
+        if ($servicePath -notmatch "(?i)LEAP") {
+            throw "Refusing to remove service '$serviceName' because its binary path is not recognised as a LEAP path: $servicePath"
+        }
+
+        if ([string]$service.State -ne "Stopped") {
+            Stop-Service -Name $serviceName -Force -ErrorAction Stop
+            Write-Log "Stopped stale LEAP integration service: $serviceName"
+        }
+
+        $scOutput = @(& "$env:SystemRoot\System32\sc.exe" delete $serviceName 2>&1)
+        if ($LASTEXITCODE -notin @(0, 1060)) {
+            throw "Could not remove stale LEAP integration service '$serviceName'. $($scOutput -join ' ')"
+        }
+
+        Write-Log "Removed stale LEAP integration service: $serviceName"
+    }
+}
+
+function Get-LocalUserProfilePaths {
+    Get-LocalUserProfileRecords | Select-Object -ExpandProperty LocalPath -Unique
+}
+
+function Remove-StaleLeapUserProfileRemnants {
+    if ($SkipLeapProfileCleanup) {
+        Write-Log "Skipping LEAP user profile residual cleanup because -SkipLeapProfileCleanup was supplied." "WARN"
+        return
+    }
+
+    Write-Log "Cleaning known LEAP user profile remnants by moving them to backup."
+    Write-Log "Preserving AppData\Roaming\LEAP Accounting because it may contain incomplete LEAP Accounting timesheet entries." "WARN"
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would enumerate non-special local user profiles and move known LEAP profile leftovers to backup."
+        Write-Log "SIMULATION: Would preserve AppData\Roaming\LEAP Accounting in each profile if present." "WARN"
+        return
+    }
+
+    $profiles = @(Get-LocalUserProfilePaths)
+    if ($profiles.Count -eq 0) {
+        Write-Log "No local user profiles found for LEAP profile cleanup."
+        return
+    }
+
+    foreach ($userProfilePath in $profiles) {
+        $userName = Split-Path -Leaf $userProfilePath
+        $roamingPath = Join-Path $userProfilePath "AppData\Roaming"
+        $localPath = Join-Path $userProfilePath "AppData\Local"
+        $tempPath = Join-Path $localPath "Temp"
+
+        Write-Log "Cleaning LEAP remnants in profile: $userProfilePath"
+
+        if (Test-Path -LiteralPath $roamingPath) {
+            Move-LeapResidualToBackup -Path (Join-Path $roamingPath "4D") -Label "$userName-Roaming-4D"
+            Move-LeapResidualToBackup -Path (Join-Path $roamingPath "LEAP Desktop") -Label "$userName-Roaming-LEAP Desktop"
+            Move-LeapResidualToBackup -Path (Join-Path $roamingPath "LEAP Legal Software") -Label "$userName-Roaming-LEAP Legal Software"
+
+            $leapAccountingPath = Join-Path $roamingPath "LEAP Accounting"
+            if (Test-Path -LiteralPath $leapAccountingPath) {
+                Write-Log "Preserving LEAP Accounting profile folder: $leapAccountingPath" "WARN"
+                $Script:LeapResidualPreserved++
+            }
+        }
+
+        if (Test-Path -LiteralPath $localPath) {
+            Move-LeapResidualToBackup -Path (Join-Path $localPath "LEAP-Accounting-Plus") -Label "$userName-Local-LEAP-Accounting-Plus"
+            Rename-LeapResidualFolder -Path (Join-Path $localPath "LEAP_Desktop")
+            Move-LeapResidualToBackup -Path (Join-Path $localPath "LEAP") -Label "$userName-Local-LEAP"
+            Move-LeapResidualToBackup -Path (Join-Path $localPath "LEAP Office Installations") -Label "$userName-Local-LEAP Office Installations"
+            Move-LeapResidualToBackup -Path (Join-Path $localPath "LEAP_Legal") -Label "$userName-Local-LEAP_Legal"
+
+            $microsoftCorporationPath = Join-Path $localPath "Microsoft Corporation"
+            if (Test-Path -LiteralPath $microsoftCorporationPath) {
+                Get-ChildItem -LiteralPath $microsoftCorporationPath -Directory -ErrorAction SilentlyContinue |
+                    Where-Object { $_.Name -like "*LEAP*" } |
+                    ForEach-Object {
+                        Move-LeapResidualToBackup -Path $_.FullName -Label "$userName-Local-Microsoft Corporation-$($_.Name)"
+                    }
+            }
+        }
+
+        if (Test-Path -LiteralPath $tempPath) {
+            Move-LeapResidualToBackup -Path (Join-Path $tempPath "4D") -Label "$userName-Temp-4D"
+            Move-LeapResidualToBackup -Path (Join-Path $tempPath "LEAP") -Label "$userName-Temp-LEAP"
+            Move-LeapResidualToBackup -Path (Join-Path $tempPath "LEAP_Legal") -Label "$userName-Temp-LEAP_Legal"
+            Move-LeapResidualToBackup -Path (Join-Path $tempPath "LEAP_Cloud") -Label "$userName-Temp-LEAP_Cloud"
+            Move-LeapResidualToBackup -Path (Join-Path $tempPath "LEAP_Desktop") -Label "$userName-Temp-LEAP_Desktop"
+        }
+    }
+}
+
+function Remove-StaleLeapMachineRemnants {
+    Write-Log "Cleaning safe LEAP machine-level remnants by moving or renaming them."
+
+    if ($Simulation) {
+        Remove-StaleLeapServices
+        Write-Log "SIMULATION: Would unregister stale LEAP scheduled tasks."
+        Write-Log "SIMULATION: Would move known machine-level LEAP folders to backup and rename selected ProgramData folders."
+        return
+    }
+
+    Remove-StaleLeapServices
+
+    try {
+        Get-ScheduledTask -TaskName "LEAP*" -ErrorAction SilentlyContinue | ForEach-Object {
+            Unregister-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -Confirm:$false -ErrorAction SilentlyContinue
+            Write-Log "Removed stale LEAP scheduled task: $($_.TaskPath)$($_.TaskName)"
+        }
+    }
+    catch {
+        Write-Log "Could not enumerate/remove LEAP scheduled tasks. $($_.Exception.Message)" "WARN"
+    }
+
+    foreach ($name in @("LEAP Office", "LEAP Accounting")) {
+        Rename-LeapResidualFolder -Path (Join-Path $env:ProgramData $name)
+    }
+
+    $safeDirs = @()
+    $machineRoots = @($env:ProgramFiles, ${env:ProgramFiles(x86)}, $env:ProgramData) | Where-Object {
+        -not [string]::IsNullOrWhiteSpace($_)
+    } | Select-Object -Unique
+
+    foreach ($root in $machineRoots) {
+        foreach ($name in @("LEAP", "LEAP Legal Software", "LEAP Office", "LEAP Accounting")) {
+            $safeDirs += Join-Path $root $name
+        }
+    }
+
+    foreach ($dir in ($safeDirs | Select-Object -Unique)) {
+        Move-LeapResidualToBackup -Path $dir -Label (($dir -replace "^[A-Za-z]:\\", "") -replace "\\", "-")
+    }
+}
+
+function Write-LeapResidualCleanupSummary {
+    if ($Simulation) {
+        Write-Log "SIMULATION: LEAP residual backup path would be under $Script:BackupDir"
+        return
+    }
+
+    Write-Log "LEAP residual cleanup backup path: $(Join-Path $Script:BackupDir "LEAP-Residual-$Script:RunStamp")"
+    Write-Log "LEAP residual folders moved to backup: $Script:LeapResidualMoved"
+    Write-Log "LEAP residual folders renamed in place: $Script:LeapResidualRenamed"
+    Write-Log "LEAP residual paths skipped because missing: $Script:LeapResidualSkipped"
+    Write-Log "LEAP residual folders preserved: $Script:LeapResidualPreserved"
+    Write-Log "LEAP residual cleanup errors: $Script:LeapResidualErrors"
+
+    if ($Script:LeapResidualErrors -gt 0) {
+        throw "LEAP residual cleanup encountered errors. Restart and rerun before continuing with Office, Adobe, or LEAP reinstall."
+    }
+}
+
+function Get-DefaultLeapInstallArguments {
+    return @(
+        "/s",
+        "/SMS",
+        "/v`"/qn REBOOT=ReallySuppress`""
+    )
+}
+
+function Stop-LeapPostInstallLaunches {
+    param(
+        [int]$WaitSeconds = 5,
+        [switch]$IncludeSetupProcesses
+    )
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would close LEAP post-install client/tray launches if they appear."
+        return
+    }
+
+    $deadline = (Get-Date).AddSeconds([Math]::Max(0, $WaitSeconds))
+    $closeAttempted = $false
+    do {
+        if (Close-LeapPostInstallProcesses -LogWhenClosed -IncludeSetupProcesses:$IncludeSetupProcesses) {
+            $closeAttempted = $true
+        }
+
+        if ((Get-Date) -ge $deadline) {
+            break
+        }
+        Start-Sleep -Milliseconds 250
+    } while ($true)
+
+    $remaining = @(Get-LeapPostInstallProcesses -IncludeSetupProcesses:$IncludeSetupProcesses)
+
+    if ($remaining.Count -gt 0) {
+        $remainingNames = ($remaining | Select-Object -ExpandProperty ProcessName -Unique | Sort-Object) -join ", "
+        Write-Log "LEAP post-install processes are still running after close attempt: $remainingNames" "WARN"
+    }
+    elseif ($closeAttempted) {
+        Write-Log "LEAP post-install client/tray processes closed immediately after detection."
+    }
+    else {
+        Write-Log "No LEAP post-install client/tray processes remained open."
+    }
+}
+
+function Install-Leap {
+    param([Parameter(Mandatory = $true)][string]$InstallerPath)
+
+    $leapWindowStyle = "Hidden"
+    Write-Log "LEAP's official installer may auto-launch the LEAP client when installation completes; the post-install gate will close detected client/tray processes before verification." "WARN"
+    $effectiveLeapInstallArguments = @($LeapInstallArguments)
+    if ($LeapInstallArguments.Count -eq 0) {
+        $effectiveLeapInstallArguments = @(Get-DefaultLeapInstallArguments)
+        Write-Log "No LEAP install arguments were supplied. Using detected InstallShield silent defaults: $($effectiveLeapInstallArguments -join ' ')." "WARN"
+    }
+
+    try {
+        $maxAttempts = 4
+        $installationCompleted = $false
+        for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+            Invoke-ProcessChecked `
+                -FilePath $InstallerPath `
+                -ArgumentList $effectiveLeapInstallArguments `
+                -Description "LEAP installation attempt $attempt of $maxAttempts" `
+                -SuccessExitCodes @(0, 1618, 3010) `
+                -WindowStyle $leapWindowStyle `
+                -WhileRunning { [void](Close-LeapPostInstallProcesses -LogWhenClosed) }
+            $exitCode = [int]$Script:LastProcessExitCode
+
+            if ($exitCode -eq 1618) {
+                if ($attempt -ge $maxAttempts) {
+                    throw "LEAP installation remained blocked by Windows Installer error 1618 after $maxAttempts attempts. Reboot the machine, confirm no other installer is active, and rerun."
+                }
+
+                Write-Log "LEAP installation returned Windows Installer error 1618 (another installation is in progress). Closing any LEAP child launches and waiting 30 seconds before retry $($attempt + 1) of $maxAttempts." "WARN"
+                Stop-LeapPostInstallLaunches -WaitSeconds 1
+                Start-Sleep -Seconds 30
+                continue
+            }
+
+            $installationCompleted = $true
+            break
+        }
+
+        if (-not $installationCompleted) {
+            throw "LEAP installation did not complete."
+        }
+    }
+    finally {
+        Stop-LeapPostInstallLaunches -WaitSeconds 5 -IncludeSetupProcesses
+    }
+
+    if ($Simulation) {
+        $Script:SimulationLeapInstalled = $true
+    }
+}
+
+function Write-LeapInstallSummary {
+    $entries = @(Get-LeapEntries)
+    if ($entries.Count -eq 0) {
+        throw "No LEAP install entry found after install."
+    }
+
+    foreach ($entry in $entries) {
+        Write-Log "LEAP installed entry: $($entry.DisplayName) $($entry.DisplayVersion)"
+        if ((-not $Simulation) -and ([string]$entry.Publisher -notmatch "(?i)LEAP")) {
+            throw "LEAP verification failed: installed entry publisher was not recognised as LEAP. Product '$($entry.DisplayName)' publisher '$($entry.Publisher)'."
+        }
+    }
+}
+
+function Remove-WorkingDownloadsIfRequested {
+    if ($KeepDownloads) {
+        Write-Log "Keeping downloads in $Script:DownloadDir"
+        return
+    }
+
+    try {
+        Remove-Item -LiteralPath $Script:DownloadDir -Recurse -Force -ErrorAction Stop
+        Write-Log "Removed temporary downloads: $Script:DownloadDir"
+    }
+    catch {
+        Write-Log "Could not remove temporary downloads. $($_.Exception.Message)" "WARN"
+    }
+}
+
+function Invoke-DeploymentPause {
+    param(
+        [Parameter(Mandatory = $true)][int]$Seconds,
+        [Parameter(Mandatory = $true)][string]$Reason
+    )
+
+    if ($Seconds -le 0) {
+        Write-Log "Skipping pause for $Reason because duration is $Seconds seconds."
+        return
+    }
+
+    if ($Simulation) {
+        Write-Log "SIMULATION: Would wait $Seconds seconds for $Reason."
+        return
+    }
+
+    Write-Log "Waiting $Seconds seconds for $Reason."
+    Start-Sleep -Seconds $Seconds
+}
+function ConvertTo-SafeFileName {
+    param(
+        [Parameter(Mandatory = $false)]
+        [Alias("Name")]
+        [AllowEmptyString()]
+        [string]$FileName
+    )
+
+    if ([string]::IsNullOrWhiteSpace($FileName)) {
+        return "Unnamed"
+    }
+
+    $safe = $FileName
+    foreach ($character in [System.IO.Path]::GetInvalidFileNameChars()) {
+        $safe = $safe.Replace([string]$character, "_")
+    }
+
+    if ([string]::IsNullOrWhiteSpace($safe)) {
+        return "Unnamed"
+    }
+
+    return $safe
+}
+
+function Invoke-OfficeUninstallAndCleanup {
+    param([Parameter(Mandatory = $true)]$Assets)
+
+    Stop-OfficeBlockingApps
+
+    try {
+        Invoke-ProcessChecked `
+            -FilePath $Assets.Setup `
+            -ArgumentList @("/configure", $Assets.RemoveConfig) `
+            -Description "Office Click-to-Run removal" `
+            -WorkingDirectory $Script:OfficeDir
+    }
+    catch {
+        $officeRemovalError = $_.Exception.Message
+        Write-Log "Office Click-to-Run removal returned a non-success result. Continuing to Microsoft Office scrub cleanup because ODT Remove All can fail when Office is already absent or partially removed." "WARN"
+        Write-Log "Office Click-to-Run removal detail: $officeRemovalError" "WARN"
+    }
+
+    Invoke-OfficeScrubCleanup
+}
+
+function Invoke-AdobeCleanerCleanup {
+    $cleanerExe = Get-AdobeCleanerPath
+
+    foreach ($productId in @(1, 0)) {
+        $productName = if ($productId -eq 1) { "Reader" } else { "Acrobat" }
+
+        try {
+            Invoke-ProcessChecked `
+                -FilePath $cleanerExe `
+                -ArgumentList @("/silent", "/product=$productId", "/cleanlevel=1", "/scanforothers=1") `
+                -SuccessExitCodes @(0, 3010) `
+                -Description "Adobe AcroCleaner cleanup for $productName"
+        }
+        catch {
+            $remaining = @(Get-AdobeReaderAndAcrobatEntries)
+
+            if ($remaining.Count -eq 0) {
+                Write-Log "Adobe AcroCleaner cleanup for $productName failed or found nothing useful to clean after standard Adobe uninstall, but no Adobe Reader/Acrobat uninstall entries remain. Continuing with reinstall flow." "WARN"
+                if (-not $Simulation) {
+                    $Script:RebootRequired = $true
+                }
+                break
+            }
+
+            foreach ($entry in $remaining) {
+                Write-Log "Adobe Reader/Acrobat still present after AcroCleaner failure: $($entry.DisplayName) $($entry.DisplayVersion)" "ERROR"
+            }
+
+            throw
+        }
+    }
+
+    if (-not $Simulation) {
+        $Script:RebootRequired = $true
+    }
+    Write-Log "Adobe recommends restarting after AcroCleaner. Continuing because this deployment flow reinstalls before LEAP, but a reboot should be scheduled afterward." "WARN"
+}
+
+function Assert-AdobeAcrobatProLanguageSelection {
+    if ($AllowAcrobatProLanguageNotVerified) {
+        Write-Log "Acrobat Pro UK English language proof was explicitly bypassed. Ensure the supplied Adobe enterprise package is pre-configured for en_GB." "WARN"
+        return
+    }
+
+    $argumentText = (@(Get-AdobeAcrobatProInstallArgumentList) -join " ")
+    if ($argumentText -match "(?i)(^|\s)LANG_LIST\s*=\s*en_GB(\s|$)") {
+        $prefix = if ($Simulation) { "SIMULATION: " } else { "" }
+        Write-Log "${prefix}Acrobat Pro language preflight passed: LANG_LIST=en_GB was supplied. Adobe maps International English en_GB to its en_US English resource transform."
+        return
+    }
+
+    throw "Acrobat Pro was selected, but UK/British English was not verified. Add LANG_LIST=en_GB to -AdobeAcrobatProInstallArgumentLine or -AdobeAcrobatProInstallArguments, or use -AllowAcrobatProLanguageNotVerified only for a pre-configured Adobe enterprise package."
+}
+
+function Assert-AdobeInstallerSourceAvailable {
+    param([Parameter(Mandatory = $true)]$AdobeSelection)
+
+    if ($AdobeSelection.Product -eq "Reader") {
+        $readerUri = $null
+        if (-not [Uri]::TryCreate($AdobeReaderInstallerUrl, [UriKind]::Absolute, [ref]$readerUri)) {
+            throw "Adobe Reader installer URL is not a valid absolute URL: $AdobeReaderInstallerUrl"
+        }
+        if ($readerUri.Scheme -ne "https") {
+            throw "Adobe Reader installer URL must use HTTPS."
+        }
+        $readerLeaf = Split-Path -Leaf $readerUri.AbsolutePath
+        if ($readerLeaf -notmatch "(?i)^AcroRdrDCx64.*_MUI\.exe$") {
+            throw "Adobe Reader installer must be the official 64-bit MUI package. Configured filename: $readerLeaf"
+        }
+        Assert-RemoteUrlReachable -Url $AdobeReaderInstallerUrl -Description "Adobe Reader 64-bit MUI installer"
+        Write-Log "Adobe Reader installer source preflight passed: official-format 64-bit MUI URL configured with LANG_LIST=en_GB. Adobe maps International English en_GB to en_US English resources."
+        return
+    }
+
+    $hasPath = -not [string]::IsNullOrWhiteSpace($AdobeAcrobatProInstallerPath)
+    $hasUrl = -not [string]::IsNullOrWhiteSpace($AdobeAcrobatProInstallerUrl)
+
+    if (-not $hasPath -and -not $hasUrl) {
+        throw "Acrobat Pro was selected, but no licensed Acrobat Pro installer source was supplied. Provide -AdobeAcrobatProInstallerPath or -AdobeAcrobatProInstallerUrl before starting the run. The script cannot reinstall Pro from an already-installed copy because Adobe cleanup removes existing Reader/Acrobat first."
+    }
+
+    if ($hasPath) {
+        Assert-AdobeAcrobatProInstallerFileSupported -Path $AdobeAcrobatProInstallerPath
+        if ((-not $Simulation) -and (-not (Test-Path -LiteralPath $AdobeAcrobatProInstallerPath))) {
+            throw "Acrobat Pro installer path was supplied but not found: $AdobeAcrobatProInstallerPath"
+        }
+        if (-not $Simulation) {
+            Assert-TrustedSignature -Path $AdobeAcrobatProInstallerPath -ExpectedPublisherFragments $AdobeAcrobatProTrustedPublisherFragments
+        }
+        $prefix = if ($Simulation) { "SIMULATION: " } else { "" }
+        Write-Log "${prefix}Acrobat Pro installer path preflight passed: $AdobeAcrobatProInstallerPath"
+    }
+
+    if ($hasUrl) {
+        $proUri = $null
+        if (-not [Uri]::TryCreate($AdobeAcrobatProInstallerUrl, [UriKind]::Absolute, [ref]$proUri)) {
+            throw "Acrobat Pro installer URL is not a valid absolute URL."
+        }
+        if ($proUri.Scheme -ne "https") {
+            throw "Acrobat Pro installer URL must use HTTPS."
+        }
+        $leaf = Split-Path -Leaf $proUri.AbsolutePath
+        if ([string]::IsNullOrWhiteSpace($leaf)) {
+            throw "Acrobat Pro installer URL must end with an installer filename."
+        }
+        Assert-AdobeAcrobatProInstallerFileSupported -Path $leaf
+        Assert-RemoteUrlReachable -Url $AdobeAcrobatProInstallerUrl -Description "Acrobat Pro licensed installer"
+        $prefix = if ($Simulation) { "SIMULATION: " } else { "" }
+        Write-Log "${prefix}Acrobat Pro installer URL preflight passed."
+    }
+
+    $acrobatProArguments = @(Get-AdobeAcrobatProInstallArgumentList)
+    if ($acrobatProArguments.Count -eq 0 -and (-not $AllowAcrobatProInstallerWithoutArguments)) {
+        throw "Acrobat Pro was selected, but no silent install arguments were supplied. Provide -AdobeAcrobatProInstallArgumentLine or -AdobeAcrobatProInstallArguments for your licensed Adobe package before starting the run, or deliberately add -AllowAcrobatProInstallerWithoutArguments."
+    }
+
+    if ($acrobatProArguments.Count -eq 0) {
+        Write-Log "No Acrobat Pro install arguments were supplied. This was explicitly allowed; installer UI may appear." "WARN"
+    }
+
+    Assert-AdobeAcrobatProLanguageSelection
+}
+
+function Invoke-ZiaasComponent {
+    param(
+        [Parameter(Mandatory = $true)][string]$Name,
+        [Parameter(Mandatory = $true)][int]$FailureExitCode,
+        [Parameter(Mandatory = $true)][scriptblock]$ScriptBlock
+    )
+
+    try {
+        Initialize-DeploymentFolders
+        Write-Log "$Name started."
+        Write-Log "Log file: $Script:LogFile"
+        Write-Log "Working root: $Script:Root"
+        Assert-AdminAndPlatform
+
+        & $ScriptBlock
+
+        $elapsed = New-TimeSpan -Start $Script:StartTime -End (Get-Date)
+        Write-Log ("$Name completed in {0:g}." -f $elapsed) "SUCCESS"
+        if ($Script:RebootRequired) {
+            Write-Log "$Name completed but a reboot is required." "WARN"
+            exit 3010
+        }
+
+        exit 0
+    }
+    catch {
+        try {
+            Write-Log $_.Exception.Message "ERROR"
+            Write-Log "$Name failed. See $Script:LogFile." "ERROR"
+        }
+        catch {
+            Write-Host "$Name failed before logging was available. $($_.Exception.Message)"
+        }
+        exit $FailureExitCode
+    }
+}
