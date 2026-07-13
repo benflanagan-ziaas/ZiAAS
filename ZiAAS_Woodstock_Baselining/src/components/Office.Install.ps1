@@ -15,3 +15,4 @@ Invoke-ZiaasComponent -Name "Microsoft 365 Apps install" -FailureExitCode 104 -S
     $assets = Get-OfficeDeploymentAssets
     Invoke-OfficeInstall -Assets $assets
 }
+
