@@ -22,4 +22,3 @@ Invoke-ZiaasComponent -Name "Adobe Reader/Acrobat install and policy configurati
     Test-AdobeEnterprisePolicies -AdobeSelection $adobeSelection
     Write-AdobeInstallSummary -AdobeSelection $adobeSelection
 }
-
