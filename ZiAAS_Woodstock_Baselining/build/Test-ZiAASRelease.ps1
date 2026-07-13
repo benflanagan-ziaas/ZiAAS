@@ -207,6 +207,27 @@ function Test-SourceOutputSync {
     Write-Check "Source tree and generated output files are in sync."
 }
 
+function Test-DirectComponentMirror {
+    $sourceRoot = Join-Path $ProjectRoot "src\components"
+    $directRoot = Join-Path $ProjectRoot "components"
+    if (-not (Test-Path -LiteralPath $directRoot)) {
+        Write-Check "No direct component mirror is present in the local source layout; package/output checks remain authoritative." "Info"
+        return
+    }
+
+    foreach ($component in $requiredComponents) {
+        $source = Join-Path $sourceRoot $component
+        $direct = Join-Path $directRoot $component
+        Assert-Condition -Condition (Test-Path -LiteralPath $source) -Message "Direct mirror source is missing: $source"
+        Assert-Condition -Condition (Test-Path -LiteralPath $direct) -Message "Direct component mirror is missing: $direct"
+        $sourceHash = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash
+        $directHash = (Get-FileHash -LiteralPath $direct -Algorithm SHA256).Hash
+        Assert-Condition -Condition ($sourceHash -eq $directHash) -Message "Direct component mirror is stale for $component. Regenerate or synchronise before release."
+    }
+
+    Write-Check "Direct component mirror and source component scripts are in sync."
+}
+
 function Test-ComponentPackage {
     param([Parameter(Mandatory = $true)]$Manifest)
 
@@ -334,6 +355,7 @@ Test-HighSignalScriptAnalysis
 Test-DuplicateFunctionDefinitions -Roots @($ProjectRoot, $OutputRoot)
 Test-JsonFiles -Roots @($ProjectRoot, $OutputRoot)
 Test-SourceOutputSync
+Test-DirectComponentMirror
 Test-Manifest
 Test-GitState
 
