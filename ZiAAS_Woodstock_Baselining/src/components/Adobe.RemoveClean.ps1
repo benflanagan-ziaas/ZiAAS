@@ -16,3 +16,4 @@ Invoke-ZiaasComponent -Name "Adobe Reader/Acrobat uninstall and cleanup" -Failur
     Remove-StaleAdobeMachineRemnants
     Invoke-AdobeCleanerCleanup
 }
+
