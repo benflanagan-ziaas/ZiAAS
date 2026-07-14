@@ -54,6 +54,22 @@ Show built-in guide:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -ShowGuide
 ```
 
+## Branded GUI example
+
+The production deployment path remains PowerShell-first for RMM, Intune, raw URL,
+and unattended use. A non-destructive WPF example is included to demonstrate the
+operator experience that can sit in front of the orchestrator:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\examples\ZiAAS_Woodstock_Baselining.GuiExample.ps1
+```
+
+The example shows product selection, Reader/Acrobat Pro choice, the enforced
+cleanup and install order, preflight gating, progress states, and the final
+operator hand-off. It does not change the machine. A production GUI should invoke
+the existing orchestrator as a child process, stream its structured reports, and
+keep the same fail-fast, logging, exit-code, and unattended behaviour.
+
 ## Acrobat Pro rule
 
 Reader is fully autonomous. Acrobat Pro is not. Acrobat Pro deployments require a licensed enterprise installer path or URL and silent install arguments before cleanup begins. Include `LANG_LIST=en_GB` unless the package is already pre-configured and `-AllowAcrobatProLanguageNotVerified` is intentionally supplied.
