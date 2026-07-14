@@ -18,7 +18,7 @@ Invoke-ZiaasComponent -Name "Adobe Reader/Acrobat install and policy configurati
     Write-Log "Pre-staging $($adobeSelection.Label) installer after cleanup and before fresh Adobe install."
     $installerPath = Get-AdobeSelectedInstallerPath -AdobeSelection $adobeSelection
     Install-AdobeProduct -AdobeSelection $adobeSelection -InstallerPath $installerPath
-    Set-AdobeEnterprisePolicies
+    Set-AdobeEnterprisePolicies -AdobeSelection $adobeSelection
     Test-AdobeEnterprisePolicies -AdobeSelection $adobeSelection
     Write-AdobeInstallSummary -AdobeSelection $adobeSelection
 }

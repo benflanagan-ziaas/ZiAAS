@@ -19,6 +19,7 @@ if ([string]::IsNullOrWhiteSpace($OutputRoot)) {
 
 $requiredComponents = @(
     "Common.ps1",
+    "Installers.Stage.ps1",
     "LEAP.RemoveClean.ps1",
     "Adobe.RemoveClean.ps1",
     "Office.RemoveClean.ps1",
@@ -98,6 +99,60 @@ function Test-PowerShellParse {
     Write-Check "Parsed $($files.Count) PowerShell files."
 }
 
+function Test-HighSignalScriptAnalysis {
+    $analyzer = Get-Module -ListAvailable PSScriptAnalyzer | Sort-Object Version -Descending | Select-Object -First 1
+    if (-not $analyzer) {
+        Write-Check "PSScriptAnalyzer is not installed; high-signal analyzer checks were skipped." "Info"
+        return
+    }
+
+    Import-Module $analyzer.Path -Force -ErrorAction Stop
+    $rules = @(
+        "PSAvoidAssignmentToAutomaticVariable",
+        "PSAvoidUsingInvokeExpression",
+        "PSAvoidUsingPlainTextForPassword",
+        "PSAvoidUsingConvertToSecureStringWithPlainText",
+        "PSAvoidUsingUsernameAndPasswordParams"
+    )
+    $findings = @(Invoke-ScriptAnalyzer -Path $ProjectRoot -Recurse -IncludeRule $rules)
+    if ($findings.Count -gt 0) {
+        $details = @($findings | ForEach-Object {
+            "{0}:{1} [{2}] {3}" -f $_.ScriptName, $_.Line, $_.RuleName, $_.Message
+        })
+        throw "High-signal PowerShell static analysis failed: $($details -join '; ')"
+    }
+
+    Write-Check "High-signal PowerShell static-analysis rules returned no findings."
+}
+
+function Test-DuplicateFunctionDefinitions {
+    param([Parameter(Mandatory = $true)][string[]]$Roots)
+
+    $files = @()
+    foreach ($root in $Roots) {
+        if (Test-Path -LiteralPath $root) {
+            $files += @(Get-ChildItem -LiteralPath $root -Recurse -Filter *.ps1 -File)
+        }
+    }
+
+    foreach ($file in $files) {
+        $tokens = $null
+        $errors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors)
+        $functions = @($ast.FindAll({ param($node) $node -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $true))
+        $duplicates = @($functions | Group-Object Name | Where-Object { $_.Count -gt 1 })
+        if ($duplicates.Count -gt 0) {
+            $detail = @($duplicates | ForEach-Object {
+                $lines = @($_.Group | ForEach-Object { $_.Extent.StartLineNumber }) -join ", "
+                "$($_.Name) at lines $lines"
+            }) -join "; "
+            throw "Duplicate function definitions found in $($file.FullName): $detail"
+        }
+    }
+
+    Write-Check "No PowerShell file contains duplicate function definitions."
+}
+
 function Test-JsonFiles {
     param([Parameter(Mandatory = $true)][string[]]$Roots)
 
@@ -150,6 +205,27 @@ function Test-SourceOutputSync {
     }
 
     Write-Check "Source tree and generated output files are in sync."
+}
+
+function Test-DirectComponentMirror {
+    $sourceRoot = Join-Path $ProjectRoot "src\components"
+    $directRoot = Join-Path $ProjectRoot "components"
+    if (-not (Test-Path -LiteralPath $directRoot)) {
+        Write-Check "No direct component mirror is present in the local source layout; package/output checks remain authoritative." "Info"
+        return
+    }
+
+    foreach ($component in $requiredComponents) {
+        $source = Join-Path $sourceRoot $component
+        $direct = Join-Path $directRoot $component
+        Assert-Condition -Condition (Test-Path -LiteralPath $source) -Message "Direct mirror source is missing: $source"
+        Assert-Condition -Condition (Test-Path -LiteralPath $direct) -Message "Direct component mirror is missing: $direct"
+        $sourceHash = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash
+        $directHash = (Get-FileHash -LiteralPath $direct -Algorithm SHA256).Hash
+        Assert-Condition -Condition ($sourceHash -eq $directHash) -Message "Direct component mirror is stale for $component. Regenerate or synchronise before release."
+    }
+
+    Write-Check "Direct component mirror and source component scripts are in sync."
 }
 
 function Test-ComponentPackage {
@@ -240,18 +316,24 @@ function Test-GitState {
         return
     }
 
-    $repoRoot = Split-Path -Parent (Split-Path -Parent $ProjectRoot)
+    $repoRoot = Split-Path -Parent $ProjectRoot
     $inside = & $git.Source -C $repoRoot rev-parse --is-inside-work-tree 2>$null
-    if ($LASTEXITCODE -ne 0 -or [string]$inside -ne "true") {
+    $insideExitCode = $LASTEXITCODE
+    if ($insideExitCode -ne 0 -or [string]$inside -ne "true") {
         if ($ForPublish) {
             throw "Cannot publish because $repoRoot is not a git worktree."
         }
 
         Write-Check "$repoRoot is not a git worktree; publish cleanliness was not checked." "Info"
+        $global:LASTEXITCODE = 0
         return
     }
 
     $status = & $git.Source -C $repoRoot status --porcelain
+    $statusExitCode = $LASTEXITCODE
+    if ($statusExitCode -ne 0 -and $ForPublish) {
+        throw "Cannot publish because git status could not be read for $repoRoot."
+    }
     if ($ForPublish -and -not [string]::IsNullOrWhiteSpace(($status -join ""))) {
         throw "Cannot publish because the git working tree has uncommitted changes."
     }
@@ -262,15 +344,20 @@ function Test-GitState {
     else {
         Write-Check "Git working tree has uncommitted changes; run with -ForPublish to enforce failure." "Info"
     }
+    $global:LASTEXITCODE = 0
 }
 
 Assert-Condition -Condition (Test-Path -LiteralPath $ProjectRoot) -Message "Project root not found: $ProjectRoot"
 Assert-Condition -Condition (Test-Path -LiteralPath $OutputRoot) -Message "Output root not found: $OutputRoot"
 
 Test-PowerShellParse -Roots @($ProjectRoot, $OutputRoot)
+Test-HighSignalScriptAnalysis
+Test-DuplicateFunctionDefinitions -Roots @($ProjectRoot, $OutputRoot)
 Test-JsonFiles -Roots @($ProjectRoot, $OutputRoot)
 Test-SourceOutputSync
+Test-DirectComponentMirror
 Test-Manifest
 Test-GitState
 
 Write-Host "ZiAAS Woodstock Baselining release checks passed."
+

@@ -25,6 +25,7 @@ $outConfig = Join-Path $OutputRoot "config"
 
 $requiredComponents = @(
     "Common.ps1",
+    "Installers.Stage.ps1",
     "LEAP.RemoveClean.ps1",
     "Adobe.RemoveClean.ps1",
     "Office.RemoveClean.ps1",
@@ -152,6 +153,7 @@ $manifest = [ordered]@{
     requiredComponents = $requiredComponents
     defaultFlow = @(
         "preflight",
+        "Installers.Stage",
         "LEAP.RemoveClean",
         "Adobe.RemoveClean",
         "Office.RemoveClean",
@@ -173,6 +175,7 @@ $manifest = [ordered]@{
         "0" = "Success"
         "1" = "Orchestrator or preflight failure"
         "20" = "Operator cancelled"
+        "100" = "Installer staging or signature verification failed before cleanup"
         "101" = "LEAP remove/clean failed"
         "102" = "Adobe remove/clean failed"
         "103" = "Office remove/clean failed"

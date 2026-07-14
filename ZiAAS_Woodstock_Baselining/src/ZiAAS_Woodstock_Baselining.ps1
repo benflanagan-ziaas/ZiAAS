@@ -95,14 +95,15 @@ ZiAAS Woodstock Baselining - Running Guide
 Purpose
 -------
 Baselines a Windows client by removing and reinstalling selected products in a controlled order:
-  1. LEAP remove and clean, if selected
-  2. Adobe Reader/Acrobat remove and clean, if selected
-  3. Office remove and clean, if selected
-  4. Wait for post-cleanup settling
-  5. Microsoft 365 Apps for enterprise install, if selected
-  6. Adobe Reader/Acrobat install and enterprise policies, if selected
-  7. Wait before LEAP
-  8. LEAP install last, if selected
+  1. Download, signature-check, hash, and stage all selected reinstall media
+  2. LEAP remove and clean, if selected
+  3. Adobe Reader/Acrobat remove and clean, if selected
+  4. Office remove and clean, if selected
+  5. Wait for post-cleanup settling
+  6. Microsoft 365 Apps for enterprise install, if selected
+  7. Adobe Reader/Acrobat install and enterprise policies, if selected
+  8. Wait before LEAP
+  9. LEAP install last, if selected
 
 Why this order matters
 ----------------------
@@ -143,6 +144,7 @@ Key arguments
 
 -AdobeProduct
   Reader or AcrobatPro. Reader uses the public 64-bit MUI installer with LANG_LIST=en_GB.
+  Adobe maps International English en_GB to its en_US English resource transform. Reader mode is enforced by machine policy.
   AcrobatPro requires a licensed enterprise installer path or URL before the run starts.
   Do not rely on an already-installed Acrobat Pro copy; Adobe cleanup removes existing Reader/Acrobat first.
 
@@ -150,7 +152,8 @@ Key arguments
   Fails early if a prompt would be required. Use this for RMM/Intune scripts.
 
 -PreflightOnly
-  Validates prerequisites, selected sequence, installer sources, disk space, and blocking apps without changing the machine.
+  Validates prerequisites, selected sequence, installer endpoints, disk space, and blocking apps without cleanup or installation.
+  A real run then downloads and verifies every selected installer before the first uninstall begins.
 
 -ResumeLastRun
   Loads the latest failed run state and skips component steps already recorded as complete after preflight passes.
@@ -201,7 +204,7 @@ Key arguments
   Bypasses the Acrobat Pro UK English proof check. Use only for a pre-configured Adobe enterprise package.
 
 -ComponentDirectory
-  Folder containing components\Common.ps1 and the six task scripts.
+  Folder containing components\Common.ps1 and the component task scripts.
 
 -ComponentBaseUrl
   Raw URL base used to download missing components. Defaults to the GitHub components folder.
@@ -237,6 +240,7 @@ Exit codes
 0     Success
 1     Orchestrator failure
 20    Operator cancelled
+100   Installer staging/signature verification failed before cleanup
 101   LEAP remove/clean failed
 102   Adobe remove/clean failed
 103   Office remove/clean failed
@@ -311,6 +315,7 @@ if ([string]::IsNullOrWhiteSpace($ComponentDirectory)) {
 
 $requiredComponentFiles = @(
     "Common.ps1",
+    "Installers.Stage.ps1",
     "LEAP.RemoveClean.ps1",
     "Adobe.RemoveClean.ps1",
     "Office.RemoveClean.ps1",
@@ -647,11 +652,12 @@ function Get-ZiaasStepRegistry {
     $adobeLabel = if ($AdobeSelection) { $AdobeSelection.Label } else { "selected Adobe product" }
     return @(
         New-ZiaasStep -Id "preflight" -Description "Preflight checks" -Applies $true -Kind "Internal" -Risk "None" -ExpectedOutput "Preflight result set" -Verification "All blocking prerequisites pass" -RecoveryHint "Resolve failed preflight items and rerun."
+        New-ZiaasStep -Id "installer-staging" -Description "Download and verify all selected reinstall media" -Applies $true -FileName "Installers.Stage.ps1" -FailureExitCode 100 -Risk "Download" -ExpectedOutput "Signed installers and Office payload cached before cleanup" -Verification "Hashes, signatures, sizes, and Office payload are recorded" -RecoveryHint "Resolve network, proxy, disk-space, URL, or signature errors; no software has been removed yet."
         New-ZiaasStep -Id "leap-remove-clean" -Description "LEAP uninstall and cleanup" -Applies ([bool]$Selection.InstallLeap) -FileName "LEAP.RemoveClean.ps1" -FailureExitCode 101 -Risk "Destructive" -ExpectedOutput "LEAP removed; safe remnants moved/renamed; LEAP Accounting preserved" -Verification "No LEAP uninstall entries remain" -RecoveryHint "Close LEAP apps, review LEAP remove log, then rerun with the same command."
         New-ZiaasStep -Id "adobe-remove-clean" -Description "Adobe Reader/Acrobat uninstall and cleanup" -Applies ([bool]$Selection.InstallAdobe) -FileName "Adobe.RemoveClean.ps1" -FailureExitCode 102 -Risk "Destructive" -ExpectedOutput "Reader/Acrobat removed and AcroCleaner executed" -Verification "No Adobe Reader/Acrobat uninstall entries remain before reinstall" -RecoveryHint "Close Adobe apps, review Adobe remove log, then rerun."
         New-ZiaasStep -Id "office-remove-clean" -Description "Office uninstall and cleanup" -Applies ([bool]$Selection.InstallOffice) -FileName "Office.RemoveClean.ps1" -FailureExitCode 103 -Risk "Destructive" -ExpectedOutput "Click-to-Run removal attempted and Office scrub completed" -Verification "Office scrub tool completes or requests reboot" -RecoveryHint "Close Office apps, reboot if requested, then rerun."
         New-ZiaasStep -Id "post-cleanup-wait" -Description "Wait $PostCleanupWaitSeconds seconds for post-cleanup settling" -Applies ([bool]($Selection.InstallOffice -or $Selection.InstallAdobe)) -Kind "Pause" -Risk "None" -ExpectedOutput "Installer services settle before fresh installs" -Verification "Pause completes" -RecoveryHint "Rerun if interrupted."
-        New-ZiaasStep -Id "office-install-verify" -Description "Install Microsoft 365 Apps for enterprise x64 en-GB Semi-Annual Enterprise" -Applies ([bool]$Selection.InstallOffice) -FileName "Office.Install.ps1" -FailureExitCode 104 -Risk "Install" -ExpectedOutput "Office x64 en-GB enterprise installed" -Verification "ProductReleaseIds, platform, and culture verified after install" -RecoveryHint "Review Office install log, network/CDN access, and ODT logs."
+        New-ZiaasStep -Id "office-install-verify" -Description "Install Microsoft 365 Apps for enterprise x64 en-GB with Semi-Annual Enterprise requested" -Applies ([bool]$Selection.InstallOffice) -FileName "Office.Install.ps1" -FailureExitCode 104 -Risk "Install" -ExpectedOutput "Office x64 en-GB enterprise installed" -Verification "ProductReleaseIds, platform, culture, version, and exact enterprise audience verified" -RecoveryHint "Review Office install log, network/CDN access, tenant update policy, and ODT logs."
         New-ZiaasStep -Id "adobe-install-verify" -Description "Install $adobeLabel and apply Adobe policies" -Applies ([bool]$Selection.InstallAdobe) -FileName "Adobe.Install.ps1" -FailureExitCode 105 -Risk "Install" -ExpectedOutput "$adobeLabel installed with New Acrobat disabled" -Verification "Reader/Pro product state and FeatureLockDown policy verified" -RecoveryHint "Review Adobe install log and confirm installer source/language arguments."
         New-ZiaasStep -Id "pre-leap-wait" -Description "Wait $PreLeapWaitSeconds seconds before LEAP add-in installation" -Applies ([bool]($Selection.InstallLeap -and ($Selection.InstallOffice -or $Selection.InstallAdobe))) -Kind "Pause" -Risk "None" -ExpectedOutput "Office and Adobe installers finish settling before LEAP" -Verification "Pause completes" -RecoveryHint "Rerun if interrupted."
         New-ZiaasStep -Id "leap-install-verify" -Description "Install LEAP last" -Applies ([bool]$Selection.InstallLeap) -FileName "LEAP.Install.ps1" -FailureExitCode 106 -Risk "Install" -ExpectedOutput "LEAP installed after Office/Adobe" -Verification "LEAP uninstall entry present and post-install launched processes closed" -RecoveryHint "Review LEAP install log and verify installer silent arguments."
@@ -678,7 +684,7 @@ function Write-ZiaasPreflightSummary {
     Write-ZiaasUiLine "Preflight summary" Yellow
     Write-ZiaasUiLine "-----------------" Yellow
     Write-ZiaasUiLine ("Mode:          {0}" -f $Selection.Label)
-    Write-ZiaasUiLine ("Office:        {0}" -f ($(if ($Selection.InstallOffice) { "Microsoft 365 Apps for enterprise, x64, en-GB, Semi-Annual Enterprise" } else { "Skipped" })))
+    Write-ZiaasUiLine ("Office:        {0}" -f ($(if ($Selection.InstallOffice) { "Microsoft 365 Apps for enterprise, x64, en-GB, Semi-Annual Enterprise requested" } else { "Skipped" })))
     Write-ZiaasUiLine ("Adobe:         {0}" -f ($(if ($Selection.InstallAdobe) { $AdobeSelection.Label } else { "Skipped" })))
     Write-ZiaasUiLine ("LEAP:          {0}" -f ($(if ($Selection.InstallLeap) { "Remove first, install last" } else { "Skipped" })))
     Write-ZiaasUiLine ("Simulation:    {0}" -f ([bool]$Simulation))
@@ -713,9 +719,21 @@ function Add-ZiaasPreflightResult {
 }
 
 function Get-ZiaasErrorCategory {
-    param([string]$Message)
+    param(
+        [string]$Message,
+        [object[]]$PreflightResults = @()
+    )
+
+    $failedPreflight = @($PreflightResults | Where-Object { $_ -and $_.Status -eq "Fail" })
+    if ($failedPreflight.Count -gt 0) {
+        if (@($failedPreflight | Where-Object { $_.Name -match "(?i)office update policy|managed office policy|cloud update" }).Count -gt 0) {
+            return "MachineStateConflict"
+        }
+        return "UserCorrectable"
+    }
 
     if ([string]::IsNullOrWhiteSpace($Message)) { return "InternalToolBug" }
+    if ($Message -match "(?i)preflight failed|preflight") { return "UserCorrectable" }
     if ($Message -match "(?i)operator cancelled|blocking apps|still running|admin|elevated|installer source|silent install|LANG_LIST|disk") { return "UserCorrectable" }
     if ($Message -match "(?i)download|web request|dns|proxy|tls|url|cdn|LEAP downloads page") { return "VendorOrDownloadFailure" }
     if ($Message -match "(?i)signature|publisher|hash|manifest") { return "VerificationFailure" }
@@ -727,7 +745,8 @@ function Get-ZiaasErrorCategory {
 function Get-ZiaasNextAction {
     param(
         [Parameter(Mandatory = $true)][string]$Status,
-        [string]$FailureMessage
+        [string]$FailureMessage,
+        [string]$ErrorCategory
     )
 
     if ($Status -eq "Success") {
@@ -742,7 +761,11 @@ function Get-ZiaasNextAction {
         return "Review failed or warning preflight items. Run without -PreflightOnly only when the plan is acceptable."
     }
 
-    switch (Get-ZiaasErrorCategory -Message $FailureMessage) {
+    if ([string]::IsNullOrWhiteSpace($ErrorCategory)) {
+        $ErrorCategory = Get-ZiaasErrorCategory -Message $FailureMessage
+    }
+
+    switch ($ErrorCategory) {
         "UserCorrectable" { return "Correct the listed prerequisite, close blocking apps or supply the missing installer details, then rerun the same command." }
         "VendorOrDownloadFailure" { return "Check internet access, proxy/TLS inspection, vendor availability, or supply an explicit installer path/URL." }
         "VerificationFailure" { return "Do not continue until hashes, signatures, language proof, or publisher checks match the expected source." }
@@ -792,6 +815,16 @@ function Get-ZiaasInstallerSourceMetadata {
         $sources += [pscustomobject]@{ Product = "LEAP"; Source = $source; Required = $true }
     }
     return @($sources)
+}
+
+function Get-ZiaasMinimumFreeBytes {
+    param([Parameter(Mandatory = $true)]$Selection)
+
+    [int64]$required = 2GB
+    if ($Selection.InstallOffice) { $required += 8GB }
+    if ($Selection.InstallAdobe) { $required += 3GB }
+    if ($Selection.InstallLeap) { $required += 3GB }
+    return $required
 }
 
 function Test-ZiaasDiskSpace {
@@ -886,10 +919,7 @@ function Test-ZiaasBlockingApps {
 }
 
 function Test-ZiaasInstalledState {
-    param(
-        [Parameter(Mandatory = $true)]$Selection,
-        [object]$AdobeSelection
-    )
+    param([Parameter(Mandatory = $true)]$Selection)
 
     if ($Simulation) {
         Add-ZiaasPreflightResult -Name "Installed state" -Status "Pass" -Detail "Simulation mode: would inventory Office, Adobe, and LEAP install state."
@@ -916,6 +946,61 @@ function Test-ZiaasInstalledState {
     }
 }
 
+function Test-ZiaasOfficeUpdatePolicy {
+    param([Parameter(Mandatory = $true)]$Selection)
+
+    if (-not $Selection.InstallOffice) {
+        return
+    }
+
+    if ($Simulation) {
+        Add-ZiaasPreflightResult -Name "Office update policy" -Status "Pass" -Detail "Simulation mode: would check Cloud Update and machine Office update-channel policy precedence before cleanup."
+        return
+    }
+
+    $policySources = @(
+        [pscustomobject]@{
+            Name = "Cloud Update"
+            Path = "HKLM:\SOFTWARE\Policies\Microsoft\cloud\office\16.0\Common\officeupdate"
+        },
+        [pscustomobject]@{
+            Name = "Machine policy"
+            Path = "HKLM:\SOFTWARE\Policies\Microsoft\office\16.0\Common\officeupdate"
+        }
+    )
+
+    $blockingPolicies = @()
+    foreach ($source in $policySources) {
+        if (-not (Test-Path -LiteralPath $source.Path)) {
+            continue
+        }
+
+        $policy = Get-ItemProperty -LiteralPath $source.Path -ErrorAction SilentlyContinue
+        $updatePath = [string](Get-ObjectPropertyValue -InputObject $policy -Name "UpdatePath")
+        $updateBranch = [string](Get-ObjectPropertyValue -InputObject $policy -Name "UpdateBranch")
+
+        if (-not [string]::IsNullOrWhiteSpace($updatePath)) {
+            $blockingPolicies += "$($source.Name) UpdatePath='$updatePath'"
+            continue
+        }
+
+        if (-not [string]::IsNullOrWhiteSpace($updateBranch) -and ($updateBranch -notmatch "(?i)SemiAnnual")) {
+            $blockingPolicies += "$($source.Name) UpdateBranch='$updateBranch'"
+        }
+    }
+
+    if ($blockingPolicies.Count -gt 0) {
+        Add-ZiaasPreflightResult `
+            -Name "Office update policy" `
+            -Status "Fail" `
+            -Detail ("A higher-precedence Office update policy overrides the requested Semi-Annual Enterprise channel: {0}." -f ($blockingPolicies -join "; ")) `
+            -RecoveryHint "Change the client-managed Cloud Update/Intune/GPO channel to Semi-Annual Enterprise, or remove the conflicting policy through the client's approved management system, then rerun. ZiAAS will not overwrite that policy automatically."
+        return
+    }
+
+    Add-ZiaasPreflightResult -Name "Office update policy" -Status "Pass" -Detail "No higher-precedence Cloud Update or machine policy conflicts with the requested Semi-Annual Enterprise channel."
+}
+
 function Invoke-ZiaasPreflightChecks {
     param(
         [Parameter(Mandatory = $true)]$Selection,
@@ -934,9 +1019,21 @@ function Invoke-ZiaasPreflightChecks {
         Add-ZiaasPreflightResult -Name "Components" -Status "Fail" -Detail "One or more required component scripts are missing." -RecoveryHint "Run without -NoComponentDownload or rebuild the component package."
     }
 
-    Test-ZiaasDiskSpace
+    Test-ZiaasDiskSpace -MinimumFreeBytes (Get-ZiaasMinimumFreeBytes -Selection $Selection)
     Test-ZiaasBlockingApps -Selection $Selection
-    Test-ZiaasInstalledState -Selection $Selection -AdobeSelection $AdobeSelection
+    Test-ZiaasInstalledState -Selection $Selection
+    Test-ZiaasOfficeUpdatePolicy -Selection $Selection
+
+    try {
+        if ($Selection.InstallOffice) {
+            Assert-RemoteUrlReachable -Url $OfficeDeploymentToolUrl -Description "Microsoft Office Deployment Tool"
+            Assert-RemoteUrlReachable -Url $OfficeScrubToolUrl -Description "Microsoft Office scrub tool"
+            Add-ZiaasPreflightResult -Name "Office installer sources" -Status "Pass" -Detail "Microsoft ODT and scrub-tool endpoints are reachable; signed payloads will be downloaded and staged before cleanup."
+        }
+    }
+    catch {
+        Add-ZiaasPreflightResult -Name "Office installer sources" -Status "Fail" -Detail $_.Exception.Message -RecoveryHint "Check Microsoft download access, proxy/TLS inspection, DNS, and the configured Office URLs."
+    }
 
     try {
         if ($Selection.InstallAdobe) {
@@ -1021,6 +1118,10 @@ function Import-ZiaasResumeState {
 function Test-ZiaasResumeStepAlreadyComplete {
     param([Parameter(Mandatory = $true)]$Step)
 
+    if ($Step.Id -eq "installer-staging") {
+        return $false
+    }
+
     if (-not $ResumeLastRun) {
         return $false
     }
@@ -1036,13 +1137,52 @@ function New-ZiaasMachineSummary {
     $os = Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue
     [pscustomobject]@{
         ComputerName = $env:COMPUTERNAME
-        User = $env:USERNAME
+        User = "<redacted>"
         Is64BitOperatingSystem = [Environment]::Is64BitOperatingSystem
         PowerShellVersion = $PSVersionTable.PSVersion.ToString()
         OS = if ($os) { "$($os.Caption) $($os.Version)" } else { "Unknown" }
-        WorkingRoot = $Script:Root
+        WorkingRoot = ConvertTo-ZiaasSanitizedText -Text $Script:Root
         RunStamp = $Script:RunStamp
         Generated = (Get-Date).ToString("s")
+    }
+}
+
+function ConvertTo-ZiaasSanitizedText {
+    param([AllowEmptyString()][string]$Text)
+
+    if ([string]::IsNullOrEmpty($Text)) { return $Text }
+    $sanitized = $Text
+    if (-not [string]::IsNullOrWhiteSpace($env:USERPROFILE)) {
+        $sanitized = $sanitized.Replace($env:USERPROFILE, "%USERPROFILE%")
+    }
+    if (-not [string]::IsNullOrWhiteSpace($env:USERNAME)) {
+        $userPattern = [regex]::Escape($env:USERNAME)
+        $sanitized = $sanitized -replace ('(?i)\\Users\\' + $userPattern + '(?=\\|"|$)'), '\Users\<redacted>'
+        $sanitized = $sanitized -replace ('(?i)(AzureAD\\|[^\s"\\]+\\)' + $userPattern + '(?=\s|"|$)'), '$1<redacted>'
+    }
+    $sanitized = $sanitized -replace '(?i)([?&](sig|signature|token|access_token|auth|authorization|apikey|api_key|key|code)=)[^&\s"'']+', '$1<redacted>'
+    return $sanitized
+}
+
+function Copy-ZiaasSanitizedFolder {
+    param(
+        [Parameter(Mandatory = $true)][string]$Source,
+        [Parameter(Mandatory = $true)][string]$Destination
+    )
+
+    if (-not (Test-Path -LiteralPath $Source -PathType Container)) { return }
+    New-Item -Path $Destination -ItemType Directory -Force | Out-Null
+    $sourcePrefix = (Resolve-Path -LiteralPath $Source).Path.TrimEnd('\')
+    foreach ($file in @(Get-ChildItem -LiteralPath $Source -Recurse -File -ErrorAction SilentlyContinue)) {
+        if ($file.Extension -notin @(".log", ".txt", ".json", ".xml")) { continue }
+        $relative = $file.FullName.Substring($sourcePrefix.Length).TrimStart('\')
+        $target = Join-Path $Destination $relative
+        $targetParent = Split-Path -Parent $target
+        if (-not (Test-Path -LiteralPath $targetParent)) {
+            New-Item -Path $targetParent -ItemType Directory -Force | Out-Null
+        }
+        $content = Get-Content -LiteralPath $file.FullName -Raw -ErrorAction SilentlyContinue
+        ConvertTo-ZiaasSanitizedText -Text $content | Set-Content -LiteralPath $target -Encoding UTF8
     }
 }
 
@@ -1063,9 +1203,7 @@ function New-ZiaasSupportBundle {
     New-Item -Path $bundleRoot -ItemType Directory -Force | Out-Null
     foreach ($folderName in @("Logs", "Reports", "RunState")) {
         $source = Join-Path $Script:Root $folderName
-        if (Test-Path -LiteralPath $source) {
-            Copy-Item -LiteralPath $source -Destination (Join-Path $bundleRoot $folderName) -Recurse -Force
-        }
+        Copy-ZiaasSanitizedFolder -Source $source -Destination (Join-Path $bundleRoot $folderName)
     }
 
     if (Test-Path -LiteralPath (Join-Path $PSScriptRoot "app.manifest.json")) {
@@ -1076,8 +1214,8 @@ function New-ZiaasSupportBundle {
     }
 
     New-ZiaasMachineSummary | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $bundleRoot "machine-summary.json") -Encoding UTF8
-    $Script:InstallerSources | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $bundleRoot "installer-sources.json") -Encoding UTF8
-    $Script:PreflightResults | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $bundleRoot "preflight-results.json") -Encoding UTF8
+    ConvertTo-ZiaasSanitizedText -Text ($Script:InstallerSources | ConvertTo-Json -Depth 5) | Set-Content -LiteralPath (Join-Path $bundleRoot "installer-sources.json") -Encoding UTF8
+    ConvertTo-ZiaasSanitizedText -Text ($Script:PreflightResults | ConvertTo-Json -Depth 5) | Set-Content -LiteralPath (Join-Path $bundleRoot "preflight-results.json") -Encoding UTF8
     $Script:ComponentHashes | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $bundleRoot "component-hashes.json") -Encoding UTF8
     if ($Script:Brand) {
         $Script:Brand | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $bundleRoot "brand-pack.json") -Encoding UTF8
@@ -1131,8 +1269,11 @@ function Write-ZiaasSummaryReport {
     }
 
     $elapsed = New-TimeSpan -Start $Script:StartTime -End (Get-Date)
-    $errorCategory = if ($FailureMessage) { Get-ZiaasErrorCategory -Message $FailureMessage } else { "" }
-    $nextAction = Get-ZiaasNextAction -Status $Status -FailureMessage $FailureMessage
+    $errorCategory = if ($FailureMessage) {
+        Get-ZiaasErrorCategory -Message $FailureMessage -PreflightResults @($Script:PreflightResults)
+    }
+    else { "" }
+    $nextAction = Get-ZiaasNextAction -Status $Status -FailureMessage $FailureMessage -ErrorCategory $errorCategory
     $summary = [ordered]@{
         App = $Script:BrandBannerTitle
         Company = $Script:BrandCompanyName
@@ -1359,7 +1500,9 @@ function Invoke-ZiaasComponentScript {
         LogFile = $componentLogPath
     }
 
-    throw "Component failed with exit code ${exitCode}: $Description"
+    $componentException = New-Object System.Exception("Component failed with exit code ${exitCode}: $Description")
+    $componentException.Data["ZiaasExitCode"] = [int]$exitCode
+    throw $componentException
 }
 
 function Add-ZiaasSkippedComponentResult {
@@ -1510,7 +1653,13 @@ try {
 }
 catch {
     $failureMessage = $_.Exception.Message
-    $exitCode = if ($failureMessage -like "Operator cancelled*") { 20 } else { 1 }
+    $exitCode = 1
+    if ($failureMessage -like "Operator cancelled*") {
+        $exitCode = 20
+    }
+    elseif ($_.Exception.Data -and $_.Exception.Data.Contains("ZiaasExitCode")) {
+        $exitCode = [int]$_.Exception.Data["ZiaasExitCode"]
+    }
     try {
         Write-Log $failureMessage "ERROR"
         Write-Log "$Script:BrandBannerTitle orchestration failed. See component logs in $Script:LogDir." "ERROR"

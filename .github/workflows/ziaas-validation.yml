@@ -1,0 +1,34 @@
+name: ZiAAS validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - "agent/**"
+
+permissions:
+  contents: read
+
+jobs:
+  powershell-validation:
+    name: PowerShell build and regression suite
+    runs-on: windows-2022
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build release artifacts
+        shell: pwsh
+        run: .\ZiAAS_Woodstock_Baselining\build\Build-ZiAAS_Woodstock_Baselining.ps1 -Version (Get-Date -Format 'yyyy.MM.dd.HHmm')
+
+      - name: Run release checks
+        shell: pwsh
+        run: .\ZiAAS_Woodstock_Baselining\build\Test-ZiAASRelease.ps1
+
+      - name: Run runtime regression suite
+        shell: pwsh
+        run: .\ZiAAS_Woodstock_Baselining\build\Test-ZiAASRuntime.ps1
+
