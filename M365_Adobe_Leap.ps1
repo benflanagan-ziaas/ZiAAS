@@ -64,6 +64,29 @@ function Assert-CompatibilityBootstrapRoot {
     }
 }
 
+function Save-CompatibilityDownload {
+    param([Parameter(Mandatory = $true)][string]$Url, [Parameter(Mandatory = $true)][string]$Path)
+
+    $lastError = $null
+    for ($attempt = 1; $attempt -le 3; $attempt++) {
+        try {
+            Invoke-WebRequest -Uri $Url -OutFile $Path -UseBasicParsing -TimeoutSec 120
+            return
+        }
+        catch {
+            $lastError = $_.Exception.Message
+            if (Test-Path -LiteralPath $Path) {
+                Remove-Item -LiteralPath $Path -Force -ErrorAction SilentlyContinue
+            }
+            if ($attempt -lt 3) {
+                Start-Sleep -Seconds (2 * $attempt)
+            }
+        }
+    }
+
+    throw "Compatibility bootstrap download failed after three attempts: $Url. $lastError"
+}
+
 Assert-CompatibilityBootstrapUrl -Url $rawBase -Description "Compatibility bootstrap base URL" | Out-Null
 Assert-CompatibilityBootstrapUrl -Url $scriptUrl -Description "Compatibility entrypoint URL" | Out-Null
 Assert-CompatibilityBootstrapRoot
@@ -85,7 +108,7 @@ if (Test-Path -LiteralPath $manifestTmp) {
 }
 
 Write-Host "Downloading ZiAAS Woodstock Baselining release manifest..."
-Invoke-WebRequest -Uri $manifestUrl -OutFile $manifestTmp -UseBasicParsing -TimeoutSec 120
+Save-CompatibilityDownload -Url $manifestUrl -Path $manifestTmp
 $manifest = Get-Content -LiteralPath $manifestTmp -Raw | ConvertFrom-Json
 if ([string]$manifest.publisher -ne "ZiAAS" -or [string]$manifest.rawBaseUrl.TrimEnd('/') -ne "$rawBase/ZiAAS_Woodstock_Baselining".TrimEnd('/')) {
     throw "Compatibility release manifest failed publisher or source validation."
@@ -105,7 +128,7 @@ if ($null -eq $entrypointArtifact -or [string]$entrypointArtifact.sha256 -notmat
 }
 
 Write-Host "Downloading ZiAAS Woodstock Baselining entrypoint..."
-Invoke-WebRequest -Uri $scriptUrl -OutFile $tmp -UseBasicParsing -TimeoutSec 120
+Save-CompatibilityDownload -Url $scriptUrl -Path $tmp
 $actualEntrypointHash = (Get-FileHash -LiteralPath $tmp -Algorithm SHA256).Hash
 if ($actualEntrypointHash -ine [string]$entrypointArtifact.sha256) {
     throw "Compatibility entrypoint hash mismatch. Expected $($entrypointArtifact.sha256), got $actualEntrypointHash."

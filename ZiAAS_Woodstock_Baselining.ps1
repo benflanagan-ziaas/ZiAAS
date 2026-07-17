@@ -63,8 +63,25 @@ function Save-ZiaasRawFile {
         Remove-Item -LiteralPath $tmp -Force
     }
 
-    Invoke-WebRequest -Uri $Url -OutFile $tmp -UseBasicParsing -TimeoutSec 120
-    Move-Item -LiteralPath $tmp -Destination $Path -Force
+    $lastError = $null
+    for ($attempt = 1; $attempt -le 3; $attempt++) {
+        try {
+            Invoke-WebRequest -Uri $Url -OutFile $tmp -UseBasicParsing -TimeoutSec 120
+            Move-Item -LiteralPath $tmp -Destination $Path -Force
+            return
+        }
+        catch {
+            $lastError = $_.Exception.Message
+            if (Test-Path -LiteralPath $tmp) {
+                Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue
+            }
+            if ($attempt -lt 3) {
+                Start-Sleep -Seconds (2 * $attempt)
+            }
+        }
+    }
+
+    throw "Bootstrap download failed after three attempts: $Url. $lastError"
 }
 
 function Save-ZiaasRawFileParts {

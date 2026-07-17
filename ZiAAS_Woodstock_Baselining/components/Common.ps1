@@ -1177,10 +1177,22 @@ function Resolve-LeapInstallerFromWebsite {
     }
 
     Write-Log "Resolving latest LEAP Desktop installer from $LeapDownloadsPageUrl"
-    $pageResponse = Invoke-WebRequestWithRetry -Uri $LeapDownloadsPageUrl -TimeoutSec 60 -Description "LEAP downloads page request"
-    $pageContent = $pageResponse.Content
+    $pageUrls = @(
+        $LeapDownloadsPageUrl,
+        ($LeapDownloadsPageUrl + $(if ($LeapDownloadsPageUrl -match '\?') { '&' } else { '?' }) + "ziaas_refresh=$([DateTime]::UtcNow.Ticks)")
+    )
+    $pageContent = $null
+    $directInfo = $null
+    foreach ($pageUrl in $pageUrls) {
+        $pageResponse = Invoke-WebRequestWithRetry -Uri $pageUrl -TimeoutSec 60 -Description "LEAP downloads page request"
+        $pageContent = $pageResponse.Content
+        $directInfo = Get-LeapInstallerLinkFromContent -Content $pageContent
+        if ($directInfo) {
+            break
+        }
+        Write-Log "LEAP downloads page response did not expose the installer link yet; trying a cache-busted page request." "WARN"
+    }
 
-    $directInfo = Get-LeapInstallerLinkFromContent -Content $pageContent
     if ($directInfo) {
         $directUri = Assert-HttpsUrl -Url $directInfo.Url -Description "LEAP installer"
         if ($directUri.Host -notin @("leaphome.sharepoint.com", "community.leap.co.uk")) {
