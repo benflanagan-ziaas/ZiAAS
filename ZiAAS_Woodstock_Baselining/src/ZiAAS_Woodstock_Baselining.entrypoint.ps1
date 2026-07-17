@@ -58,16 +58,13 @@ function Save-ZiaasRawFile {
         throw "Bootstrap download URL must be an absolute HTTPS URL: $Url"
     }
 
-    $tmp = "$Path.tmp"
-    if (Test-Path -LiteralPath $tmp) {
-        Remove-Item -LiteralPath $tmp -Force
-    }
+    $tmp = "$Path.$([guid]::NewGuid().ToString('N')).tmp"
 
     $lastError = $null
     for ($attempt = 1; $attempt -le 3; $attempt++) {
         try {
             Invoke-WebRequest -Uri $Url -OutFile $tmp -UseBasicParsing -TimeoutSec 120
-            Move-Item -LiteralPath $tmp -Destination $Path -Force
+            Publish-ZiaasTempFile -Source $tmp -Destination $Path
             return
         }
         catch {
@@ -84,6 +81,35 @@ function Save-ZiaasRawFile {
     throw "Bootstrap download failed after three attempts: $Url. $lastError"
 }
 
+function Publish-ZiaasTempFile {
+    param(
+        [Parameter(Mandatory = $true)][string]$Source,
+        [Parameter(Mandatory = $true)][string]$Destination
+    )
+
+    if (-not (Test-Path -LiteralPath $Source -PathType Leaf)) {
+        throw "Bootstrap download did not produce a file: $Source"
+    }
+
+    try {
+        if (Test-Path -LiteralPath $Destination -PathType Leaf) {
+            try {
+                [System.IO.File]::Replace($Source, $Destination, $null, $true)
+            }
+            catch {
+                Remove-Item -LiteralPath $Destination -Force -ErrorAction Stop
+                Move-Item -LiteralPath $Source -Destination $Destination -Force -ErrorAction Stop
+            }
+        }
+        else {
+            Move-Item -LiteralPath $Source -Destination $Destination -Force -ErrorAction Stop
+        }
+    }
+    catch {
+        throw "Could not publish bootstrap file '$Destination'. $($_.Exception.Message)"
+    }
+}
+
 function Save-ZiaasRawFileParts {
     param(
         [Parameter(Mandatory = $true)][string]$UrlPrefix,
@@ -91,10 +117,7 @@ function Save-ZiaasRawFileParts {
         [Parameter(Mandatory = $true)][string]$Path
     )
 
-    $tmp = "$Path.tmp"
-    if (Test-Path -LiteralPath $tmp) {
-        Remove-Item -LiteralPath $tmp -Force
-    }
+    $tmp = "$Path.$([guid]::NewGuid().ToString('N')).tmp"
 
     for ($index = 1; $index -le $PartCount; $index++) {
         $partName = ("{0}.part{1:00}" -f $UrlPrefix, $index)
@@ -104,7 +127,7 @@ function Save-ZiaasRawFileParts {
         Remove-Item -LiteralPath $partPath -Force
     }
 
-    Move-Item -LiteralPath $tmp -Destination $Path -Force
+    Publish-ZiaasTempFile -Source $tmp -Destination $Path
 }
 
 function Test-ZiaasArgumentPresent {

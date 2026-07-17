@@ -67,16 +67,18 @@ function Assert-CompatibilityBootstrapRoot {
 function Save-CompatibilityDownload {
     param([Parameter(Mandatory = $true)][string]$Url, [Parameter(Mandatory = $true)][string]$Path)
 
+    $tmp = "$Path.$([guid]::NewGuid().ToString('N')).tmp"
     $lastError = $null
     for ($attempt = 1; $attempt -le 3; $attempt++) {
         try {
-            Invoke-WebRequest -Uri $Url -OutFile $Path -UseBasicParsing -TimeoutSec 120
+            Invoke-WebRequest -Uri $Url -OutFile $tmp -UseBasicParsing -TimeoutSec 120
+            Publish-CompatibilityTempFile -Source $tmp -Destination $Path
             return
         }
         catch {
             $lastError = $_.Exception.Message
-            if (Test-Path -LiteralPath $Path) {
-                Remove-Item -LiteralPath $Path -Force -ErrorAction SilentlyContinue
+            if (Test-Path -LiteralPath $tmp) {
+                Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue
             }
             if ($attempt -lt 3) {
                 Start-Sleep -Seconds (2 * $attempt)
@@ -85,6 +87,35 @@ function Save-CompatibilityDownload {
     }
 
     throw "Compatibility bootstrap download failed after three attempts: $Url. $lastError"
+}
+
+function Publish-CompatibilityTempFile {
+    param(
+        [Parameter(Mandatory = $true)][string]$Source,
+        [Parameter(Mandatory = $true)][string]$Destination
+    )
+
+    if (-not (Test-Path -LiteralPath $Source -PathType Leaf)) {
+        throw "Compatibility download did not produce a file: $Source"
+    }
+
+    try {
+        if (Test-Path -LiteralPath $Destination -PathType Leaf) {
+            try {
+                [System.IO.File]::Replace($Source, $Destination, $null, $true)
+            }
+            catch {
+                Remove-Item -LiteralPath $Destination -Force -ErrorAction Stop
+                Move-Item -LiteralPath $Source -Destination $Destination -Force -ErrorAction Stop
+            }
+        }
+        else {
+            Move-Item -LiteralPath $Source -Destination $Destination -Force -ErrorAction Stop
+        }
+    }
+    catch {
+        throw "Could not publish compatibility bootstrap file '$Destination'. $($_.Exception.Message)"
+    }
 }
 
 Assert-CompatibilityBootstrapUrl -Url $rawBase -Description "Compatibility bootstrap base URL" | Out-Null
@@ -120,7 +151,7 @@ if (-not [string]::IsNullOrWhiteSpace($expectedManifestHash)) {
         throw "Compatibility release manifest hash mismatch. Expected $expectedManifestHash, got $actualManifestHash."
     }
 }
-Move-Item -LiteralPath $manifestTmp -Destination $manifestPath -Force
+Publish-CompatibilityTempFile -Source $manifestTmp -Destination $manifestPath
 
 $entrypointArtifact = @($manifest.artifacts | Where-Object { [string]$_.name -eq "entrypoint" }) | Select-Object -First 1
 if ($null -eq $entrypointArtifact -or [string]$entrypointArtifact.sha256 -notmatch '^[0-9A-Fa-f]{64}$') {
@@ -133,7 +164,7 @@ $actualEntrypointHash = (Get-FileHash -LiteralPath $tmp -Algorithm SHA256).Hash
 if ($actualEntrypointHash -ine [string]$entrypointArtifact.sha256) {
     throw "Compatibility entrypoint hash mismatch. Expected $($entrypointArtifact.sha256), got $actualEntrypointHash."
 }
-Move-Item -LiteralPath $tmp -Destination $scriptPath -Force
+Publish-CompatibilityTempFile -Source $tmp -Destination $scriptPath
 
 Write-Host "Starting ZiAAS Woodstock Baselining..."
 $powerShellHost = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
