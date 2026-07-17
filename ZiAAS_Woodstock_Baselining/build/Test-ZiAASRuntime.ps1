@@ -20,6 +20,9 @@ $corePath = Join-Path $OutputRoot "ZiAAS_Woodstock_Baselining.core.ps1"
 $componentPath = Join-Path $OutputRoot "components"
 $testRoot = Join-Path (Split-Path -Parent $ProjectRoot) "work\runtime-regression"
 $powerShellExe = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
+$currentIdentity = [Security.Principal.WindowsIdentity]::GetCurrent()
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal($currentIdentity)
+$isElevated = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 
 function Assert-Condition {
     param([bool]$Condition, [string]$Message)
@@ -45,7 +48,8 @@ function Invoke-RuntimeCase {
         [Parameter(Mandatory = $true)][string]$Name,
         [Parameter(Mandatory = $true)][string[]]$ScriptArguments,
         [int]$ExpectedExitCode = 0,
-        [switch]$ExpectSummary
+        [switch]$ExpectSummary,
+        [string]$ComponentDirectoryOverride
     )
 
     $workingRoot = Join-Path $testRoot $Name
@@ -54,10 +58,11 @@ function Invoke-RuntimeCase {
     }
     New-Item -Path $workingRoot -ItemType Directory -Force | Out-Null
 
+    $selectedComponentPath = if ([string]::IsNullOrWhiteSpace($ComponentDirectoryOverride)) { $componentPath } else { $ComponentDirectoryOverride }
     $arguments = @(
         "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $corePath,
         "-WorkingRoot", $workingRoot,
-        "-ComponentDirectory", $componentPath,
+        "-ComponentDirectory", $selectedComponentPath,
         "-NoComponentDownload",
         "-NoLogo",
         "-NoColor",
@@ -91,6 +96,11 @@ $leapRetryTest = Join-Path $PSScriptRoot "Test-ZiAASLeapRetry.ps1"
 $leapRetryOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $leapRetryTest -CommonPath (Join-Path $OutputRoot "components\Common.ps1") 2>&1)
 Assert-Condition ($LASTEXITCODE -eq 0) "LEAP 1618 retry regression failed: $($leapRetryOutput -join [Environment]::NewLine)"
 Write-Pass "LEAP Windows Installer 1618 retry path passed."
+
+$leapHardeningTest = Join-Path $PSScriptRoot "Test-ZiAASLeapHardening.ps1"
+$leapHardeningOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $leapHardeningTest -CommonPath (Join-Path $OutputRoot "components\Common.ps1") 2>&1)
+Assert-Condition ($LASTEXITCODE -eq 0) "LEAP hardening regression failed: $($leapHardeningOutput -join [Environment]::NewLine)"
+Write-Pass "LEAP download selection, product filtering, and post-install process detection passed."
 
 $adobeRetryTest = Join-Path $PSScriptRoot "Test-ZiAASAdobeRetry.ps1"
 $adobeRetryOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $adobeRetryTest -CommonPath (Join-Path $OutputRoot "components\Common.ps1") 2>&1)
@@ -152,6 +162,39 @@ foreach ($case in $matrix) {
 }
 Write-Pass "All seven supported Reader deployment combinations passed simulation and ordering checks."
 
+Invoke-RuntimeCase -Name "HttpInstallerUrlRejected" -ScriptArguments @(
+    "-Simulation", "-Unattended", "-InstallMode", "Office",
+    "-OfficeDeploymentToolUrl", "http://download.example.invalid/odt.exe"
+) -ExpectedExitCode 1 -ExpectSummary | Out-Null
+Write-Pass "HTTP installer sources are rejected before cleanup or installation."
+
+$compatibilityScript = Join-Path $ProjectRoot "src\M365_Adobe_Leap.ps1"
+$compatibilityRoot = Join-Path $testRoot "CompatibilityHttpGuard"
+$oldCompatibilityUrl = $env:ZIAAS_WOODSTOCK_ENTRYPOINT_URL
+$oldCompatibilityRoot = $env:ZIAAS_WOODSTOCK_BOOTSTRAP_ROOT
+try {
+    $env:ZIAAS_WOODSTOCK_ENTRYPOINT_URL = "http://download.example.invalid/entrypoint.ps1"
+    $env:ZIAAS_WOODSTOCK_BOOTSTRAP_ROOT = $compatibilityRoot
+    try {
+        $compatibilityOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $compatibilityScript 2>&1)
+        $compatibilityExitCode = $LASTEXITCODE
+    }
+    catch {
+        $compatibilityOutput = @($_.Exception.Message)
+        $compatibilityExitCode = 1
+    }
+}
+finally {
+    if ($null -eq $oldCompatibilityUrl) { Remove-Item Env:ZIAAS_WOODSTOCK_ENTRYPOINT_URL -ErrorAction SilentlyContinue }
+    else { $env:ZIAAS_WOODSTOCK_ENTRYPOINT_URL = $oldCompatibilityUrl }
+    if ($null -eq $oldCompatibilityRoot) { Remove-Item Env:ZIAAS_WOODSTOCK_BOOTSTRAP_ROOT -ErrorAction SilentlyContinue }
+    else { $env:ZIAAS_WOODSTOCK_BOOTSTRAP_ROOT = $oldCompatibilityRoot }
+}
+Assert-Condition ($compatibilityExitCode -eq 1) "Legacy compatibility wrapper accepted an HTTP entrypoint URL. Output: $($compatibilityOutput -join [Environment]::NewLine)"
+Assert-Condition (($compatibilityOutput -join [Environment]::NewLine) -match "absolute HTTPS URL") "Legacy compatibility wrapper did not explain its HTTPS URL rejection."
+Assert-Condition (-not (Test-Path -LiteralPath $compatibilityRoot)) "Legacy compatibility wrapper created its bootstrap root before URL validation."
+Write-Pass "Legacy compatibility wrapper validates HTTPS and root safety before downloading."
+
 $proPath = Join-Path $testRoot "Licensed-Acrobat-Pro-Simulation.exe"
 Set-Content -LiteralPath $proPath -Value "SIMULATION ONLY" -Encoding ASCII
 $validPro = Invoke-RuntimeCase -Name "AcrobatProValid" -ScriptArguments @(
@@ -160,6 +203,13 @@ $validPro = Invoke-RuntimeCase -Name "AcrobatProValid" -ScriptArguments @(
     "-AdobeAcrobatProInstallArgumentLine", "/sAll /rs LANG_LIST=en_GB"
 ) -ExpectedExitCode 0 -ExpectSummary
 Assert-StepOrder -Summary $validPro.Summary
+
+Invoke-RuntimeCase -Name "AcrobatProEntitlementMissing" -ScriptArguments @(
+    "-Simulation", "-Unattended", "-InstallMode", "Adobe", "-AdobeProduct", "AcrobatPro",
+    "-SimulationAcrobatProEntitlementLevel", "0",
+    "-AdobeAcrobatProInstallerPath", $proPath,
+    "-AdobeAcrobatProInstallArgumentLine", "/sAll /rs LANG_LIST=en_GB"
+) -ExpectedExitCode 105 -ExpectSummary | Out-Null
 
 Invoke-RuntimeCase -Name "AcrobatProMissingInstaller" -ScriptArguments @(
     "-Simulation", "-Unattended", "-InstallMode", "Adobe", "-AdobeProduct", "AcrobatPro",
@@ -224,30 +274,73 @@ finally {
 Assert-Condition ($brokenExitCode -eq 1) "Missing-component preflight did not fail with exit code 1. Output: $($brokenOutput -join [Environment]::NewLine)"
 Write-Pass "Missing component preflight fails before component execution."
 
-$blockerRoot = Join-Path $testRoot "BlockingApps"
-New-Item -Path $blockerRoot -ItemType Directory -Force | Out-Null
-$blockerPath = Join-Path $blockerRoot "ms-teams.exe"
-Copy-Item -LiteralPath (Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe") -Destination $blockerPath -Force
-$blocker = Start-Process -FilePath $blockerPath -ArgumentList "-NoProfile", "-Command", "Start-Sleep -Seconds 60" -WindowStyle Hidden -PassThru
+$rebootComponents = Join-Path $testRoot "reboot-components"
+Copy-Item -LiteralPath $componentPath -Destination $rebootComponents -Recurse -Force
+Set-Content -LiteralPath (Join-Path $rebootComponents "Office.Install.ps1") -Value "exit 3010" -Encoding ASCII
+$rebootBoundary = Invoke-RuntimeCase -Name "RebootBoundary" -ComponentDirectoryOverride $rebootComponents -ScriptArguments @(
+    "-Simulation", "-Unattended", "-InstallMode", "Office"
+) -ExpectedExitCode 3010 -ExpectSummary
+Assert-Condition ([string]$rebootBoundary.Summary.Status -eq "RebootRequired") "Reboot boundary did not produce RebootRequired status."
+$rebootComponent = @($rebootBoundary.Summary.Components | Where-Object { $_.File -eq "Office.Install.ps1" }) | Select-Object -First 1
+Assert-Condition ($null -ne $rebootComponent -and [string]$rebootComponent.Status -eq "RebootRequired") "Reboot-required component was not recorded as an unsafe resume boundary."
+Write-Pass "Reboot-required component stops the flow before dependent steps and records a resumable boundary."
+
+$mutexRoot = Join-Path $testRoot "ConcurrentRun"
+if (Test-Path -LiteralPath $mutexRoot) { Remove-Item -LiteralPath $mutexRoot -Recurse -Force }
+$mutexOutput = Join-Path $testRoot "concurrent-first.console.txt"
+$mutexError = Join-Path $testRoot "concurrent-first.error.txt"
+$mutexArguments = @(
+    "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $corePath,
+    "-WorkingRoot", $mutexRoot, "-ComponentDirectory", $componentPath, "-NoComponentDownload",
+    "-NoLogo", "-NoColor", "-Quiet", "-Simulation", "-Unattended", "-InstallMode", "Office",
+    "-PostCleanupWaitSeconds", "5", "-PreLeapWaitSeconds", "0"
+)
+$firstRun = Start-Process -FilePath $powerShellExe -ArgumentList $mutexArguments -RedirectStandardOutput $mutexOutput -RedirectStandardError $mutexError -WindowStyle Hidden -PassThru
 try {
-    $blockingRoot = Join-Path $testRoot "BlockingAppsRun"
-    $blockingOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $corePath -WorkingRoot $blockingRoot -ComponentDirectory $componentPath -NoComponentDownload -NoLogo -NoColor -Quiet -LogLevel Warn -InstallMode Office -PostCleanupWaitSeconds 0 -PreLeapWaitSeconds 0 2>&1)
-    $blockingExitCode = $LASTEXITCODE
-    Assert-Condition ($blockingExitCode -eq 1) "Blocking-app preflight did not fail with exit code 1. Output: $($blockingOutput -join [Environment]::NewLine)"
-    $blockingSummary = Get-LatestSummary -WorkingRoot $blockingRoot
-    Assert-Condition ($null -ne $blockingSummary) "Blocking-app preflight did not create a summary report."
-    $blockingFailures = @($blockingSummary.Preflight | Where-Object { $_.Name -eq "Blocking apps" -and $_.Status -eq "Fail" })
-    Assert-Condition ($blockingFailures.Count -eq 1) "Blocking-app preflight result was not recorded as a failure."
-    $policyFailures = @($blockingSummary.Preflight | Where-Object { $_.Name -eq "Office update policy" -and $_.Status -eq "Fail" })
-    $expectedBlockingCategory = if ($policyFailures.Count -gt 0) { "MachineStateConflict" } else { "UserCorrectable" }
-    Assert-Condition ([string]$blockingSummary.ErrorCategory -eq $expectedBlockingCategory) "Preflight error category did not match the failed preflight results. Expected $expectedBlockingCategory, got $($blockingSummary.ErrorCategory)."
+    Start-Sleep -Seconds 2
+    $secondOutput = @(& $powerShellExe @mutexArguments 2>&1)
+    $secondExitCode = $LASTEXITCODE
+    Assert-Condition ($secondExitCode -eq 1) "Concurrent run was not rejected with exit code 1. Output: $($secondOutput -join [Environment]::NewLine)"
+    Assert-Condition (($secondOutput -join [Environment]::NewLine) -match "already active|run lock") "Concurrent run did not explain the active run lock."
+    $firstRun.WaitForExit()
+    $firstRun.Refresh()
+    $firstSummary = Get-LatestSummary -WorkingRoot $mutexRoot
+    Assert-Condition ($null -ne $firstSummary -and [string]$firstSummary.Status -eq "Success") "The original concurrent run did not complete successfully."
 }
 finally {
-    if ($blocker -and -not $blocker.HasExited) {
-        Stop-Process -Id $blocker.Id -Force -ErrorAction SilentlyContinue
-    }
+    if ($firstRun -and -not $firstRun.HasExited) { Stop-Process -Id $firstRun.Id -Force -ErrorAction SilentlyContinue }
 }
-Write-Pass "Blocked-app preflight reports a recoverable UserCorrectable failure before cleanup."
+Write-Pass "Concurrent deployment attempts are rejected without interrupting the original run."
+
+if ($isElevated) {
+    $blockerRoot = Join-Path $testRoot "BlockingApps"
+    New-Item -Path $blockerRoot -ItemType Directory -Force | Out-Null
+    $blockerPath = Join-Path $blockerRoot "ms-teams.exe"
+    Copy-Item -LiteralPath (Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe") -Destination $blockerPath -Force
+    $blocker = Start-Process -FilePath $blockerPath -ArgumentList "-NoProfile", "-Command", "Start-Sleep -Seconds 60" -WindowStyle Hidden -PassThru
+    try {
+        $blockingRoot = Join-Path $testRoot "BlockingAppsRun"
+        $blockingOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $corePath -WorkingRoot $blockingRoot -ComponentDirectory $componentPath -NoComponentDownload -NoLogo -NoColor -Quiet -LogLevel Warn -InstallMode Office -PostCleanupWaitSeconds 0 -PreLeapWaitSeconds 0 2>&1)
+        $blockingExitCode = $LASTEXITCODE
+        Assert-Condition ($blockingExitCode -eq 1) "Blocking-app preflight did not fail with exit code 1. Output: $($blockingOutput -join [Environment]::NewLine)"
+        $blockingSummary = Get-LatestSummary -WorkingRoot $blockingRoot
+        Assert-Condition ($null -ne $blockingSummary) "Blocking-app preflight did not create a summary report."
+        $blockingFailures = @($blockingSummary.Preflight | Where-Object { $_.Name -eq "Blocking apps" -and $_.Status -eq "Fail" })
+        Assert-Condition ($blockingFailures.Count -eq 1) "Blocking-app preflight result was not recorded as a failure."
+        $policyFailures = @($blockingSummary.Preflight | Where-Object { $_.Name -eq "Office update policy" -and $_.Status -eq "Fail" })
+        $expectedBlockingCategory = if ($policyFailures.Count -gt 0) { "MachineStateConflict" } else { "UserCorrectable" }
+        Assert-Condition ([string]$blockingSummary.ErrorCategory -eq $expectedBlockingCategory) "Preflight error category did not match the failed preflight results. Expected $expectedBlockingCategory, got $($blockingSummary.ErrorCategory)."
+    }
+    finally {
+        if ($blocker -and -not $blocker.HasExited) {
+            Stop-Process -Id $blocker.Id -Force -ErrorAction SilentlyContinue
+        }
+    }
+    Write-Pass "Blocked-app preflight reports a recoverable UserCorrectable failure before cleanup."
+}
+else {
+    Write-Host "[SKIP] Live blocking-app preflight requires an elevated PowerShell session; simulation and all other regression cases passed."
+}
 
 $timeoutTestPath = Join-Path $PSScriptRoot "Test-ZiAASProcessTimeout.ps1"
 $timeoutOutput = @(& $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $timeoutTestPath -CommonPath (Join-Path $OutputRoot "components\Common.ps1") -WorkingRoot (Join-Path $testRoot "ProcessTimeout"))
@@ -259,4 +352,3 @@ Write-Host "ZiAAS Woodstock runtime regression checks passed."
 if (-not $KeepTestData) {
     Remove-Item -LiteralPath $testRoot -Recurse -Force -ErrorAction SilentlyContinue
 }
-

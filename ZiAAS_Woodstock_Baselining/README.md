@@ -11,7 +11,7 @@ The orchestrator validates and stages all selected reinstall media first, remove
 3. Adobe Reader/Acrobat uninstall and cleanup, if selected
 4. Office uninstall and cleanup, if selected
 5. Wait 60 seconds by default
-6. Install Microsoft 365 Apps for enterprise, 64-bit, en-GB, requesting Semi-Annual Enterprise
+6. Install Microsoft 365 Apps for enterprise (`O365ProPlusRetail` by default; `O365ProPlusEEANoTeamsRetail` is also allowed), 64-bit, en-GB, requesting Semi-Annual Enterprise
 7. Install Adobe Reader 64-bit MUI with `LANG_LIST=en_GB`, or install a supplied Acrobat Pro package
 8. Disable New Acrobat and enforce Reader-only reduced mode when Reader is selected
 9. Wait 60 seconds by default before LEAP
@@ -20,7 +20,7 @@ The orchestrator validates and stages all selected reinstall media first, remove
 
 Microsoft is unifying Semi-Annual Enterprise Channel into Monthly Enterprise Channel from Version 2606 in July 2026. The tool still requests `Channel=SemiAnnual`, verifies the exact enterprise audience, and only accepts Monthly Enterprise reporting at or above Microsoft's documented transition build.
 
-Adobe officially maps International English `en_GB` to its `en_US` English resource transform. Verification therefore proves the 64-bit MUI installer request, the mapped English resources, the Reader-only machine policy, and the disabled New Acrobat policy.
+Adobe officially maps International English `en_GB` to its `en_US` English resource transform. Verification therefore proves the 64-bit MUI installer request, the mapped English resources and MUI registry state, the Reader-only machine policy, and the disabled New Acrobat policy.
 
 ## Common commands
 
@@ -36,7 +36,7 @@ Full unattended Reader deployment:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -InstallMode All -AdobeProduct Reader -Unattended
 ```
 
-Preflight only:
+Preflight only (writes logs/reports under the working root, but does not uninstall or install products):
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -PreflightOnly -InstallMode All -AdobeProduct Reader
@@ -72,7 +72,7 @@ keep the same fail-fast, logging, exit-code, and unattended behaviour.
 
 ## Acrobat Pro rule
 
-Reader is fully autonomous. Acrobat Pro is not. Acrobat Pro deployments require a licensed enterprise installer path or URL and silent install arguments before cleanup begins. Include `LANG_LIST=en_GB` unless the package is already pre-configured and `-AllowAcrobatProLanguageNotVerified` is intentionally supplied.
+Reader is fully autonomous. Acrobat Pro is not. Acrobat Pro deployments require a licensed enterprise installer path or URL and silent install arguments before cleanup begins. Include `LANG_LIST=en_GB` unless the package is already pre-configured and `-AllowAcrobatProLanguageNotVerified` is intentionally supplied. The default verification also requires Adobe entitlement level `300` for the current user; use `-AllowAcrobatProEntitlementNotVerified` only when an approved enterprise package deliberately defers sign-in entitlement.
 
 ## Safety model
 
@@ -80,7 +80,11 @@ Reader is fully autonomous. Acrobat Pro is not. Acrobat Pro deployments require 
 - `-PreflightOnly` validates requirements without changing the machine.
 - A real run stages and signature-checks all selected reinstall media before the first uninstall.
 - Blocking Office, Adobe, and LEAP apps stop the run unless `-ForceCloseApps` is supplied.
+- Reboot-required component results stop the flow before the next dependent step. Restart Windows, then use `-ResumeLastRun`; reboot-required steps are never treated as complete resume boundaries.
+- A named machine-wide run lock prevents two deployments from changing the same client concurrently.
+- Working-root deletion is restricted to a dedicated local child directory and is never allowed against system, user, program, or drive-root paths.
 - Cleanup paths are allowlisted.
+- Per-user uninstall hives are loaded briefly when safe so logged-out users' Adobe/LEAP entries are included; an incomplete hive inventory fails preflight before cleanup.
 - LEAP profile cleanup preserves `AppData\Roaming\LEAP Accounting`.
 - Raw URL bootstrap downloads a manifest first, then verifies SHA-256 hashes for the core script and component package before execution.
 - Component exit codes are preserved by the orchestrator, including exit `100` for a pre-cleanup staging failure.

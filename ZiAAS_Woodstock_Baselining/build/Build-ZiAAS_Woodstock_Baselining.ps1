@@ -17,6 +17,12 @@ if ([string]::IsNullOrWhiteSpace($OutputRoot)) {
     $OutputRoot = Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) "outputs"
 }
 
+$rawBaseUri = $null
+if (-not [Uri]::TryCreate($RawBaseUrl, [UriKind]::Absolute, [ref]$rawBaseUri) -or $rawBaseUri.Scheme -ne "https") {
+    throw "RawBaseUrl must be an absolute HTTPS URL: $RawBaseUrl"
+}
+$RawBaseUrl = $RawBaseUrl.TrimEnd('/')
+
 $srcRoot = Join-Path $ProjectRoot "src"
 $srcComponents = Join-Path $srcRoot "components"
 $srcConfig = Join-Path $srcRoot "config"
@@ -146,6 +152,33 @@ $manifest = [ordered]@{
     defaultWorkingRoot = "C:\ProgramData\ZiAAS_Woodstock_Baselining"
     rawBaseUrl = $RawBaseUrl
     componentBaseUrl = "$RawBaseUrl/components"
+    productRequirements = [ordered]@{
+        office = [ordered]@{
+            productIds = @("O365ProPlusRetail", "O365ProPlusEEANoTeamsRetail")
+            defaultProductId = "O365ProPlusRetail"
+            platform = "x64"
+            culture = "en-gb"
+            requestedChannel = "SemiAnnual"
+        }
+        adobeReader = [ordered]@{
+            installerPattern = "AcroRdrDCx64*_MUI.exe"
+            languageArgument = "LANG_LIST=en_GB"
+            requiredMuiTransform = "en_US"
+            readerOnlyPolicy = "bIsSCReducedModeEnforcedEx=1"
+            newAcrobatPolicy = "bEnableAV2Enterprise=0"
+        }
+        adobeAcrobatPro = [ordered]@{
+            installerSource = "Licensed enterprise package supplied by operator"
+            requiredLanguageArgument = "LANG_LIST=en_GB"
+            requiredEntitlementLevel = 300
+            newAcrobatPolicy = "bEnableAV2Enterprise=0"
+        }
+        leap = [ordered]@{
+            installerSource = "Official LEAP downloads page"
+            architecture = "x64"
+            installLast = $true
+        }
+    }
     downloadRetryDefaults = [ordered]@{
         attempts = 3
         delaySeconds = 5
