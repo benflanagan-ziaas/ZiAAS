@@ -19,7 +19,8 @@ $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $defaultRawBase = "https://raw.githubusercontent.com/benflanagan-ziaas/ZiAAS/refs/heads/main/ZiAAS_Woodstock_Baselining"
-$rawBase = if ([string]::IsNullOrWhiteSpace($env:ZIAAS_WOODSTOCK_RAW_BASE)) { $defaultRawBase } else { $env:ZIAAS_WOODSTOCK_RAW_BASE.TrimEnd("/") }
+$rawBaseFromEnvironment = -not [string]::IsNullOrWhiteSpace($env:ZIAAS_WOODSTOCK_RAW_BASE)
+$rawBase = if (-not $rawBaseFromEnvironment) { $defaultRawBase } else { $env:ZIAAS_WOODSTOCK_RAW_BASE.TrimEnd("/") }
 $root = if ([string]::IsNullOrWhiteSpace($env:ZIAAS_WOODSTOCK_BOOTSTRAP_ROOT)) { Join-Path $env:ProgramData "ZiAAS_Woodstock_Baselining" } else { $env:ZIAAS_WOODSTOCK_BOOTSTRAP_ROOT }
 $componentDir = Join-Path $root "components"
 $corePath = Join-Path $root "ZiAAS_Woodstock_Baselining.core.ps1"
@@ -51,6 +52,11 @@ function Save-ZiaasRawFile {
         [Parameter(Mandatory = $true)][string]$Url,
         [Parameter(Mandatory = $true)][string]$Path
     )
+
+    $uri = $null
+    if (-not [Uri]::TryCreate($Url, [UriKind]::Absolute, [ref]$uri) -or $uri.Scheme -ne "https") {
+        throw "Bootstrap download URL must be an absolute HTTPS URL: $Url"
+    }
 
     $tmp = "$Path.tmp"
     if (Test-Path -LiteralPath $tmp) {
@@ -97,6 +103,22 @@ function Test-ZiaasArgumentPresent {
     }
 
     return $false
+}
+
+function Get-ZiaasPowerShellHost {
+    if ([Environment]::Is64BitOperatingSystem -and (-not [Environment]::Is64BitProcess)) {
+        $sysnativeHost = Join-Path $env:SystemRoot "Sysnative\WindowsPowerShell\v1.0\powershell.exe"
+        if (Test-Path -LiteralPath $sysnativeHost -PathType Leaf) {
+            return $sysnativeHost
+        }
+    }
+
+    $systemHost = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
+    if (Test-Path -LiteralPath $systemHost -PathType Leaf) {
+        return $systemHost
+    }
+
+    return "powershell.exe"
 }
 
 function Get-ZiaasManifestArtifactHash {
@@ -157,6 +179,73 @@ function Assert-ZiaasFileHash {
     Write-Host "$Description hash verified."
 }
 
+function Assert-ZiaasBootstrapRoot {
+    if ($root.StartsWith('\\')) {
+        throw "Bootstrap root must be a local path, not a UNC path: $root"
+    }
+    $fullPath = [IO.Path]::GetFullPath($root).TrimEnd('\')
+    $driveRoot = [IO.Path]::GetPathRoot($fullPath).TrimEnd('\')
+    if ([string]::IsNullOrWhiteSpace($driveRoot) -or $fullPath -ieq $driveRoot) {
+        throw "Bootstrap root cannot be a drive root: $fullPath"
+    }
+
+    $protected = @(
+        $env:SystemRoot,
+        $env:ProgramFiles,
+        ${env:ProgramFiles(x86)},
+        (Join-Path $env:SystemDrive "Users"),
+        (Join-Path $env:SystemDrive "ProgramData")
+    ) | Where-Object { $_ } | ForEach-Object { [IO.Path]::GetFullPath($_).TrimEnd('\') }
+    foreach ($path in $protected) {
+        if ($fullPath -ieq $path) {
+            throw "Bootstrap root points at a protected system directory: $fullPath"
+        }
+    }
+}
+
+function Assert-ZiaasManifestContract {
+    param(
+        [Parameter(Mandatory = $true)]$Manifest,
+        [Parameter(Mandatory = $true)][string]$ExpectedRawBase
+    )
+
+    foreach ($propertyName in @("name", "version", "publisher", "rawBaseUrl", "requiredComponents", "artifacts", "exitCodes")) {
+        if ($null -eq $Manifest.PSObject.Properties[$propertyName]) {
+            throw "Release manifest is missing required property '$propertyName'."
+        }
+    }
+    if ([string]$Manifest.publisher -ne "ZiAAS") {
+        throw "Release manifest publisher is not ZiAAS."
+    }
+    $manifestUri = $null
+    if (-not [Uri]::TryCreate([string]$Manifest.rawBaseUrl, [UriKind]::Absolute, [ref]$manifestUri) -or $manifestUri.Scheme -ne "https") {
+        throw "Release manifest rawBaseUrl must be an absolute HTTPS URL."
+    }
+    if ([string]$Manifest.rawBaseUrl.TrimEnd('/') -ne $ExpectedRawBase.TrimEnd('/')) {
+        throw "Release manifest rawBaseUrl does not match the bootstrap source."
+    }
+
+    $requiredArtifacts = @("coreBase64", "coreScript", "componentsBase64", "componentsZip")
+    foreach ($artifactName in $requiredArtifacts) {
+        $artifact = @($Manifest.artifacts | Where-Object { [string]$_.name -eq $artifactName })
+        if ($artifact.Count -ne 1) {
+            throw "Release manifest must contain exactly one '$artifactName' artifact."
+        }
+        if ([string]$artifact[0].sha256 -notmatch '^[0-9A-Fa-f]{64}$') {
+            throw "Release manifest artifact '$artifactName' has an invalid SHA-256 hash."
+        }
+        if ([int64]$artifact[0].bytes -le 0) {
+            throw "Release manifest artifact '$artifactName' has an invalid byte count."
+        }
+    }
+
+    $componentNames = @($Manifest.requiredComponents | ForEach-Object { [string]$_ })
+    if ($componentNames.Count -lt 1 -or $componentNames -notcontains "Common.ps1") {
+        throw "Release manifest does not declare the required Common.ps1 component."
+    }
+}
+
+Assert-ZiaasBootstrapRoot
 if (-not (Test-Path -LiteralPath $root)) {
     New-Item -Path $root -ItemType Directory -Force | Out-Null
 }
@@ -173,13 +262,14 @@ if ([string]::IsNullOrWhiteSpace($manifestUrl)) {
 Write-Host "Downloading ZiAAS Woodstock Baselining manifest..."
 Save-ZiaasRawFile -Url $manifestUrl -Path $manifestPath
 $expectedManifestHash = Get-ZiaasForwardedArgumentValue -Name "ExpectedManifestHash" -ScriptArguments $ForwardedArguments
+if ((Test-ZiaasArgumentPresent -Name "ManifestUrl" -ScriptArguments $ForwardedArguments) -and [string]::IsNullOrWhiteSpace($expectedManifestHash) -and (-not (Test-ZiaasArgumentPresent -Name "Simulation" -ScriptArguments $ForwardedArguments))) {
+    throw "A custom ManifestUrl requires ExpectedManifestHash for a non-simulation run."
+}
 if (-not [string]::IsNullOrWhiteSpace($expectedManifestHash)) {
     Assert-ZiaasFileHash -Path $manifestPath -ExpectedHash $expectedManifestHash -Description "Release manifest"
 }
 $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
-if ($null -eq $manifest.PSObject.Properties["artifacts"]) {
-    throw "Release manifest is missing the artifacts contract."
-}
+Assert-ZiaasManifestContract -Manifest $manifest -ExpectedRawBase $rawBase
 
 $corePartCount = Get-ZiaasManifestArtifactPartCount -Manifest $manifest -Name "coreBase64"
 Save-ZiaasRawFileParts -UrlPrefix "$rawBase/ZiAAS_Woodstock_Baselining.core.ps1.b64" -PartCount $corePartCount -Path $coreB64Path
@@ -200,6 +290,13 @@ $bootstrapArgs = @()
 if (-not (Test-ZiaasArgumentPresent -Name "ComponentDirectory" -ScriptArguments $ForwardedArguments)) {
     $bootstrapArgs += @("-ComponentDirectory", $componentDir)
 }
+if (-not (Test-ZiaasArgumentPresent -Name "ExpectedComponentPackageHash" -ScriptArguments $ForwardedArguments)) {
+    $bootstrapArgs += @("-ExpectedComponentPackageHash", (Get-ZiaasManifestArtifactHash -Manifest $manifest -Name "componentsZip"))
+}
+if (-not (Test-ZiaasArgumentPresent -Name "ComponentPackageUrl" -ScriptArguments $ForwardedArguments)) {
+    $bootstrapArgs += @("-ComponentPackageUrl", "$rawBase/ZiAAS_Woodstock_Baselining.components.zip.b64")
+}
 
-& powershell.exe -NoProfile -ExecutionPolicy Bypass -File $corePath @bootstrapArgs @ForwardedArguments
+$powerShellHost = Get-ZiaasPowerShellHost
+& $powerShellHost -NoProfile -ExecutionPolicy Bypass -File $corePath @bootstrapArgs @ForwardedArguments
 exit $LASTEXITCODE
