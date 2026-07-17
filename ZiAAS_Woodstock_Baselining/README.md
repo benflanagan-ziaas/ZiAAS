@@ -42,6 +42,15 @@ Preflight only (writes logs/reports under the working root, but does not uninsta
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ZiAAS_Woodstock_Baselining.ps1 -PreflightOnly -InstallMode All -AdobeProduct Reader
 ```
 
+URL run for an engineer (open PowerShell with **Run as administrator** first):
+
+```powershell
+$u='https://raw.githubusercontent.com/benflanagan-ziaas/ZiAAS/refs/heads/main/ZiAAS_Woodstock_Baselining/ZiAAS_Woodstock_Baselining.ps1';$p=Join-Path $env:TEMP 'ZiAAS_Woodstock_Baselining.ps1';Invoke-WebRequest $u -OutFile $p -UseBasicParsing;powershell.exe -NoProfile -ExecutionPolicy Bypass -File $p
+```
+
+The command-line value for the menu's “LEAP only” option is `-InstallMode Leap`.
+The legacy root URL `M365_Adobe_Leap.ps1` remains supported.
+
 Simulation:
 
 ```powershell
