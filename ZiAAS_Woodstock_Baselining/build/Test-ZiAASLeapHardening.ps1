@@ -18,6 +18,7 @@ try {
         RunStamp = Get-Date -Format "yyyyMMdd-HHmmss"
     }
     . $CommonPath
+    Initialize-DeploymentFolders
 
     $pagePayload = @"
 Latest Version: 2.5.620.0
@@ -45,6 +46,39 @@ https://leaphome.sharepoint.com/sites/download/2.5.620.0/LEAPDesktopX64Setup.exe
     }
     if (@($entries | Where-Object { $_.DisplayName -eq "LEAP Desktop" }).Count -ne 1) {
         throw "LEAP Desktop was not detected from its uninstall entry."
+    }
+
+    function New-TestPeFile {
+        param(
+            [Parameter(Mandatory = $true)][string]$Path,
+            [Parameter(Mandatory = $true)][int]$Machine
+        )
+
+        $bytes = New-Object byte[] 128
+        $bytes[0] = 0x4D
+        $bytes[1] = 0x5A
+        [BitConverter]::GetBytes([int]0x40).CopyTo($bytes, 0x3C)
+        $bytes[0x40] = 0x50
+        $bytes[0x41] = 0x45
+        [BitConverter]::GetBytes([uint16]$Machine).CopyTo($bytes, 0x44)
+        [IO.File]::WriteAllBytes($Path, $bytes)
+    }
+
+    $x64Bootstrapper = Join-Path $testRoot "LEAPDesktopX64setup.exe"
+    New-TestPeFile -Path $x64Bootstrapper -Machine 0x014C
+    Assert-LeapInstallerArchitecture -Path $x64Bootstrapper
+
+    $genericX86Installer = Join-Path $testRoot "LEAPDesktopSetup.exe"
+    New-TestPeFile -Path $genericX86Installer -Machine 0x014C
+    $genericX86Rejected = $false
+    try {
+        Assert-LeapInstallerArchitecture -Path $genericX86Installer
+    }
+    catch {
+        $genericX86Rejected = $true
+    }
+    if (-not $genericX86Rejected) {
+        throw "A generic x86 LEAP installer was incorrectly accepted as an x64 deployment source."
     }
 
     $hostExe = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
