@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0",
+  "name": "PSCP",
+  "version": "4.0.0",
+  "repository": "benflanagan-ziaas/ZiAAS",
+  "branch": "main",
+  "analyzer": {
+    "path": "PSCP_v4_0/Invoke-PSCP.ps1",
+    "rawUrl": "https://raw.githubusercontent.com/benflanagan-ziaas/ZiAAS/main/PSCP_v4_0/Invoke-PSCP.ps1",
+    "sha256": "A09E1895621DE9811C64F656FC0C86113207EB6297B7E3B4A801EF1826BBFA52",
+    "bytes": 150334
+  },
+  "runtimeDependency": {
+    "name": "PSScriptAnalyzer",
+    "repository": "PSGallery",
+    "requiredVersion": "1.25.0"
+  },
+  "files": [
+    { "path": "PSCP_v4_0/Invoke-PSCP.ps1", "sha256": "A09E1895621DE9811C64F656FC0C86113207EB6297B7E3B4A801EF1826BBFA52", "bytes": 150334 },
+    { "path": "PSCP_v4_0/README.md", "sha256": "C3BB01B37C1EB56D583444C7C756194A23D36DD54808492A5D02E0152EF75E3E", "bytes": 6456 },
+    { "path": "PSCP_v4_0/sample-PSCP_v3_4-report.json", "sha256": "6BF1A0210D9C580C93E72FC99772478B03C05CE4F68A81655239EEC76F515C64", "bytes": 58990 },
+    { "path": "PSCP_v4_0/schema/pscp-report.schema.json", "sha256": "C68A082004699BD0D203A3253F1A60B8810D6F8FA858A361277718BD533BC90E", "bytes": 3946 },
+    { "path": "PSCP_v4_0/tests/Test-PSCP.ps1", "sha256": "7A568DE9E1029A7A7E280D1F8A23350E594A28484B8CB2E6AC8C3DA96405E727", "bytes": 11398 },
+    { "path": "PSCP_v4_0/tests/fixtures/Benign.ps1", "sha256": "D2C39E89DCE88F995CE263B8F321C01481B1B729D04FE8603E6247F37886B87C", "bytes": 747 },
+    { "path": "PSCP_v4_0/tests/fixtures/Compressed.ps1", "sha256": "F77431BAB35D5E49350D53AC986DD91332E6B0EE5917602906A977B25B99DBA6", "bytes": 271 },
+    { "path": "PSCP_v4_0/tests/fixtures/Dangerous.ps1", "sha256": "64ABB5D5C0A419155D0828659E9304E99623E68ABFA26ED5CE1850E962E2501B", "bytes": 581 },
+    { "path": "PSCP_v4_0/tests/fixtures/Malformed.ps1", "sha256": "E59568ED316757C0E444E231CA1CE89E321CCB5EAA63CC71F1D30ED54261EFA1", "bytes": 102 },
+    { "path": "PSCP_v4_0/tests/fixtures/Obfuscated.ps1", "sha256": "54E70CEB7A0DFA082FE296EF33DC47AC991E458F1AD87FFA2D680EF68948FAF0", "bytes": 421 },
+    { "path": "PSCP_v4_0/tests/fixtures/SecretRedaction.ps1", "sha256": "4A1381CC5C6723EAD8E293BE7976AD7F9C73A87A07607A885613399BD627EDB3", "bytes": 254 },
+    { "path": "PSCP_v4_0/tests/fixtures/SideEffectSentinel.ps1", "sha256": "892D519BFFBBC879E7C607994A2D5347FACB464726BBFB0D2E7AAD121258A2C2", "bytes": 304 }
+  ]
+}
