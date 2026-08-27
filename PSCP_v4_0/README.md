@@ -20,6 +20,29 @@ For an already provisioned or offline machine:
 
 `-Profile` is an alias of `-AnalysisProfile`. JSON is the default output and is the canonical file format written by `-OutputPath`. `-OutputFormat Text` gives a short human summary; `Object` is useful when calling the analyzer from PowerShell with `-NoExit`.
 
+## Run from an immutable GitHub URL
+
+Download first, verify the published SHA-256, and only then start a separate PowerShell process. Do not pipe remote source into `Invoke-Expression`:
+
+```powershell
+$uri = 'https://raw.githubusercontent.com/benflanagan-ziaas/ZiAAS/a49352f0cbaf61486141b59995f93799efd02e34/PSCP_v4_0/Invoke-PSCP.ps1'
+$expected = 'A09E1895621DE9811C64F656FC0C86113207EB6297B7E3B4A801EF1826BBFA52'
+$toolPath = Join-Path ([IO.Path]::GetTempPath()) 'Invoke-PSCP-4.0.0.ps1'
+Invoke-WebRequest -Uri $uri -OutFile $toolPath -UseBasicParsing
+if ((Get-FileHash -LiteralPath $toolPath -Algorithm SHA256).Hash -ne $expected) {
+    throw 'PSCP download failed integrity verification.'
+}
+& powershell.exe -NoLogo -NoProfile -NonInteractive -File $toolPath -Path .\MyScript.ps1 -AnalysisProfile Maximum -OutputPath .\pscp-report.json
+```
+
+The mutable convenience URL is recorded in [`release-manifest.json`](release-manifest.json), together with hashes and sizes for the release files. Automation should prefer the immutable URL above.
+
+## Codex automatic gate
+
+The repository includes a reusable Codex skill at [`skill/powershell-static-gate`](skill/powershell-static-gate). Copy that whole directory into `$CODEX_HOME/skills/powershell-static-gate`, then restart or reload Codex so skill discovery runs again. Its broad trigger policy makes PSCP the final static gate whenever Codex creates or changes `.ps1`, `.psm1`, or `.psd1` source.
+
+The skill launcher downloads only the immutable analyzer URL above, verifies the pinned SHA-256 before caching or execution, and fails closed on a missing or mismatched offline cache. It never executes the target script. Codex should require `PASS_STATIC` before presenting generated PowerShell as ready for isolated runtime testing.
+
 ## Dependency policy
 
 The only runtime dependency is Microsoft `PSScriptAnalyzer`, pinned by default to `1.25.0`.
