@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ziaas:pscp:report:1.0.0",
+  "title": "PSCP static analysis report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "tool", "verdict", "exitCode", "analysisComplete",
+    "safeToBeginSandboxTesting", "malwareAssessment", "summary", "request",
+    "timing", "environment", "coverage", "files", "capabilities",
+    "decodedArtifacts", "findings", "testPlan", "skippedPaths",
+    "analysisErrors", "limitations"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "mode", "targetWasExecuted", "testsWereExecuted"],
+      "properties": {
+        "name": { "const": "PSCP" },
+        "version": { "type": "string" },
+        "mode": { "const": "static-only" },
+        "targetWasExecuted": { "const": false },
+        "testsWereExecuted": { "const": false }
+      }
+    },
+    "verdict": { "enum": ["PASS_STATIC", "REVIEW", "BLOCK", "INCOMPLETE", "FATAL"] },
+    "exitCode": { "type": "integer", "minimum": 0, "maximum": 4 },
+    "analysisComplete": { "type": "boolean" },
+    "safeToBeginSandboxTesting": { "type": "boolean" },
+    "malwareAssessment": { "enum": ["NoStaticIndicatorsDetected", "SuspiciousIndicators", "HighRiskIndicators", "UnknownIncomplete"] },
+    "summary": {
+      "type": "object",
+      "required": ["directAnswer", "recommendedAction", "filesAnalyzed", "totalFindings", "reportedFindings", "blockingFindings", "suppressedFindings", "bySeverity"]
+    },
+    "request": { "type": "object" },
+    "timing": { "type": "object" },
+    "environment": { "type": "object" },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "required", "version", "message"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["completed", "failed", "skipped", "unavailable", "degraded"] },
+          "required": { "type": "boolean" },
+          "version": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "files": { "type": "array", "items": { "type": "object" } },
+    "capabilities": { "type": "array", "items": { "type": "object" } },
+    "decodedArtifacts": { "type": "array", "items": { "type": "object" } },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ruleId", "engine", "category", "severity", "confidence", "blocking",
+          "suppressed", "file", "line", "column", "message", "consequence",
+          "remediation", "evidence", "fingerprint"
+        ],
+        "properties": {
+          "ruleId": { "type": "string", "minLength": 1 },
+          "engine": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "severity": { "enum": ["Critical", "Error", "Warning", "Information"] },
+          "confidence": { "enum": ["High", "Medium", "Low"] },
+          "blocking": { "type": "boolean" },
+          "suppressed": { "type": "boolean" },
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 1 },
+          "column": { "type": "integer", "minimum": 1 },
+          "message": { "type": "string", "minLength": 1 },
+          "consequence": { "type": "string", "minLength": 1 },
+          "remediation": { "type": "string", "minLength": 1 },
+          "evidence": { "type": "string" },
+          "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{24}$" }
+        }
+      }
+    },
+    "testPlan": { "type": "array", "items": { "type": "object" } },
+    "skippedPaths": { "type": "array", "items": { "type": "object" } },
+    "analysisErrors": { "type": "array", "items": { "type": "string" } },
+    "limitations": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

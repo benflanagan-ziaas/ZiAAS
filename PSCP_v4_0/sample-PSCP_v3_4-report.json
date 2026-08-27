@@ -1,0 +1,1930 @@
+{
+  "schemaVersion": "1.0.0",
+  "tool": {
+    "name": "PSCP",
+    "version": "4.0.0",
+    "mode": "static-only",
+    "targetWasExecuted": false,
+    "testsWereExecuted": false
+  },
+  "verdict": "BLOCK",
+  "exitCode": 2,
+  "analysisComplete": true,
+  "safeToBeginSandboxTesting": false,
+  "malwareAssessment": "NoStaticIndicatorsDetected",
+  "summary": {
+    "directAnswer": "Do not run this script yet. 1 blocking finding(s) require remediation or explicit security review.",
+    "recommendedAction": "Fix critical/error findings and rerun PSCP. Escalate malware or credential-access indicators for security review.",
+    "filesAnalyzed": 1,
+    "totalFindings": 17,
+    "reportedFindings": 17,
+    "blockingFindings": 1,
+    "suppressedFindings": 0,
+    "bySeverity": {
+      "Critical": 0,
+      "Error": 1,
+      "Warning": 16,
+      "Information": 0
+    }
+  },
+  "request": {
+    "paths": [
+      "C:\\Users\\BenFlanagan\\Documents\\Codex\\2026-08-27\\https-github-com-benflanagan-ziaas-ziaas\\work\\audit-target\\PSCP_v3_4.ps1"
+    ],
+    "profile": "Standard",
+    "dependencyMode": "Require",
+    "minimumReportedSeverity": "Information",
+    "recurse": true,
+    "limits": {
+      "maxFileCount": 5000,
+      "maxFileBytes": 10485760,
+      "maxDecodedBytes": 1048576,
+      "maxDecodeDepth": 3
+    }
+  },
+  "timing": {
+    "startedUtc": "2026-08-27T09:52:10.9563455Z",
+    "finishedUtc": "2026-08-27T09:52:20.3523599Z",
+    "durationMs": 9396
+  },
+  "environment": {
+    "powerShellVersion": "7.6.4",
+    "edition": "Core",
+    "platform": "Microsoft Windows NT 10.0.26200.0",
+    "processArchitecture": "x64"
+  },
+  "coverage": [
+    {
+      "name": "PowerShell.Parser+PSCP.Custom",
+      "status": "completed",
+      "required": true,
+      "version": "7.6.4",
+      "durationMs": 4384,
+      "message": "Parser and bundled static rules completed without executing target code.",
+      "details": {
+        "filesRequested": 1,
+        "filesAnalyzed": 1,
+        "decodedArtifacts": 0
+      }
+    },
+    {
+      "name": "Dependency:PSScriptAnalyzer",
+      "status": "completed",
+      "required": true,
+      "version": "1.25.0",
+      "durationMs": 670,
+      "message": "Pinned PSGallery dependency loaded by exact manifest path after identity and signature validation.",
+      "details": {
+        "manifestPath": "C:\\Users\\BenFlanagan\\OneDrive - ZiAAS\\Documents\\PowerShell\\Modules\\PSScriptAnalyzer\\1.25.0\\PSScriptAnalyzer.psd1",
+        "manifestSha256": "2B219F688BCDD67101040F845E530B22907D39BBF49089B4B5B2AFABA7996791",
+        "signaturesChecked": 20
+      }
+    },
+    {
+      "name": "PSScriptAnalyzer",
+      "status": "completed",
+      "required": true,
+      "version": "1.25.0",
+      "durationMs": 3997,
+      "message": "All requested PSScriptAnalyzer passes completed.",
+      "details": [
+        {
+          "name": "Default",
+          "status": "completed",
+          "diagnostics": 0,
+          "durationMs": 3495,
+          "message": ""
+        },
+        {
+          "name": "ScriptSecurity",
+          "status": "completed",
+          "diagnostics": 0,
+          "durationMs": 278,
+          "message": ""
+        },
+        {
+          "name": "ScriptFunctions",
+          "status": "completed",
+          "diagnostics": 0,
+          "durationMs": 219,
+          "message": ""
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fullPath": "C:\\Users\\BenFlanagan\\Documents\\Codex\\2026-08-27\\https-github-com-benflanagan-ziaas-ziaas\\work\\audit-target\\PSCP_v3_4.ps1",
+      "relativePath": "work\\audit-target\\PSCP_v3_4.ps1",
+      "sha256": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "sizeBytes": 22681,
+      "extension": ".ps1",
+      "encoding": "utf-8-no-bom",
+      "authenticode": {
+        "available": true,
+        "status": "NotSigned",
+        "signer": "",
+        "timestamp": ""
+      },
+      "parser": {
+        "success": true,
+        "errorCount": 0,
+        "tokenCount": 3669
+      },
+      "statistics": {
+        "lines": 102,
+        "commands": 156,
+        "functions": 8,
+        "parameters": 30
+      },
+      "dependencies": {
+        "requiredPowerShellVersion": "",
+        "requiredModules": [],
+        "importedModules": [
+          "PSScriptAnalyzer"
+        ],
+        "moduleQualifiedCommands": [],
+        "nativeCommands": [],
+        "dynamicCommandLines": [],
+        "resolutionNote": "Command/module resolution is intentionally not performed because discovery can import modules or run module initialization code."
+      },
+      "functions": [
+        {
+          "name": "Get-PSCPCount",
+          "lineStart": 9,
+          "lineEnd": 9,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "Value",
+              "type": "System.Object",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 9
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 1,
+          "maximumNestingDepth": 0,
+          "calls": [],
+          "scopeWrites": [],
+          "outputProperties": [],
+          "hasCommentHelp": false
+        },
+        {
+          "name": "Get-PSCPProp",
+          "lineStart": 10,
+          "lineEnd": 10,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "Object",
+              "type": "System.Object",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 10
+            },
+            {
+              "name": "Name",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateNotNullOrEmpty"
+              ],
+              "hasDefault": false,
+              "line": 10
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 3,
+          "maximumNestingDepth": 1,
+          "calls": [],
+          "scopeWrites": [],
+          "outputProperties": [],
+          "hasCommentHelp": false
+        },
+        {
+          "name": "Get-PSCPLocation",
+          "lineStart": 11,
+          "lineEnd": 11,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "Text",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateNotNull"
+              ],
+              "hasDefault": false,
+              "line": 11
+            },
+            {
+              "name": "Index",
+              "type": "System.Int32",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 11
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 2,
+          "maximumNestingDepth": 1,
+          "calls": [
+            "Get-PSCPCount"
+          ],
+          "scopeWrites": [],
+          "outputProperties": [
+            "Column",
+            "Line"
+          ],
+          "hasCommentHelp": false
+        },
+        {
+          "name": "Get-PSCPRating",
+          "lineStart": 12,
+          "lineEnd": 12,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "Score",
+              "type": "System.Int32",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 12
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 5,
+          "maximumNestingDepth": 1,
+          "calls": [],
+          "scopeWrites": [],
+          "outputProperties": [],
+          "hasCommentHelp": false
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "lineStart": 13,
+          "lineEnd": 13,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "File",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateNotNullOrEmpty"
+              ],
+              "hasDefault": false,
+              "line": 13
+            },
+            {
+              "name": "Severity",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateSet"
+              ],
+              "hasDefault": false,
+              "line": 13
+            },
+            {
+              "name": "Area",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateNotNullOrEmpty"
+              ],
+              "hasDefault": false,
+              "line": 13
+            },
+            {
+              "name": "Line",
+              "type": "System.Int32",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 13
+            },
+            {
+              "name": "Column",
+              "type": "System.Int32",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 13
+            },
+            {
+              "name": "Message",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateNotNullOrEmpty"
+              ],
+              "hasDefault": false,
+              "line": 13
+            },
+            {
+              "name": "Text",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": true,
+              "line": 13
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 1,
+          "maximumNestingDepth": 0,
+          "calls": [],
+          "scopeWrites": [],
+          "outputProperties": [
+            "Area",
+            "Column",
+            "File",
+            "Line",
+            "Message",
+            "Severity",
+            "Text"
+          ],
+          "hasCommentHelp": false
+        },
+        {
+          "name": "Test-PSCPEap",
+          "lineStart": 14,
+          "lineEnd": 14,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "Ast",
+              "type": "System.Management.Automation.Language.Ast",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 14
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 4,
+          "maximumNestingDepth": 0,
+          "calls": [
+            "Get-PSCPCount"
+          ],
+          "scopeWrites": [],
+          "outputProperties": [],
+          "hasCommentHelp": false
+        },
+        {
+          "name": "Get-PSCPCodeText",
+          "lineStart": 15,
+          "lineEnd": 15,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "Raw",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateNotNull"
+              ],
+              "hasDefault": false,
+              "line": 15
+            },
+            {
+              "name": "Tokens",
+              "type": "System.Object[]",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 15
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 5,
+          "maximumNestingDepth": 2,
+          "calls": [
+            "Sort-Object",
+            "Where-Object"
+          ],
+          "scopeWrites": [],
+          "outputProperties": [],
+          "hasCommentHelp": false
+        },
+        {
+          "name": "Add-PSCPSummary",
+          "lineStart": 16,
+          "lineEnd": 16,
+          "lines": 1,
+          "parameters": [
+            {
+              "name": "File",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [
+                "ValidateNotNullOrEmpty"
+              ],
+              "hasDefault": false,
+              "line": 16
+            },
+            {
+              "name": "Start",
+              "type": "System.Int32",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 16
+            },
+            {
+              "name": "Raw",
+              "type": "System.String",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 16
+            },
+            {
+              "name": "Commands",
+              "type": "System.Object[]",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 16
+            },
+            {
+              "name": "Functions",
+              "type": "System.Object[]",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 16
+            },
+            {
+              "name": "Parameters",
+              "type": "System.Object[]",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 16
+            },
+            {
+              "name": "Variables",
+              "type": "System.Object[]",
+              "mandatory": false,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false,
+              "validations": [],
+              "hasDefault": false,
+              "line": 16
+            }
+          ],
+          "supportsShouldProcess": false,
+          "usesShouldProcess": false,
+          "hasProcessBlock": false,
+          "complexity": 4,
+          "maximumNestingDepth": 1,
+          "calls": [
+            "ForEach-Object",
+            "Get-PSCPCount",
+            "Get-PSCPRating",
+            "Sort-Object",
+            "Where-Object"
+          ],
+          "scopeWrites": [],
+          "outputProperties": [
+            "Commands",
+            "Critical",
+            "Error",
+            "File",
+            "FindingsPer100Lines",
+            "Functions",
+            "Lines",
+            "Parameters",
+            "Rating",
+            "Review",
+            "Score",
+            "Variables",
+            "Warning"
+          ],
+          "hasCommentHelp": false
+        }
+      ],
+      "commands": [
+        {
+          "name": "<literal-scriptblock>",
+          "line": 1,
+          "scope": "<script>"
+        },
+        {
+          "name": "Set-StrictMode",
+          "line": 2,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 11,
+          "scope": "Get-PSCPLocation"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 14,
+          "scope": "Test-PSCPEap"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 15,
+          "scope": "Get-PSCPCodeText"
+        },
+        {
+          "name": "Where-Object",
+          "line": 15,
+          "scope": "Get-PSCPCodeText"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-PSCPRating",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Where-Object",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Where-Object",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Where-Object",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Where-Object",
+          "line": 16,
+          "scope": "Add-PSCPSummary"
+        },
+        {
+          "name": "Get-Module",
+          "line": 18,
+          "scope": "<script>"
+        },
+        {
+          "name": "Select-Object",
+          "line": 18,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-Module",
+          "line": 19,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 19,
+          "scope": "<script>"
+        },
+        {
+          "name": "Install-Module",
+          "line": 19,
+          "scope": "<script>"
+        },
+        {
+          "name": "Select-Object",
+          "line": 19,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 20,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-Command",
+          "line": 23,
+          "scope": "<script>"
+        },
+        {
+          "name": "Import-Module",
+          "line": 23,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-ChildItem",
+          "line": 24,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 24,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 24,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 25,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 27,
+          "scope": "<script>"
+        },
+        {
+          "name": "Resolve-Path",
+          "line": 29,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 30,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 31,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPSummary",
+          "line": 31,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-Content",
+          "line": 31,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCodeText",
+          "line": 32,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 33,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 35,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 36,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 36,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 38,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 38,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 41,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 41,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 42,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 43,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-Module",
+          "line": 43,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 43,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 44,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 44,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 44,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 44,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 45,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 45,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 45,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-Command",
+          "line": 45,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 45,
+          "scope": "<script>"
+        },
+        {
+          "name": "Select-Object",
+          "line": 45,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 45,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 46,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 46,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 47,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 48,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 48,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 50,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 51,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 52,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 52,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 52,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 53,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 53,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 53,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 53,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 54,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 54,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 55,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 55,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 55,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 55,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 55,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 55,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 56,
+          "scope": "<script>"
+        },
+        {
+          "name": "Test-PSCPEap",
+          "line": 56,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 57,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 57,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 57,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 58,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 58,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 58,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 59,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 59,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 59,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 59,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 60,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 60,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 60,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 61,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 61,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 61,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 62,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 62,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 73,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPLocation",
+          "line": 73,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Invoke-ScriptAnalyzer",
+          "line": 74,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPSummary",
+          "line": 75,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPFinding",
+          "line": 77,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPProp",
+          "line": 77,
+          "scope": "<script>"
+        },
+        {
+          "name": "Add-PSCPSummary",
+          "line": 78,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 82,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 82,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 83,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 83,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 84,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 84,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 85,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 85,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 86,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 86,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 87,
+          "scope": "<script>"
+        },
+        {
+          "name": "Where-Object",
+          "line": 87,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 88,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 89,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 89,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 89,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 91,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 91,
+          "scope": "<script>"
+        },
+        {
+          "name": "Format-Table",
+          "line": 94,
+          "scope": "<script>"
+        },
+        {
+          "name": "Out-String",
+          "line": 94,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 94,
+          "scope": "<script>"
+        },
+        {
+          "name": "Format-Table",
+          "line": 96,
+          "scope": "<script>"
+        },
+        {
+          "name": "Out-String",
+          "line": 96,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 96,
+          "scope": "<script>"
+        },
+        {
+          "name": "Format-Table",
+          "line": 97,
+          "scope": "<script>"
+        },
+        {
+          "name": "Get-PSCPCount",
+          "line": 97,
+          "scope": "<script>"
+        },
+        {
+          "name": "Out-String",
+          "line": 97,
+          "scope": "<script>"
+        },
+        {
+          "name": "Sort-Object",
+          "line": 97,
+          "scope": "<script>"
+        },
+        {
+          "name": "ForEach-Object",
+          "line": 99,
+          "scope": "<script>"
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "filesystem",
+      "occurrences": [
+        {
+          "file": "work\\audit-target\\PSCP_v3_4.ps1",
+          "line": 31,
+          "operation": "Get-Content",
+          "evidence": "Get-Content -LiteralPath $File.FullName -Raw -ErrorAction Stop"
+        }
+      ]
+    },
+    {
+      "name": "modules-and-packages",
+      "occurrences": [
+        {
+          "file": "work\\audit-target\\PSCP_v3_4.ps1",
+          "line": 19,
+          "operation": "Install-Module",
+          "evidence": "Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop"
+        },
+        {
+          "file": "work\\audit-target\\PSCP_v3_4.ps1",
+          "line": 23,
+          "operation": "Import-Module",
+          "evidence": "Import-Module -Name PSScriptAnalyzer -ErrorAction Stop"
+        }
+      ]
+    },
+    {
+      "name": "package-change",
+      "occurrences": [
+        {
+          "file": "work\\audit-target\\PSCP_v3_4.ps1",
+          "line": 19,
+          "operation": "Install-Module",
+          "evidence": "Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop"
+        }
+      ]
+    }
+  ],
+  "decodedArtifacts": [],
+  "findings": [
+    {
+      "ruleId": "PSCP.SUPPLYCHAIN.BypassedPackageValidation",
+      "engine": "PSCP.Custom",
+      "category": "SupplyChain",
+      "severity": "Error",
+      "confidence": "High",
+      "blocking": true,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 19,
+      "column": 28,
+      "endLine": 19,
+      "endColumn": 28,
+      "message": "'Install-Module' bypasses a package installation safeguard.",
+      "consequence": "Publisher verification or command-collision protections may be disabled during dependency installation.",
+      "remediation": "Remove the bypass flag and install the pinned dependency into a private tool cache before importing its exact manifest path.",
+      "evidence": "Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop",
+      "tags": [
+        "dependency",
+        "supply-chain"
+      ],
+      "cwe": "CWE-494",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "8734d544ae9a7fdabb9ad5d1"
+    },
+    {
+      "ruleId": "PSCP.INJECTION.UnsafeEscaping",
+      "engine": "PSCP.Custom",
+      "category": "Injection",
+      "severity": "Warning",
+      "confidence": "Low",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 13,
+      "column": 400,
+      "endLine": 13,
+      "endColumn": 400,
+      "message": "String replacement appears to implement manual quote escaping.",
+      "consequence": "Hand-written escaping is context-sensitive and can permit injection when the result reaches code, command, SQL, LDAP, or another interpreter.",
+      "remediation": "Avoid constructing interpreter text. Use typed parameters or the target API parameterization mechanism.",
+      "evidence": "$Text -replace '\\s+',' '",
+      "tags": [
+        "escaping",
+        "injection"
+      ],
+      "cwe": "CWE-116",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "4d8e253ffb518eec8e599bf0"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 18,
+      "column": 96,
+      "endLine": 18,
+      "endColumn": 96,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { $PssaModule = $null; $null = $Notes.Add(\"PSScriptAnalyzer discovery failed: $($_.Exception.Message)\") }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "1d85a9ceea2c5a0cf24787f6"
+    },
+    {
+      "ruleId": "PSCP.SAFETY.ShouldProcessCoverage",
+      "engine": "PSCP.Custom",
+      "category": "Safety",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 19,
+      "column": 28,
+      "endLine": 19,
+      "endColumn": 28,
+      "message": "State-changing command 'Install-Module' is not proven to be inside a same-scope ShouldProcess guard.",
+      "consequence": "The operation may run without a reliable -WhatIf preview or user confirmation boundary.",
+      "remediation": "Add [CmdletBinding(SupportsShouldProcess=$true)] to scope '<script>' and execute this command only inside if ($PSCmdlet.ShouldProcess(...)).",
+      "evidence": "Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop",
+      "tags": [
+        "package-change",
+        "should-process"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "aa02c5d40612e16badbb0487"
+    },
+    {
+      "ruleId": "PSCP.SUPPLYCHAIN.UnpinnedPackage",
+      "engine": "PSCP.Custom",
+      "category": "SupplyChain",
+      "severity": "Warning",
+      "confidence": "High",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 19,
+      "column": 28,
+      "endLine": 19,
+      "endColumn": 28,
+      "message": "'Install-Module' does not pin an exact package version.",
+      "consequence": "A future or compromised package release can change script behaviour without a source-code change.",
+      "remediation": "Pin RequiredVersion/Version, constrain the repository, and record the loaded module path and hash.",
+      "evidence": "Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop",
+      "tags": [
+        "dependency",
+        "supply-chain"
+      ],
+      "cwe": "CWE-1104",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "2b0e157cd1f3c3007ab85856"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 19,
+      "column": 220,
+      "endLine": 19,
+      "endColumn": 220,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { $PssaModule = $null }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "a3ebacae95e82193dac20e3c"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 19,
+      "column": 486,
+      "endLine": 19,
+      "endColumn": 486,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { $null = $Notes.Add(\"PSScriptAnalyzer install failed; PSSA skipped: $($_.Exception.Message)\") }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "640b9ed18335b8c19e47aa94"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 23,
+      "column": 164,
+      "endLine": 23,
+      "endColumn": 164,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { $null = $Notes.Add(\"PSScriptAnalyzer import/check failed; PSSA skipped: $($_.Exception.Message)\") }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "b7c23293f660ffce466f6f82"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 24,
+      "column": 193,
+      "endLine": 24,
+      "endColumn": 193,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { $Files = @(); $null = $Notes.Add(\"File enumeration failed: $($_.Exception.Message)\") }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "7b22f2ccc6fabe996b93da96"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 29,
+      "column": 93,
+      "endLine": 29,
+      "endColumn": 93,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { $RelativePath = $File.FullName }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "b48454fe779b8e3ce9cc2276"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 31,
+      "column": 78,
+      "endLine": 31,
+      "endColumn": 78,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { Add-PSCPFinding -File $RelativePath -Severity Critical -Area Read -Line 0 -Column 0 -Message $_.Exception.Message; Add-PSCPSummary -File $RelativePath -Start $StartFinding -Raw $Raw -Commands $Commands -Functions $Functions -Parameters $Parameters -Variables $Variables; continue }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "01069cc19a8bfa24a89a389b"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 45,
+      "column": 298,
+      "endLine": 45,
+      "endColumn": 298,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { $CommandCache[$CommandName] = $null }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "4cd4baad6376977c8ec33190"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 74,
+      "column": 705,
+      "endLine": 74,
+      "endColumn": 705,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { Add-PSCPFinding -File $RelativePath -Severity Review -Area PSSA -Line 0 -Column 0 -Message $_.Exception.Message }",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "d59b8972ed3123776d31d54d"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.SwallowedException",
+      "engine": "PSCP.Custom",
+      "category": "Reliability",
+      "severity": "Warning",
+      "confidence": "Medium",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 76,
+      "column": 3,
+      "endLine": 76,
+      "endColumn": 3,
+      "message": "A catch block does not clearly report, rethrow, return, or terminate.",
+      "consequence": "Failures may be hidden and the script can continue in an invalid state.",
+      "remediation": "Handle the error explicitly, add useful context, and rethrow or return a documented failure result.",
+      "evidence": "catch { Add-PSCPFinding -File $RelativePath -Severity Critical -Area Analyzer -Line (Get-PSCPProp -Object $_.InvocationInfo -Name ScriptLineNumber) -Column 0 -Message \"Analyzer failed on this file: $($_.Exception.Message)\" Add-PSCPSummary -File $RelativePath -Start $StartFinding -Raw $Raw -Commands $Commands -Functions $Functions -Parameters $Parameters -Var...",
+      "tags": [
+        "error-handling"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "1b97a999a8107d1a637256a6"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.FormattingInLogic",
+      "engine": "PSCP.Custom",
+      "category": "AgentReadiness",
+      "severity": "Warning",
+      "confidence": "High",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 94,
+      "column": 47,
+      "endLine": 94,
+      "endColumn": 47,
+      "message": "Formatting command 'Format-Table' is embedded in script logic.",
+      "consequence": "Formatting objects destroy structured pipeline data and make output difficult for agents and callers to consume reliably.",
+      "remediation": "Return normal objects or JSON from the analyzer logic and apply formatting only in an explicitly selected human-output mode.",
+      "evidence": "Format-Table -AutoSize",
+      "tags": [
+        "agent-readiness",
+        "structured-output"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "e58b5508087b424b1e2638ea"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.FormattingInLogic",
+      "engine": "PSCP.Custom",
+      "category": "AgentReadiness",
+      "severity": "Warning",
+      "confidence": "High",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 96,
+      "column": 43,
+      "endLine": 96,
+      "endColumn": 43,
+      "message": "Formatting command 'Format-Table' is embedded in script logic.",
+      "consequence": "Formatting objects destroy structured pipeline data and make output difficult for agents and callers to consume reliably.",
+      "remediation": "Return normal objects or JSON from the analyzer logic and apply formatting only in an explicitly selected human-output mode.",
+      "evidence": "Format-Table -AutoSize",
+      "tags": [
+        "agent-readiness",
+        "structured-output"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "a0f79925c1835b493c210039"
+    },
+    {
+      "ruleId": "PSCP.QUALITY.FormattingInLogic",
+      "engine": "PSCP.Custom",
+      "category": "AgentReadiness",
+      "severity": "Warning",
+      "confidence": "High",
+      "blocking": false,
+      "suppressed": false,
+      "suppressionId": "",
+      "file": "work\\audit-target\\PSCP_v3_4.ps1",
+      "fileHash": "37486AC4BEB02814E9122FD681B1A27196CF8E792823F8B17C865A30A050CC7A",
+      "line": 97,
+      "column": 213,
+      "endLine": 97,
+      "endColumn": 213,
+      "message": "Formatting command 'Format-Table' is embedded in script logic.",
+      "consequence": "Formatting objects destroy structured pipeline data and make output difficult for agents and callers to consume reliably.",
+      "remediation": "Return normal objects or JSON from the analyzer logic and apply formatting only in an explicitly selected human-output mode.",
+      "evidence": "Format-Table -AutoSize -Property File,Severity,Area,Line,Column,Message,Text",
+      "tags": [
+        "agent-readiness",
+        "structured-output"
+      ],
+      "cwe": "",
+      "attack": [],
+      "references": [],
+      "suggestedCorrections": [],
+      "fingerprint": "a75631e2cff783ceb2940db7"
+    }
+  ],
+  "testPlan": [
+    {
+      "id": "T01",
+      "area": "syntax",
+      "scenario": "Parse every target under each declared PowerShell host",
+      "expected": "No parser errors and the same intended AST structure",
+      "isolation": "No execution"
+    },
+    {
+      "id": "T02",
+      "area": "parameters",
+      "scenario": "Exercise missing, null, malformed, boundary, and conflicting parameters",
+      "expected": "Deterministic validation errors with no side effects",
+      "isolation": "Mock or disposable sandbox"
+    },
+    {
+      "id": "T03",
+      "area": "errors",
+      "scenario": "Force each external command and API call to fail",
+      "expected": "Non-zero/failed structured result; cleanup runs; no false success",
+      "isolation": "Mock all external boundaries"
+    },
+    {
+      "id": "T04",
+      "area": "idempotency",
+      "scenario": "Run twice against the same prepared state",
+      "expected": "Second run is safe and converges without duplicate or destructive changes",
+      "isolation": "Disposable sandbox"
+    },
+    {
+      "id": "T05",
+      "area": "filesystem",
+      "scenario": "Use missing, locked, read-only, long, relative, traversal, and symlink/reparse-point paths",
+      "expected": "Targets remain inside the approved root and partial writes are cleaned up",
+      "isolation": "Temporary directory or disposable VM"
+    }
+  ],
+  "skippedPaths": [],
+  "analysisErrors": [],
+  "limitations": [
+    "Static analysis cannot prove runtime safety, intent, authorization, remote content, environment state, permissions, race behaviour, or all data flows.",
+    "Target scripts, modules, manifests, and tests were parsed/read only; none were imported, dot-sourced, invoked, or executed.",
+    "Command resolution is intentionally disabled because discovery can auto-import modules and run initialization code.",
+    "Malware assessment reports indicators, not a clean bill of health or a definitive malware classification.",
+    "Bounded decoders handle literal Base64 and gzip/deflate content; encrypted, custom-packed, runtime-built, or oversized payloads require an isolated specialist workflow."
+  ]
+}
